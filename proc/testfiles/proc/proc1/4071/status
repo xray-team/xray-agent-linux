@@ -1,0 +1,55 @@
+Name:	nano
+Umask:	0002
+State:	T (stopped)
+Tgid:	4071
+Ngid:	0
+Pid:	4071
+PPid:	1481
+TracerPid:	0
+Uid:	1000	1000	1000	1000
+Gid:	1000	1000	1000	1000
+FDSize:	256
+Groups:	4 24 27 30 46 113 129 130 140 1000 
+NStgid:	4071
+NSpid:	4071
+NSpgid:	4071
+NSsid:	1481
+VmPeak:	   27212 kB
+VmSize:	   27048 kB
+VmLck:	       0 kB
+VmPin:	       0 kB
+VmHWM:	    6488 kB
+VmRSS:	    6420 kB
+RssAnon:	    3052 kB
+RssFile:	    3368 kB
+RssShmem:	       0 kB
+VmData:	    3104 kB
+VmStk:	     132 kB
+VmExe:	     236 kB
+VmLib:	    2660 kB
+VmPTE:	      96 kB
+VmSwap:	       0 kB
+HugetlbPages:	       0 kB
+CoreDumping:	0
+THP_enabled:	1
+Threads:	1
+SigQ:	0/63344
+SigPnd:	0000000000000000
+ShdPnd:	0000000000000000
+SigBlk:	0000000000000000
+SigIgn:	0000000000000006
+SigCgt:	00000000080a4001
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000003fffffffff
+CapAmb:	0000000000000000
+NoNewPrivs:	0
+Seccomp:	0
+Speculation_Store_Bypass:	thread vulnerable
+Cpus_allowed:	f
+Cpus_allowed_list:	0-3
+Mems_allowed:	00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001
+Mems_allowed_list:	0
+voluntary_ctxt_switches:	5
+nonvoluntary_ctxt_switches:	13

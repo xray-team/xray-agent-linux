@@ -1,0 +1,55 @@
+Name:	iio-sensor-prox
+Umask:	0022
+State:	D (disk sleep)
+Tgid:	1564
+Ngid:	0
+Pid:	1564
+PPid:	1
+TracerPid:	0
+Uid:	0	0	0	0
+Gid:	0	0	0	0
+FDSize:	128
+Groups:	 
+NStgid:	1564
+NSpid:	1564
+NSpgid:	1564
+NSsid:	1564
+VmPeak:	  269824 kB
+VmSize:	  269816 kB
+VmLck:	       0 kB
+VmPin:	       0 kB
+VmHWM:	    6072 kB
+VmRSS:	    5860 kB
+RssAnon:	     860 kB
+RssFile:	    5000 kB
+RssShmem:	       0 kB
+VmData:	   25816 kB
+VmStk:	     132 kB
+VmExe:	      52 kB
+VmLib:	    8580 kB
+VmPTE:	     148 kB
+VmSwap:	       4 kB
+HugetlbPages:	       0 kB
+CoreDumping:	0
+THP_enabled:	1
+Threads:	3
+SigQ:	0/63344
+SigPnd:	0000000000000000
+ShdPnd:	0000000000000000
+SigBlk:	0000000000000000
+SigIgn:	0000000000001000
+SigCgt:	0000000180000000
+CapInh:	0000000000000000
+CapPrm:	0000003ffffeffff
+CapEff:	0000003ffffeffff
+CapBnd:	0000003ffffeffff
+CapAmb:	0000000000000000
+NoNewPrivs:	0
+Seccomp:	2
+Speculation_Store_Bypass:	thread force mitigated
+Cpus_allowed:	f
+Cpus_allowed_list:	0-3
+Mems_allowed:	00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001
+Mems_allowed_list:	0
+voluntary_ctxt_switches:	50752035
+nonvoluntary_ctxt_switches:	33376
