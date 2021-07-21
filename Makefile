@@ -4,6 +4,8 @@ OUT_BIN = xray-agent
 
 export PATH := $(PATH):/usr/local/go/bin
 
+all: clean build
+
 download:
 	$(ENV_BIN) GOPROXY=direct $(GO_BIN) get
 	$(GO_BIN) get github.com/golangci/golangci-lint/cmd/golangci-lint
