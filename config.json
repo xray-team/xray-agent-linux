@@ -100,9 +100,9 @@
   },
   "tsDB": {
     "graphite": {
-      "mode": "tree",
       "servers": [
         {
+          "mode": "tree",
           "address": "127.0.0.1:2003",
           "protocol": "tcp",
           "timeout": 10
