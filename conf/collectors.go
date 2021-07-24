@@ -39,8 +39,9 @@ type PSConf struct {
 }
 
 type PSStatConf struct {
-	Enabled     bool     `json:"enabled"`
-	ProcessList []string `json:"processList"`
+	Enabled           bool     `json:"enabled"`
+	CollectPerPidStat bool     `json:"collectPerPidStat"`
+	ProcessList       []string `json:"processList"`
 }
 
 type StatConf struct {

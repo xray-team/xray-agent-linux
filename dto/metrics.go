@@ -57,6 +57,7 @@ const (
 	//   PS Stat
 	SetNamePSStatProcessName       = "ProcessName"
 	SetNamePSStatPID               = "PID"
+	SetValuePSStatPIDTotal         = "Total"
 	MetricPSStatUser               = "User"
 	MetricPSStatSystem             = "System"
 	MetricPSStatGuest              = "Guest"

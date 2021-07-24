@@ -22,6 +22,7 @@
     },
     "psStat": {
       "enabled": true,
+      "collectPerPidStat": false,
       "processList": ["xray-agent"]
     },
     "stat": {
