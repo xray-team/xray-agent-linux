@@ -43,39 +43,30 @@ func (g *Graphite) Title() string {
 }
 
 func (g *Graphite) sendMetrics(telemetry *dto.Telemetry, dryRun bool) error {
-	var gm []graphite.Metric
-
-	switch g.cfg.Mode {
-	case dto.GraphiteModeTree:
-		gm = genGraphiteTreeMetrics(*telemetry)
-	case dto.GraphiteModeTags:
-		gm = genGraphiteTagsMetrics(*telemetry)
-	default:
-		return fmt.Errorf("bad graphite mode")
-	}
-
-	// debug
-	if dryRun {
-		logger.Log.Printf("metrics %+v", gm)
-
-		return nil
-	}
-
-	return g.sendMetricsToGraphite(telemetry.HostInfo, gm)
-}
-
-func (g *Graphite) sendMetricsToGraphite(hostInfo *dto.HostInfo, metrics []graphite.Metric) error {
-	if metrics == nil {
-		logger.Log.Printf("nothing to send to graphite\n")
-
-		return nil
-	}
-
-	errors := make([]string, 0)
+	var (
+		gm []graphite.Metric
+		errors = make([]string, 0)
+	)
 
 	for _, serverConf := range g.cfg.Servers {
+		switch serverConf.Mode {
+		case dto.GraphiteModeTree:
+			gm = genGraphiteTreeMetrics(*telemetry)
+		case dto.GraphiteModeTags:
+			gm = genGraphiteTagsMetrics(*telemetry)
+		default:
+			return fmt.Errorf("bad graphite mode")
+		}
+
+		// debug
+		if dryRun {
+			logger.Log.Printf("metrics %+v", gm)
+
+			continue
+		}
+
 		// Initializing graphite client
-		graphiteClient, err := graphite.NewGraphiteTCP(convertGraphiteConf(hostInfo, &serverConf, g.cfg.Mode))
+		graphiteClient, err := graphite.NewGraphiteTCP(convertGraphiteConf(telemetry.HostInfo, &serverConf))
 		if err != nil {
 			errors = append(errors, fmt.Sprintf("error while sending metric to server %s: %s", serverConf.Address, err.Error()))
 
@@ -83,7 +74,7 @@ func (g *Graphite) sendMetricsToGraphite(hostInfo *dto.HostInfo, metrics []graph
 		}
 
 		// Sending metrics to server
-		err = graphiteClient.SendMetrics(&metrics)
+		err = graphiteClient.SendMetrics(&gm)
 		if err != nil {
 			errors = append(errors, fmt.Sprintf("error while sending metric to server %s: %s", serverConf.Address, err.Error()))
 		}
@@ -96,7 +87,7 @@ func (g *Graphite) sendMetricsToGraphite(hostInfo *dto.HostInfo, metrics []graph
 	return nil
 }
 
-func convertGraphiteConf(hostInfo *dto.HostInfo, cfg *conf.GraphiteServerConf, mode string) *graphite.Config {
+func convertGraphiteConf(hostInfo *dto.HostInfo, cfg *conf.GraphiteServerConf) *graphite.Config {
 	out := graphite.Config{
 		Address: cfg.Address,
 		Timeout: time.Duration(cfg.Timeout) * time.Second,
@@ -115,7 +106,7 @@ func convertGraphiteConf(hostInfo *dto.HostInfo, cfg *conf.GraphiteServerConf, m
 	}
 
 	// Prefix
-	if mode == dto.GraphiteModeTree {
+	if cfg.Mode == dto.GraphiteModeTree {
 		for _, attr := range hostInfo.Attributes {
 			out.Prefix = fmt.Sprintf("%s.%s", out.Prefix, attr.Value)
 		}

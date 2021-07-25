@@ -22,6 +22,7 @@
     },
     "psStat": {
       "enabled": true,
+      "collectPerPidStat": false,
       "processList": ["xray-agent"]
     },
     "stat": {
@@ -91,14 +92,15 @@
   },
   "tsDB": {
     "graphite": {
-      "mode": "tree",
       "servers": [
         {
+          "mode": "tree",
           "address": "192.168.0.10:2003",
           "protocol": "tcp",
           "timeout": 10
         },
         {
+          "mode": "tags",
           "address": "192.168.0.20:2003",
           "protocol": "tcp",
           "timeout": 10
