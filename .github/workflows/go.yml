@@ -1,0 +1,57 @@
+name: Go
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Get tag
+      id: tag
+      uses: dawidd6/action-get-tag@v1
+      
+    - name: Use tag
+      run: echo ${{steps.tag.outputs.tag}}
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.16
+
+    - name: Build
+      run: go build -o xray-agent -v
+      
+    - uses: kentik/pkg@v1.0.0-rc7
+      with:
+        name: xray-agent
+        version: ${{steps.tag.outputs.tag}}
+        arch: x86_64
+        format: deb
+        package: ./package/package.yaml
+        
+    - uses: kentik/pkg@v1.0.0-rc7
+      with:
+        name: xray-agent
+        version: ${{steps.tag.outputs.tag}}
+        arch: x86_64
+        format: rpm
+        package: ./package/package.yaml
+
+
+    - name: Release deb
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: xray-agent_${{steps.tag.outputs.tag}}-1_amd64.deb
+    
+    - name: Release rpm
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: xray-agent-${{steps.tag.outputs.tag}}-1.x86_64.rpm

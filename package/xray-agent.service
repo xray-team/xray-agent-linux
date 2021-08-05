@@ -1,0 +1,16 @@
+[Unit]
+Description=xray-agent daemon
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+ExecStart=/usr/bin/xray-agent --config /etc/xray/agent/config.json
+ExecStop=/bin/kill -s TERM $MAINPID
+
+[Install]
+WantedBy=multi-user.target

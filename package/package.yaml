@@ -1,0 +1,19 @@
+meta:
+  description: xray-agent
+  vendor: xray
+  maintainer: V. Khomenko, A. Opryshko
+files:
+  "/usr/bin/xray-agent":
+    file: xray-agent
+    mode: "0755"
+    user: "root"
+  "/etc/xray/agent/config.json":
+    file: config.json
+    mode: "0644"
+    user: "root"
+    keep: true
+units:
+  - package/xray-agent.service
+scripts:
+  "post-install": package/post-inst.sh.sh
+user: root
