@@ -15,5 +15,5 @@ files:
 units:
   - package/xray-agent.service
 scripts:
-  "post-install": package/post-inst.sh.sh
+  "post-install": package/post-inst.sh
 user: root
