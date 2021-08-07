@@ -44,7 +44,7 @@ func (g *Graphite) Title() string {
 
 func (g *Graphite) sendMetrics(telemetry *dto.Telemetry, dryRun bool) error {
 	var (
-		gm []graphite.Metric
+		gm     []graphite.Metric
 		errors = make([]string, 0)
 	)
 

@@ -1,7 +1,6 @@
 package collectors
 
 import (
-	"errors"
 	"fmt"
 	"golang.org/x/sys/unix"
 	"strings"
@@ -22,7 +21,7 @@ type DiskSpaceCollector struct {
 
 func NewDiskSpaceCollector(cfg *conf.CollectorsConf, mountsDataSource MountsDataSource) dto.Collector {
 	if cfg == nil || mountsDataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, errors.New(fmt.Sprintf("%s collector init params error", dto.CollectorNameDiskStat)))
+		logger.LogWarning(logger.CollectorInitPrefix, fmt.Errorf("%s collector init params error", dto.CollectorNameDiskStat))
 		return nil
 	}
 

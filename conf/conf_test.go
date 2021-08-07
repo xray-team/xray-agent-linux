@@ -100,13 +100,13 @@ func TestReadConfigFile(t *testing.T) {
 					Graphite: &conf.GraphiteConf{
 						Servers: []conf.GraphiteServerConf{
 							{
-								Mode: dto.GraphiteModeTree,
+								Mode:     dto.GraphiteModeTree,
 								Address:  "192.168.0.10:2003",
 								Protocol: "tcp",
 								Timeout:  10,
 							},
 							{
-								Mode: dto.GraphiteModeTags,
+								Mode:     dto.GraphiteModeTags,
 								Address:  "192.168.0.20:2003",
 								Protocol: "tcp",
 								Timeout:  10,

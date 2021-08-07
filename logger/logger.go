@@ -1,9 +1,10 @@
 package logger
 
 import (
-	"github.com/go-playground/validator"
 	"log"
 	"os"
+
+	"github.com/go-playground/validator"
 )
 
 // Log is global logger variable.

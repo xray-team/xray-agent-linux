@@ -1,7 +1,6 @@
 package collectors
 
 import (
-	"errors"
 	"fmt"
 	"strings"
 
@@ -26,7 +25,7 @@ type NetDevCollector struct {
 
 func NewNetDevCollector(cfg *conf.CollectorsConf, netDevDataSource NetDevDataSource, classNetDataSource ClassNetDataSource) dto.Collector {
 	if cfg == nil || netDevDataSource == nil || classNetDataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, errors.New(fmt.Sprintf("%s collector init params error", dto.CollectorNameNetDev)))
+		logger.LogWarning(logger.CollectorInitPrefix, fmt.Errorf("%s collector init params error", dto.CollectorNameNetDev))
 		return nil
 	}
 
