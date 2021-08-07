@@ -8,7 +8,9 @@ linters-settings:
   govet:
     check-shadowing: true
   gocyclo:
-    min-complexity: 50
+    min-complexity: 30
+  cyclop:
+    max-complexity: 30
   maligned:
     suggest-new: true
   depguard:
@@ -21,7 +23,7 @@ linters-settings:
   lll:
     line-length: 200
   funlen:
-    lines: 300
+    lines: 500
     statements: 500
   gocognit:
     min-complexity: 80
@@ -39,3 +41,4 @@ linters:
     - gochecknoinits
     - gochecknoglobals
     - goerr113
+    - wrapcheck

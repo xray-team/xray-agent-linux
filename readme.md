@@ -10,6 +10,9 @@ Tested with:
 * centos 8
 * centos 7
 
+### Packages
+The deb and rpm packages are available at the [Releases page](https://github.com/xray-team/xray-agent-linux/releases/latest).
+
 ### Contribute
 Welcomes any kind of contribution, please follow the next steps:
 * Fork the project on github.com.
