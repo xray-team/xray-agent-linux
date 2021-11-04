@@ -263,5 +263,9 @@ func (s *Stat) initCollectors() []dto.Collector {
 				dto.CollectorNameNginx,
 			),
 		),
+		// entropy
+		collectors.NewEntropyCollector(s.cfg.Collectors,
+			proc.NewEntropyDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, proc.EntropyPath), dto.CollectorNameEntropy),
+		),
 	}
 }

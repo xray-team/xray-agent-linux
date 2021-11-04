@@ -18,4 +18,5 @@ const (
 	DiskStatsPath = "/diskstats"
 	PIDsLimit     = "/sys/kernel/pid_max"
 	ThreadsLimit  = "/sys/kernel/threads-max"
+	EntropyPath   = "/sys/kernel/random/entropy_avail"
 )

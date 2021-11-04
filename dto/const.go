@@ -21,6 +21,7 @@ const (
 	CollectorNameMDStat       = "MDStat"
 	CollectorNameCMD          = "CMD"
 	CollectorNameNginx        = "Nginx"
+	CollectorNameEntropy      = "Entropy"
 
 	// Graphite working modes.
 	GraphiteModeTree = "tree"

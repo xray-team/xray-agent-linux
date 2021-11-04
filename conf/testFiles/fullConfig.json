@@ -88,6 +88,9 @@
     },
     "mdStat": {
       "enabled": true
+    },
+    "entropy": {
+      "enabled": true
     }
   },
   "tsDB": {

@@ -97,6 +97,9 @@
       "enabled": true,
       "endpoint": "http://127.0.0.1/basic_status",
       "timeout": 5
+    },
+    "entropy": {
+      "enabled": true
     }
   },
   "tsDB": {
