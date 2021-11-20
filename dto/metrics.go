@@ -22,6 +22,7 @@ const (
 	ResourceMDStat          = "MDStat"
 	ResourceCMD             = "CMD"
 	ResourceNginxStubStatus = "NginxStubStatus"
+	ResourceEntropy         = "Entropy"
 	ResourceXraySelf        = "Self"
 
 	// Metrics Names
@@ -204,6 +205,8 @@ const (
 	MetricNginxStubStatusReading  = "Reading"
 	MetricNginxStubStatusWriting  = "Writing"
 	MetricNginxStubStatusWaiting  = "Waiting"
+	// Entropy
+	MetricEntropyAvailable = "Available"
 	// Self metrics
 	SetNameSelfScope           = "Scope"
 	SetValueSelfScopeAgent     = "Agent"

@@ -57,7 +57,7 @@ func RunModules(modules ...Module) {
 	}
 
 	signalChan := make(chan os.Signal, 1)
-	signal.Notify(signalChan, syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP)
+	signal.Notify(signalChan, syscall.SIGTERM, syscall.SIGINT)
 
 	for {
 		select {

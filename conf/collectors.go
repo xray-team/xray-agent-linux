@@ -24,6 +24,7 @@ type CollectorsConf struct {
 	CMD               *CMDConf          `json:"cmd"`
 	NginxStubStatus   *NginxStubStatus  `json:"nginxStubStatus"`
 	Wireless          *WirelessConf     `json:"wireless"`
+	Entropy           *EntropyConf      `json:"entropy"`
 }
 
 type UptimeConf struct {
@@ -131,4 +132,8 @@ type NginxStubStatus struct {
 	Enabled  bool   `json:"enabled"`
 	Endpoint string `json:"endpoint" validate:"required"`
 	Timeout  int    `json:"timeout" validate:"required,min=1,max=120"`
+}
+
+type EntropyConf struct {
+	Enabled bool `json:"enabled"`
 }

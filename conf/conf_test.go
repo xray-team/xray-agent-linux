@@ -51,6 +51,7 @@ func TestReadConfigFile(t *testing.T) {
 					NetStat:           &conf.NetStatConf{Enabled: true},
 					NetSNMP:           &conf.NetSNMPConf{Enabled: true},
 					NetSNMP6:          &conf.NetSNMP6Conf{Enabled: true},
+					Entropy:           &conf.EntropyConf{Enabled: true},
 					NetDev: &conf.NetDevConf{
 						Enabled:          true,
 						ExcludeLoopbacks: true,
