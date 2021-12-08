@@ -7,6 +7,22 @@
 - [uptime](collectors.md#uptime)
 - [loadAvg](collectors.md#loadavg)
 - [ps](collectors.md#ps)
+- [psStat](collectors.md#psstat)
+- [stat](collectors.md#stat)
+- [cpuInfo](collectors.md#cpuinfo)
+- [memoryInfo](collectors.md#memoryinfo)
+- [diskStat](collectors.md#diskstat)
+- [diskSpace](collectors.md#diskspace)
+- [mdStat](collectors.md#mdstat)
+- [netDev](collectors.md#netdev)
+- [netDevStatus](collectors.md#netdevstatus)
+- [netStat](collectors.md#netstat)
+- [netSNMP](collectors.md#netsnmp)
+- [netSNMP6](collectors.md#netsnmp6)
+- [netARP](collectors.md#netarp)
+- [entropy](collectors.md#entropy)
+- [nginxStubStatus](collectors.md#nginxstubstatus)
+- [cmd](collectors.md#cmd)
 
 ## uptime
 ### Описание
@@ -122,3 +138,63 @@
   * **true** - дополнительно будут собираться метрики по каждому процессу
   * **false** - будут собираться только агрегированные метрики.
 * **"processList"** - список имен процессов, для которых нужно собирать статистику
+
+## stat
+### Описание
+### Конфигурация
+
+## cpuInfo
+### Описание
+### Конфигурация
+
+## memoryInfo
+### Описание
+### Конфигурация
+
+## diskStat
+### Описание
+### Конфигурация
+
+## diskSpace
+### Описание
+### Конфигурация
+
+## mdStat
+### Описание
+### Конфигурация
+
+## netDev
+### Описание
+### Конфигурация
+
+## netDevStatus
+### Описание
+### Конфигурация
+
+## netStat
+### Описание
+### Конфигурация
+
+## netSNMP
+### Описание
+### Конфигурация
+
+## netSNMP6
+### Описание
+### Конфигурация
+
+## netARP
+### Описание
+### Конфигурация
+
+## entropy
+### Описание
+### Конфигурация
+
+## nginxStubStatus
+### Описание
+### Конфигурация
+
+## cmd
+### Описание
+### Конфигурация
