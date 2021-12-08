@@ -62,16 +62,16 @@
 
 | Имя метрики      | Тип    | Источник данных         | Описание                                      |
 |------------------|--------|-------------------------|-----------------------------------------------|
-| Count            | gauge  | /proc/\[pid\]/stat      | Количество запущенных процессов в системе.    |
+| Count            | gauge  | /proc/\[pid\]/status    | Количество запущенных процессов в системе.    |
 | Limit            | gauge  | /sys/kernel/pid_max     | Максимальное допустимое количество процессов. |
-| InStateRunning   | gauge  | /proc/\[pid\]/stat      | Количество процессов в состоянии running.     | 
-| InStateIdle      | gauge  | /proc/\[pid\]/stat      | Количество процессов в состоянии idle.        |
-| InStateSleeping  | gauge  | /proc/\[pid\]/stat      | Количество процессов в состоянии sleeping.    |
-| InStateDiskSleep | gauge  | /proc/\[pid\]/stat      | Количество процессов в состоянии disk sleep.  |
-| InStateStopped   | gauge  | /proc/\[pid\]/stat      | Количество процессов в состоянии stopped.     |
-| InStateZombie    | gauge  | /proc/\[pid\]/stat      | Количество процессов в состоянии zombie.      |
-| InStateDead      | gauge  | /proc/\[pid\]/stat      | Количество процессов в состоянии dead.        |
-| Threads          | gauge  | /proc/\[pid\]/stat      | Количество запущенных потоков.                |
+| InStateRunning   | gauge  | /proc/\[pid\]/status    | Количество процессов в состоянии running.     | 
+| InStateIdle      | gauge  | /proc/\[pid\]/status    | Количество процессов в состоянии idle.        |
+| InStateSleeping  | gauge  | /proc/\[pid\]/status    | Количество процессов в состоянии sleeping.    |
+| InStateDiskSleep | gauge  | /proc/\[pid\]/status    | Количество процессов в состоянии disk sleep.  |
+| InStateStopped   | gauge  | /proc/\[pid\]/status    | Количество процессов в состоянии stopped.     |
+| InStateZombie    | gauge  | /proc/\[pid\]/status    | Количество процессов в состоянии zombie.      |
+| InStateDead      | gauge  | /proc/\[pid\]/status    | Количество процессов в состоянии dead.        |
+| Threads          | gauge  | /proc/\[pid\]/status    | Количество запущенных потоков.                |
 | ThreadsLimit     | gauge  | /sys/kernel/threads-max | Максимальное допустимое количество потоков.   | 
 ### Конфигурация
 ```json
@@ -86,3 +86,39 @@
 * **"enabled"**
   * **true** - включить коллектор
   * **false** - отключить коллектор
+
+## psStat
+### Описание
+Коллектор psStat собирает статистику использования CPU и памяти для указанных в конфигурации приложений. Сбор метрик происходит аналогично тому, как это делает утилита top (top -p <pid>).  
+Для каждого приложения собираются следующие метрики:
+
+| Имя метрики        | Тип    | Источник данных         | Описание                                            |
+|--------------------|--------|-------------------------|-----------------------------------------------------|
+| Processes          | gauge  | /proc/\[pid\]/stat      | Количество процессов.                               |
+| Threads            | gauge  | /proc/\[pid\]/stat      | Количество потоков.                                 |
+| System             | gauge  | /proc/\[pid\]/stat      | Использование CPU(system).                          |
+| User               | gauge  | /proc/\[pid\]/stat      | Использование CPU(user).                            |
+| Guest              | gauge  | /proc/\[pid\]/stat      | Использование CPU(guest).                           |
+| Total              | gauge  | /proc/\[pid\]/stat      | Использование CPU(system+user+guest).               |
+| ResidentMemorySize | gauge  | /proc/\[pid\]/stat      | Размер памяти (в байтах) выделенной процессу в RAM. |
+| VirtualMemorySize  | gauge  | /proc/\[pid\]/stat      | Размер виртуальной памяти в байтах.                 |
+
+### Конфигурация
+```json
+{
+  "collectors": {
+    "psStat": {
+      "enabled": true,
+      "collectPerPidStat": false,
+      "processList": ["xray-agent"]
+    }
+  }
+}
+```
+* **"enabled"**
+  * **true** - включить коллектор
+  * **false** - отключить коллектор
+* **collectPerPidStat**
+  * **true** - дополнительно будут собираться метрики по каждому процессу
+  * **false** - будут собираться только агрегированные метрики.
+* **"processList"** - список имен процессов, для которых нужно собирать статистику
