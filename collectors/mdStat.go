@@ -2,6 +2,8 @@ package collectors
 
 import (
 	"errors"
+	"strconv"
+	"strings"
 
 	"xray-agent-linux/conf"
 	"xray-agent-linux/dto"
@@ -58,10 +60,13 @@ func (c *MDStatCollector) Collect() ([]dto.Metric, error) {
 			Value: mdName,
 		}
 
+		// prepare level
+		level, _ := strconv.Atoi(strings.TrimPrefix(strings.ToLower(stat.Level), "raid"))
+
 		metrics = append(metrics,
 			dto.Metric{
 				Name:       dto.MetricMDStatLevel,
-				Value:      stat.Level,
+				Value:      level,
 				Attributes: []dto.MetricAttribute{resourceAttr, mdNameAttr},
 			},
 			dto.Metric{

@@ -4,7 +4,7 @@
 Любой из коллекторов можно отключить, если метрики, которые он собирает не нужны.
 
 Список коллекторов:
-- [uptime](collectors.md#uptime)+
+- [uptime](collectors.md#uptime)
 - [loadAvg](collectors.md#loadavg)
 - [ps](collectors.md#ps)
 - [psStat](collectors.md#psstat)
@@ -297,7 +297,7 @@
   * **true** - включить коллектор
   * **false** - отключить коллектор
 * **"diskTypes"** - список типов дисков (major numbers), для которых нужно собирать метрики.  
-Подробней о типах дисков: [https://www.kernel.org/doc/Documentation/admin-guide/devices.txt](https://www.kernel.org/doc/Documentation/admin-guide/devices.txt).  
+Подробней о типах дисков: [https://www.kernel.org/doc/html/latest/admin-guide/devices.html](https://www.kernel.org/doc/html/latest/admin-guide/devices.html).  
 Расшифровка часто-используемых типов:
   * 8 - SCSI(sata)-диски. Например: sda, sda1, sdb, sdb1 и т.д.
   * 9 - Metadisk (RAID). Например: md0, md1 и т.д.
@@ -346,7 +346,44 @@
 
 ## mdStat
 ### Описание
+Коллектор mdStat собирает информацию о состоянии linux software RAID. Для каждого md-устройства собираются следующие метрики:
+
+| Имя метрики          | Тип     | Источник данных                      | Описание                                                                                                                                                                  |
+|----------------------|---------|--------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Level                | gauge   | /sys/block/\[md*\]/md/level          | Тип RAID-масcива: raid1 - 1, raid6 - 6, raid10 - 10, и т.д.                                                                                                               |
+| NumDisks             | gauge   | /sys/block/\[md*\]/md/raid_disks     | Количество дисков в масcиве.                                                                                                                                              |
+| ArrayState           | gauge   | /sys/block/\[md*\]/md/array_state    | Состояние RAID-масcива: "clear" - 1, "inactive" - 2, "suspended" - 3, "readonly" - 4, "read-auto" - 5, "clean" - 6, "active" - 7, "write-pending" - 8, "active-idle" - 9. |
+| ArraySize            | gauge   | /sys/block/\[md*\]/md/               | Эффективный размер массива в килобайтах.                                                                                                                                  |
+| SyncAction           | gauge   | /sys/block/\[md*\]/md/sync_action    | Текущее состояние синхронизации RAID-массива: "resync" - 1, "recover" - 2, "idle" - 3, "check" - 4, "repair" - 5.                                                         |
+| NumDegraded          | gauge   | /sys/block/\[md*\]/md/degraded       | Количество деградирующих дисков.                                                                                                                                          |
+| MismatchCnt          | counter | /sys/block/\[md*\]/md/mismatch_cnt   | Количество секторов, которые были перезаписаны для проверки.                                                                                                              |
+| SyncCompletedSectors | counter | /sys/block/\[md*\]/md/sync_completed | Количество секторов, обработка которых была завершена независимо от текущего sync_action.                                                                                 |
+| NumSectors           | gauge   | /sys/block/\[md*\]/md/               | Общее количество секторов, которые нужно обработать.                                                                                                                      |
+| SyncSpeed            | gauge   | /sys/block/\[md*\]/md/sync_speed     | Текущая фактическая скорость в КБ/сек текущего sync_action. Среднее значение за последние 30 секунд.                                                                      |
+
+Для каждого диска в RAID-массиве собираются следующие метрики:
+
+| Имя метрики | Тип    | Источник данных                     | Описание                                                                                                                                                   |
+|-------------|--------|-------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Slot        | gauge  | /sys/block/\[mdN\]/md/\[dev\]slot   | Позиция диска в RAID-масcиве.                                                                                                                              |
+| State       | gauge  | /sys/block/\[mdN\]/md/\[dev\]state  | Состояние диска: "faulty" - 1, "in_sync" - 2, "writemostly" - 3, "blocked" - 4, "spare" - 5, "write_error" - 6, "want_replacement" - 7, "replacement" - 8. |
+| Errors      | gauge  | /sys/block/\[mdN\]/md/\[dev\]errors | Приблизительное количество ошибок чтения, которые были обнаружены на этом устройстве, но не привели к удалению устройства из raid массива.                 |
+
+Подробнее:
+* [https://www.kernel.org/doc/html/latest/admin-guide/md.html](https://www.kernel.org/doc/html/latest/admin-guide/md.html)
 ### Конфигурация
+```json
+{
+  "collectors": {
+    "mdStat": {
+      "enabled": true
+    }
+  }
+}
+```
+* **"enabled"**
+  * **true** - включить коллектор
+  * **false** - отключить коллектор
 
 ## netDev
 ### Описание
@@ -389,13 +426,13 @@
 ### Описание
 Коллектор netDevStatus собирает информацию о состоянии сетевых интерфейсов. Для каждого интерфейса доступны следующие метрики:
 
-| Имя метрики | Тип     | Источник данных                        | Описание                                                                                                                                                                                                                                                                                 |
-|-------------|---------|----------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| OperState   | gauge   | /sys/class/net/<iface>/operstate       | Состояние интерфейса. Может принимать следующие значения: 1 - "up", 2 - "lowerlayerdown", 3 - "dormant", 4 - "down", 5 - "unknown", 6 - "testing", 7 - "notpresent". Подробнее: [https://tools.ietf.org/html/rfc2863#section-3.1.14](https://tools.ietf.org/html/rfc2863#section-3.1.14) |
-| LinkFlaps   | counter | /sys/class/net/<iface>/carrier_changes | Количество флапов интерфейса.                                                                                                                                                                                                                                                            |
-| Speed       | gauge   | /sys/class/net/<iface>/speed           | Отображает последнее,  или текущее значение скорости интерфейса в Мбит/с.                                                                                                                                                                                                                |
-| Duplex      | gauge   | /sys/class/net/<iface>/duplex          | Отображает последнее,  или текущее значение Duplex'a. Возможные значения: 1 - "full", 2 - "half", 3 - "unknown". Подробнее https://www.kernel.org/doc/Documentation/ABI/testing/sysfs-class-net.                                                                                         |
-| MTU         | gauge   | /sys/class/net/<iface>/mtu             | Отображает установленное значение MTU для интерфейса.                                                                                                                                                                                                                                    |
+| Имя метрики | Тип     | Источник данных                          | Описание                                                                                                                                                                                                                                                                                 |
+|-------------|---------|------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| OperState   | gauge   | /sys/class/net/\[iface\]/operstate       | Состояние интерфейса. Может принимать следующие значения: 1 - "up", 2 - "lowerlayerdown", 3 - "dormant", 4 - "down", 5 - "unknown", 6 - "testing", 7 - "notpresent". Подробнее: [https://tools.ietf.org/html/rfc2863#section-3.1.14](https://tools.ietf.org/html/rfc2863#section-3.1.14) |
+| LinkFlaps   | counter | /sys/class/net/\[iface\]/carrier_changes | Количество флапов интерфейса.                                                                                                                                                                                                                                                            |
+| Speed       | gauge   | /sys/class/net/\[iface\]/speed           | Отображает последнее,  или текущее значение скорости интерфейса в Мбит/с.                                                                                                                                                                                                                |
+| Duplex      | gauge   | /sys/class/net/\[iface\]/duplex          | Отображает последнее,  или текущее значение Duplex'a. Возможные значения: 1 - "full", 2 - "half", 3 - "unknown". Подробнее https://www.kernel.org/doc/Documentation/ABI/testing/sysfs-class-net.                                                                                         |
+| MTU         | gauge   | /sys/class/net/\[iface\]/mtu             | Отображает установленное значение MTU для интерфейса.                                                                                                                                                                                                                                    |
 ### Конфигурация
 ```json
 {
@@ -418,6 +455,8 @@
 
 ## netStat
 ### Описание
+Коллектор netStat собирает статистику сетевой активности ОС из /proc/net/netstat. Количество и состав метрик может отличатся в зависимости от версии и настроек ядра Linux.  
+Подробное описание метрик можно найти здесь: [https://www.kernel.org/doc/html/latest/networking/snmp_counter.html](https://www.kernel.org/doc/html/latest/networking/snmp_counter.html)
 ### Конфигурация
 ```json
 {
@@ -497,7 +536,9 @@
 {
   "collectors": {
     "wireless": {
-      "enabled": true
+      "enabled": true,
+      "excludeByName": [],
+      "excludeByOperState": ["down"]
     }
   }
 }
@@ -505,6 +546,8 @@
 * **"enabled"**
   * **true** - включить коллектор
   * **false** - отключить коллектор
+* **"excludeByName"** - список имен интерфейсов, которые нужно исключить из статистики
+* **"excludeByOperState"** - список состояний wireless-интерфейсов, для которых не нужно собирать метрики. Возможные состояния:  "unknown", "notpresent", "down", "lowerlayerdown", "testing", "dormant", "up" (расшифровка здесь [https://tools.ietf.org/html/rfc2863#section-3.1.14](https://tools.ietf.org/html/rfc2863#section-3.1.14))
 
 ## entropy
 ### Описание
@@ -569,3 +612,39 @@
 ### Описание
 Коллектор cmd позволяет выполнять произвольные shell-команды, или скрипты и записывать результат их выполнения в виде отдельных метрик. Таким образом возможно быстро и просто расширять функциональность xray-agent собственными метриками.
 ### Конфигурация
+```json
+{
+  "collectors": {
+    "cmd": {
+      "enabled": true,
+      "timeout": 1,
+      "metrics": [
+        {
+          "names": ["metricName1", "metricName2", "metricNameN"],
+          "delimiter": " ",
+          "pipeline": [
+            ["command1", "argument1ForCommand1", "argument2ForCommand1", "argumentNForCommand1"],
+            ["command2", "argument1ForCommand2", "argument2ForCommand2", "argumentNForCommand2"],
+            ["commandN", "argument1ForCommandN", "argument2ForCommandN", "argumentNForCommandN"]
+          ],
+          "attributes": [
+            {
+              "name": "AttributeName",
+              "value": "AttributeValue"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+* **"enabled"**
+  * **true** - включить коллектор
+  * **false** - отключить коллектор
+* **"timeout"** - таймаут выполнения каждого pipeline'а в секундах. Минимальное значение 1, максимальное - 120
+* **"metrics"** - конфигурация пользовательских команд
+  * **"names"** - список названий метрик. Количество элементов данного списка должно равняться количеству значений, которые возвращает команда указанная в "pipeline". Что-бы игнорировать (пропустить) ненужные значения - укажите вместо имени "-".
+  * **"delimiter"** - строка-разделитель
+  * **"pipeline"** - список команд, которые нужно выполнить, что-бы получить метрики. В свою очередь каждая команда представляется в виде массива произвольной длины, в котором первый элемент - это исполняемый файл, а последующие элементы - аргументы.
+* **"attributes"** - дополнительные атрибуты, которые нужно добавить к метрикам
