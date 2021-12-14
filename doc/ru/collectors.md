@@ -646,5 +646,95 @@
 * **"metrics"** - конфигурация пользовательских команд
   * **"names"** - список названий метрик. Количество элементов данного списка должно равняться количеству значений, которые возвращает команда указанная в "pipeline". Что-бы игнорировать (пропустить) ненужные значения - укажите вместо имени "-".
   * **"delimiter"** - строка-разделитель
-  * **"pipeline"** - список команд, которые нужно выполнить, что-бы получить метрики. В свою очередь каждая команда представляется в виде массива произвольной длины, в котором первый элемент - это исполняемый файл, а последующие элементы - аргументы.
+  * **"pipeline"** - список команд, которые нужно выполнить, что-бы получить метрики. В свою очередь каждая команда представляется в виде массива произвольной длины, в котором первый элемент - это исполняемый файл, а последующие элементы - аргументы.  
+  Для наглядности несколько примеров:
+    * Entropy  
+      *shell*:
+      ```shell
+      cat /proc/sys/kernel/random/entropy_avail
+      ```
+      *эквивалентный xray cmd pipeline*:
+      ```json
+      "pipeline": [
+        ["cat", "/proc/sys/kernel/random/entropy_avail"]
+      ]
+      ```
+    * OOM killer  
+      *shell*:
+      ```shell
+      cat /proc/vmstat | grep oom_kill
+      ```
+      *эквивалентный xray cmd pipeline*:
+      ```json
+      "pipeline": [
+        ["cat", "/proc/vmstat"],
+        ["grep", "oom_kill"]
+      ]
+      ```
+    * ARP Limits  
+      *shell*:
+      ```shell
+      sysctl net.ipv4.neigh.default.gc_thresh1 net.ipv4.neigh.default.gc_thresh2 net.ipv4.neigh.default.gc_thresh3 | awk '{print $3}' ORS=' '
+      ```
+      *эквивалентный xray cmd pipeline*:
+      ```json
+      "pipeline": [
+        ["sysctl", "net.ipv4.neigh.default.gc_thresh1", "net.ipv4.neigh.default.gc_thresh2", "net.ipv4.neigh.default.gc_thresh3"],
+        ["awk", "{print $3}", "ORS= "]
+      ]
+      ```
 * **"attributes"** - дополнительные атрибуты, которые нужно добавить к метрикам
+
+**Пример 1.**
+Например, нужно сохранять в виде метрики с именем EntropyAvail вывод следующей команды:
+```shel
+cat /proc/sys/kernel/random/entropy_avail
+```
+В таком случае в конфигурационный файл xray-agent нужно будет добавить следующие строки:
+```json
+{
+  "collectors": {
+    "cmd": {
+      "enabled": true,
+      "metrics": [
+        {
+          "names": ["EntropyAvail"],
+          "pipeline": [
+            ["cat", "/proc/sys/kernel/random/entropy_avail"]
+          ],
+          "delimiter": " "
+        }
+      ]
+    }
+  }
+}
+```
+**Пример 2.** Например, нужно сохранять в виде 3 метрик вывод следующей команды:
+```shel
+sysctl net.ipv4.neigh.default.gc_thresh1 net.ipv4.neigh.default.gc_thresh2 net.ipv4.neigh.default.gc_thresh3 | awk '{print $3}' ORS=' '
+```
+В таком случае в конфигурационный файл xray-agent нужно будет добавить следующие строки:
+```json
+{
+  "collectors": {
+    "cmd": {
+      "metrics": [
+        {
+          "names": ["GcThresh1", "GcThresh2", "GcThresh3"],
+          "pipeline": [
+            ["sysctl", "net.ipv4.neigh.default.gc_thresh1", "net.ipv4.neigh.default.gc_thresh2", "net.ipv4.neigh.default.gc_thresh3"],
+            ["awk", "{print $3}", "ORS= "]
+          ],
+          "delimiter": " ",
+          "attributes": [
+            {
+              "name": "Set",
+              "value": "IPv4NeighbourTable"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```
