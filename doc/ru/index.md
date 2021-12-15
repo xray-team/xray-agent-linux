@@ -1,3 +1,4 @@
 # xray-agent
 
-* [Подробное описание коллекторов](collectors.md)
+* [Конфигурация](configuration.md)
+* [Список коллекторов](collectors.md)
