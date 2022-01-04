@@ -1,3 +1,6 @@
+[English version](../en/collectors.md)
+
+---
 # Коллекторы
 Все метрики собираются с помощью коллекторов.  
 Каждый коллектор представляет собой небольшой модуль, который позволяет собирать определенные метрики, имеет собственную конфигурацию и ограничения.  
@@ -90,6 +93,7 @@
 | InStateDead      | gauge | /proc/\[pid\]/status    | Количество процессов в состоянии dead.        |
 | Threads          | gauge | /proc/\[pid\]/status    | Количество запущенных потоков.                |
 | ThreadsLimit     | gauge | /sys/kernel/threads-max | Максимальное допустимое количество потоков.   |
+
 ### Конфигурация
 ```json
 {
@@ -269,7 +273,7 @@
 | WeightedTimeSpentDoingIOs          | counter   | /proc/diskstats | Общее количество времени (в миллисекундах), затраченное на выполнение операций ввода/вывода.                                                                                                      | Kernel 4.18+                               |
 | DiscardsCompletedSuccessfully      | counter   | /proc/diskstats | Общее количество успешно завершенных операций discard. Операции discard выполняются при выполнении TRIM.                                                                                          | Kernel 4.18+                               |
 | DiscardsMerged                     | counter   | /proc/diskstats | Общее количество объединенных операций discard.                                                                                                                                                   | Kernel 4.18+                               |
-| SectorsDiscarded                   | counter   | /proc/diskstats | общее количество успешно очищенных секторов.                                                                                                                                                      | Kernel 4.18+                               |
+| SectorsDiscarded                   | counter   | /proc/diskstats | Общее количество успешно очищенных секторов.                                                                                                                                                      | Kernel 4.18+                               |
 | TimeSpentDiscarding                | counter   | /proc/diskstats | Общее количество времени (в миллисекундах), затраченного на выполнение операций discard.                                                                                                          | Kernel 4.18+                               |
 | FlushRequestsCompletedSuccessfully | counter   | /proc/diskstats | Общее количество успешно завершенных операций flush.                                                                                                                                              | Kernel 5.5+, не отслеживается для разделов |
 | TimeSpentFlushing                  | counter   | /proc/diskstats | Общее количество времени (в миллисекундах), затраченного на выполнение операций flush.                                                                                                            | Kernel 5.5+, не отслеживается для разделов |
@@ -341,7 +345,7 @@
 * **"enabled"**
   * **true** - включить коллектор
   * **false** - отключить коллектор
-* **"fsTypes"** - список типов файловых систем, для которых нужно собирать метрики.
+* **"fsTypes"** - список типов файловых систем, для которых нужно собирать метрики.  
 Подробнее о файловых системах: [https://man7.org/linux/man-pages/man5/filesystems.5.html](https://man7.org/linux/man-pages/man5/filesystems.5.html)
 
 ## mdStat
@@ -387,7 +391,8 @@
 
 ## netDev
 ### Описание
-Коллектор netDev собирает статистику для каждого сетевого интерфейса из /proc/net/dev. Описание всех счетчиков можно найти здесь: [https://www.kernel.org/doc/html/latest/networking/statistics.html#struct-rtnl-link-stats64](https://www.kernel.org/doc/html/latest/networking/statistics.html#struct-rtnl-link-stats64)  
+Коллектор netDev собирает статистику для каждого сетевого интерфейса из /proc/net/dev.  
+Описание всех счетчиков можно найти здесь: [https://www.kernel.org/doc/html/latest/networking/statistics.html#struct-rtnl-link-stats64](https://www.kernel.org/doc/html/latest/networking/statistics.html#struct-rtnl-link-stats64)  
 ### Конфигурация
 ```json
 {
@@ -420,11 +425,12 @@
   * **true** - исключает виртуальные интерфейсы из статистики
   * **false** - не исключает виртуальные интерфейсы из статистики
 * **"excludeByName"** - список имен интерфейсов, которые нужно исключить из статистики
-* **"excludeByOperState"** - список состояний интерфейсов, которые нужно исключить из статистики исходя из состояния интерфейса. 
+* **"excludeByOperState"** - список состояний интерфейсов, которые нужно исключить из статистики исходя из состояния интерфейса. Возможные состояния: "unknown", "notpresent", "down", "lowerlayerdown", "testing", "dormant", "up" (расшифровка здесь [https://tools.ietf.org/html/rfc2863#section-3.1.14](https://tools.ietf.org/html/rfc2863#section-3.1.14))
 
 ## netDevStatus
 ### Описание
-Коллектор netDevStatus собирает информацию о состоянии сетевых интерфейсов. Для каждого интерфейса доступны следующие метрики:
+Коллектор netDevStatus собирает информацию о состоянии сетевых интерфейсов.  
+Для каждого интерфейса доступны следующие метрики:
 
 | Имя метрики | Тип     | Источник данных                          | Описание                                                                                                                                                                                                                                                                                 |
 |-------------|---------|------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -455,7 +461,8 @@
 
 ## netStat
 ### Описание
-Коллектор netStat собирает статистику сетевой активности ОС из /proc/net/netstat. Количество и состав метрик может отличатся в зависимости от версии и настроек ядра Linux.  
+Коллектор netStat собирает статистику сетевой активности ОС из /proc/net/netstat.  
+Количество и состав метрик может отличатся в зависимости от версии и настроек ядра Linux.  
 Подробное описание метрик можно найти здесь: [https://www.kernel.org/doc/html/latest/networking/snmp_counter.html](https://www.kernel.org/doc/html/latest/networking/snmp_counter.html)
 ### Конфигурация
 ```json
@@ -491,7 +498,8 @@
 
 ## netSNMP6
 ### Описание
-Коллектор netSNMP6 собирает все доступные метрики из /proc/net/snmp6. Данный коллектор собирает аналогичные коллектору netSNMP метрики для IPv6.
+Коллектор netSNMP6 собирает все доступные метрики из /proc/net/snmp6.  
+Данный коллектор собирает аналогичные коллектору netSNMP метрики для IPv6.
 ### Конфигурация
 ```json
 {
@@ -531,6 +539,25 @@
 
 ## wireless
 ### Описание
+Коллектор wireless с помощью утилиты iwconfig собирает статистику для беспроводных интерфейсов.
+
+| Имя метрики        | Тип     | Источник данных | Описание                                                                                                                                                  |
+|--------------------|---------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Frequency          | gauge   | iwconfig        | Канал.                                                                                                                                                    |
+| BitRate            | gauge   | iwconfig        | Скорость подключения.                                                                                                                                     |
+| TxPower            | gauge   | iwconfig        | TX power в dBm.                                                                                                                                           |
+| LinkQuality        | gauge   | iwconfig        | Качество подключения. Абстрактное значение, которое может базироваться на качестве принимаемого сигнала, частоте ошибок и/или других аппаратных метриках. |
+| LinkQualityLimit   | gauge   | iwconfig        | Максимальное значение для LinkQuality.                                                                                                                    |
+| SignalLevel        | gauge   | iwconfig        | Уровень (мощность) принимаемого сигнала.                                                                                                                  |
+| RxInvalidNwid      | counter | iwconfig        | Количество пакетов, полученных с другим NWID или ESSID.                                                                                                   |
+| RxInvalidCrypt     | counter | iwconfig        | Количество пакетов, которые оборудование не смогло расшифровать.                                                                                          |
+| RxInvalidFrag      | counter | iwconfig        | Количество пакетов, для которых оборудование не могло должным образом повторно собрать фрагменты канального уровня (скорее всего, один отсутствовал).     |
+| TxExcessiveRetries | counter | iwconfig        | Количество пакетов, которые не удалось доставить.                                                                                                         |
+| InvalidMisc        | counter | iwconfig        | Количество пакетов, которые были потеряны по другим причинам.                                                                                             |
+| MissedBeacon       | counter | iwconfig        | Количество пропущенных периодических wireless beacon от точки доступа.                                                                                    |
+
+Подробнее: man iwconfig
+
 ### Конфигурация
 ```json
 {
@@ -547,7 +574,7 @@
   * **true** - включить коллектор
   * **false** - отключить коллектор
 * **"excludeByName"** - список имен интерфейсов, которые нужно исключить из статистики
-* **"excludeByOperState"** - список состояний wireless-интерфейсов, для которых не нужно собирать метрики. Возможные состояния:  "unknown", "notpresent", "down", "lowerlayerdown", "testing", "dormant", "up" (расшифровка здесь [https://tools.ietf.org/html/rfc2863#section-3.1.14](https://tools.ietf.org/html/rfc2863#section-3.1.14))
+* **"excludeByOperState"** - список состояний wireless-интерфейсов, для которых не нужно собирать метрики. Возможные состояния: "unknown", "notpresent", "down", "lowerlayerdown", "testing", "dormant", "up" (расшифровка здесь [https://tools.ietf.org/html/rfc2863#section-3.1.14](https://tools.ietf.org/html/rfc2863#section-3.1.14))
 
 ## entropy
 ### Описание
@@ -578,7 +605,7 @@
 
 | Имя метрики | Тип     | Источник данных              | Описание                                                                               |
 |-------------|---------|------------------------------|----------------------------------------------------------------------------------------|
-| Active      | gauge   | ngx_http_stub_status_module  | Текущее число активных клиентских соединений, включая Waiting-соединения .             |
+| Active      | gauge   | ngx_http_stub_status_module  | Текущее число активных клиентских соединений, включая Waiting-соединения.              |
 | Accepts     | counter | ngx_http_stub_status_module  | Суммарное число принятых клиентских соединений.                                        |
 | Handled     | counter | ngx_http_stub_status_module  | Суммарное число обработанных соединений.                                               |
 | Requests    | counter | ngx_http_stub_status_module  | Суммарное число клиентских запросов.                                                   |
