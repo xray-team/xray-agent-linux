@@ -1,0 +1,127 @@
+[Russian version](../ru/configuration.md)
+
+---
+# Configuration
+## Configuration file example
+```json
+{
+  "agent": {
+    "getStatIntervalSec": 60,
+    "hostAttributes": [
+      {
+        "name": "Source",
+        "value": "xray"
+      }
+    ]
+  },
+  "collectors": {
+    "rootPath": "/",
+    "enableSelfMetrics": true,
+    "uptime": {
+      "enabled": true
+    },
+    "loadAvg": {
+      "enabled": true
+    },
+    "ps": {
+      "enabled": true
+    },
+    "psStat": {
+      "enabled": true,
+      "collectPerPidStat": false,
+      "processList": ["xray-agent"]
+    },
+    "stat": {
+      "enabled": true
+    },
+    "cpuInfo": {
+      "enabled": true
+    },
+    "memoryInfo": {
+      "enabled": true
+    },
+    "netARP": {
+      "enabled": true
+    },
+    "netStat": {
+      "enabled": true
+    },
+    "netSNMP": {
+      "enabled": true
+    },
+    "netSNMP6": {
+      "enabled": true
+    },
+    "netDev": {
+      "enabled": true,
+      "excludeLoopbacks": true,
+      "excludeWireless": false,
+      "excludeBridges": false,
+      "excludeVirtual": false,
+      "excludeByName": [],
+      "excludeByOperState": []
+    },
+    "netDevStatus": {
+      "enabled": true,
+      "excludeWireless": true,
+      "excludeByName": []
+    },
+    "wireless": {
+      "enabled": true,
+      "excludeByName": [],
+      "excludeByOperState": ["down"]
+    },
+    "diskStat": {
+      "enabled": true,
+      "diskTypes": [
+        8,
+        9
+      ],
+      "excludePartitions": false,
+      "excludeByName": []
+    },
+    "diskSpace": {
+      "enabled": true,
+      "fsTypes": [
+        "ext4",
+        "ext3",
+        "ext2",
+        "xfs",
+        "jfs",
+        "btrfs"
+      ]
+    },
+    "mdStat": {
+      "enabled": true
+    },
+    "cmd": {
+      "enabled": false,
+      "timeout": 10,
+      "metrics": []
+    },
+    "nginxStubStatus": {
+      "enabled": true,
+      "endpoint": "http://127.0.0.1/basic_status",
+      "timeout": 5
+    },
+    "entropy": {
+      "enabled": true
+    }
+  },
+  "tsDB": {
+    "graphite": {
+      "servers": [
+        {
+          "mode": "tree",
+          "address": "127.0.0.1:2003",
+          "protocol": "tcp",
+          "timeout": 10
+        }
+      ]
+    }
+  }
+}
+```
+
+## Collectors settings
+Learn more about the settings for each collector [here](collectors.md).

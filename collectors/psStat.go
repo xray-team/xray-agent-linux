@@ -149,7 +149,7 @@ func (c *PSStatCollector) Collect() ([]dto.Metric, error) {
 			},
 			{
 				Name:  dto.SetNamePSStatPID,
-				Value: "Total",
+				Value: dto.SetValuePSStatPIDTotal,
 			},
 		}
 
