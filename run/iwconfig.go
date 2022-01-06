@@ -7,7 +7,7 @@ import (
 	"regexp"
 	"strconv"
 
-	"xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/dto"
 )
 
 type iwconfigDataSource struct {

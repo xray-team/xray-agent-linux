@@ -3,9 +3,9 @@ package collectors
 import (
 	"errors"
 
-	"xray-agent-linux/conf"
-	"xray-agent-linux/dto"
-	"xray-agent-linux/logger"
+	"github.com/xray-team/xray-agent-linux/conf"
+	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/logger"
 )
 
 type NetStatDataSource interface {
@@ -50,8 +50,8 @@ func (c *NetStatCollector) Collect() ([]dto.Metric, error) {
 		for metricName, value := range stat {
 			metrics = append(metrics,
 				dto.Metric{
-					Name:     metricName,
-					Value:    value,
+					Name:  metricName,
+					Value: value,
 					Attributes: []dto.MetricAttribute{
 						{
 							Name:  dto.ResourceAttr,

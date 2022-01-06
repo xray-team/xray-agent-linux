@@ -2,7 +2,8 @@ package reader
 
 import (
 	"testing"
-	"xray-agent-linux/logger"
+
+	"github.com/xray-team/xray-agent-linux/logger"
 )
 
 func TestReadStringFile(t *testing.T) {

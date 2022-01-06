@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/dto"
 )
 
 func Test_parseStubStatus(t *testing.T) {

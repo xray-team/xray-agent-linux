@@ -1,4 +1,4 @@
-module xray-agent-linux
+module github.com/xray-team/xray-agent-linux
 
 go 1.17
 

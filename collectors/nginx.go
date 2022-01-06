@@ -1,8 +1,8 @@
 package collectors
 
 import (
-	"xray-agent-linux/conf"
-	"xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/conf"
+	"github.com/xray-team/xray-agent-linux/dto"
 )
 
 type NginxStubStatusCollector struct {

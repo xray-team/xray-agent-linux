@@ -3,9 +3,9 @@ package main
 import (
 	"flag"
 
-	"xray-agent-linux/conf"
-	"xray-agent-linux/logger"
-	"xray-agent-linux/service"
+	"github.com/xray-team/xray-agent-linux/conf"
+	"github.com/xray-team/xray-agent-linux/logger"
+	"github.com/xray-team/xray-agent-linux/service"
 )
 
 func main() {

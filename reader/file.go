@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"xray-agent-linux/logger"
+	"github.com/xray-team/xray-agent-linux/logger"
 )
 
 func ReadFile(filePath, logPrefix string) ([]byte, error) {

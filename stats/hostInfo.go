@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
-	"xray-agent-linux/conf"
-	"xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/conf"
+	"github.com/xray-team/xray-agent-linux/dto"
 )
 
 func getHostInfo(cfg *conf.AgentConf) (*dto.HostInfo, error) {

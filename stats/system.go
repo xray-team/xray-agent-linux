@@ -5,15 +5,15 @@ import (
 	"path/filepath"
 	"time"
 
-	"xray-agent-linux/collectors"
-	"xray-agent-linux/conf"
-	"xray-agent-linux/dto"
-	"xray-agent-linux/logger"
-	"xray-agent-linux/mdstat"
-	"xray-agent-linux/nginx"
-	"xray-agent-linux/proc"
-	"xray-agent-linux/run"
-	"xray-agent-linux/sys"
+	"github.com/xray-team/xray-agent-linux/collectors"
+	"github.com/xray-team/xray-agent-linux/conf"
+	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/logger"
+	"github.com/xray-team/xray-agent-linux/mdstat"
+	"github.com/xray-team/xray-agent-linux/nginx"
+	"github.com/xray-team/xray-agent-linux/proc"
+	"github.com/xray-team/xray-agent-linux/run"
+	"github.com/xray-team/xray-agent-linux/sys"
 )
 
 type Stat struct {

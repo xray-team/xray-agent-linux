@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	"xray-agent-linux/dto"
-	"xray-agent-linux/reader"
+	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/reader"
 )
 
 type netStatDataSource struct {

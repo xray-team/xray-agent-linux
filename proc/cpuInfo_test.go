@@ -4,9 +4,9 @@ import (
 	"reflect"
 	"testing"
 
-	"xray-agent-linux/dto"
-	"xray-agent-linux/logger"
-	"xray-agent-linux/proc"
+	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/logger"
+	"github.com/xray-team/xray-agent-linux/proc"
 )
 
 func Test_cpuInfoDataSource_GetData(t *testing.T) {

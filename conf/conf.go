@@ -3,8 +3,8 @@ package conf
 import (
 	"encoding/json"
 
-	"xray-agent-linux/logger"
-	"xray-agent-linux/reader"
+	"github.com/xray-team/xray-agent-linux/logger"
+	"github.com/xray-team/xray-agent-linux/reader"
 
 	"github.com/go-playground/validator"
 )
