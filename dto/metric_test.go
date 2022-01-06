@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/dto"
 )
 
 func TestMetric_GenGraphiteTreeName(t *testing.T) {
@@ -22,24 +22,24 @@ func TestMetric_GenGraphiteTreeName(t *testing.T) {
 		{
 			name: "loadAvg",
 			fields: fields{
-				Name:       dto.MetricLoadAvgLast,
+				Name: dto.MetricLoadAvgLast,
 				Attributes: []dto.MetricAttribute{
 					{
-						Name: dto.ResourceAttr,
+						Name:  dto.ResourceAttr,
 						Value: dto.ResourceLoadAvg,
 					},
 				},
-				Value:      1,
+				Value: 1,
 			},
 			want: fmt.Sprintf("%s.%s", dto.ResourceLoadAvg, dto.MetricLoadAvgLast),
 		},
 		{
 			name: "cpu",
 			fields: fields{
-				Name:     dto.MetricCPUSoftIRQTimer,
+				Name: dto.MetricCPUSoftIRQTimer,
 				Attributes: []dto.MetricAttribute{
 					{
-						Name: dto.ResourceAttr,
+						Name:  dto.ResourceAttr,
 						Value: dto.ResourceStat,
 					},
 					{
@@ -58,10 +58,10 @@ func TestMetric_GenGraphiteTreeName(t *testing.T) {
 		{
 			name: "netDev",
 			fields: fields{
-				Name:     dto.MetricNetDevStatisticsRxBytes,
+				Name: dto.MetricNetDevStatisticsRxBytes,
 				Attributes: []dto.MetricAttribute{
 					{
-						Name: dto.ResourceAttr,
+						Name:  dto.ResourceAttr,
 						Value: dto.ResourceNetDev,
 					},
 					{

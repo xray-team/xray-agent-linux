@@ -4,9 +4,9 @@ import (
 	"errors"
 	"strconv"
 
-	"xray-agent-linux/conf"
-	"xray-agent-linux/dto"
-	"xray-agent-linux/logger"
+	"github.com/xray-team/xray-agent-linux/conf"
+	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/logger"
 )
 
 type CPUInfoDataSource interface {
@@ -50,7 +50,7 @@ func (c *CPUInfoCollector) Collect() ([]dto.Metric, error) {
 
 	for _, cpu := range cpuInfo.CPU {
 		metrics = append(metrics, dto.Metric{
-			Name:     dto.MetricCPUInfoMHz,
+			Name: dto.MetricCPUInfoMHz,
 			Attributes: []dto.MetricAttribute{
 				{
 					Name:  dto.ResourceAttr,

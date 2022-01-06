@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os/exec"
 
-	"xray-agent-linux/logger"
+	"github.com/xray-team/xray-agent-linux/logger"
 )
 
 type cmdRunner struct {

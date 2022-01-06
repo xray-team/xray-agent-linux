@@ -1,6 +1,6 @@
 package conf
 
-import "xray-agent-linux/dto"
+import "github.com/xray-team/xray-agent-linux/dto"
 
 type CollectorsConf struct {
 	RootPath          string            `json:"rootPath" validate:"required,startswith=/"`

@@ -7,11 +7,11 @@ import (
 	"sync"
 	"syscall"
 
-	"xray-agent-linux/conf"
-	"xray-agent-linux/dto"
-	"xray-agent-linux/graphite"
-	"xray-agent-linux/logger"
-	"xray-agent-linux/stats"
+	"github.com/xray-team/xray-agent-linux/conf"
+	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/graphite"
+	"github.com/xray-team/xray-agent-linux/logger"
+	"github.com/xray-team/xray-agent-linux/stats"
 )
 
 type Module interface {

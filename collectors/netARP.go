@@ -4,9 +4,9 @@ import (
 	"errors"
 	"strings"
 
-	"xray-agent-linux/conf"
-	"xray-agent-linux/dto"
-	"xray-agent-linux/logger"
+	"github.com/xray-team/xray-agent-linux/conf"
+	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/logger"
 )
 
 type NetARPDataSource interface {
@@ -52,8 +52,8 @@ func (c *NetARPCollector) Collect() ([]dto.Metric, error) {
 
 		metrics = append(metrics,
 			dto.Metric{
-				Name:     dto.MetricNetARPEntries,
-				Value:    value,
+				Name:  dto.MetricNetARPEntries,
+				Value: value,
 				Attributes: []dto.MetricAttribute{
 					{
 						Name:  dto.ResourceAttr,
@@ -73,8 +73,8 @@ func (c *NetARPCollector) Collect() ([]dto.Metric, error) {
 
 		metrics = append(metrics,
 			dto.Metric{
-				Name:     dto.MetricNetARPIncompleteEntries,
-				Value:    value,
+				Name:  dto.MetricNetARPIncompleteEntries,
+				Value: value,
 				Attributes: []dto.MetricAttribute{
 					{
 						Name:  dto.ResourceAttr,

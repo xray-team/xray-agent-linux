@@ -5,10 +5,10 @@ import (
 	"strconv"
 	"strings"
 
-	"xray-agent-linux/conf"
-	"xray-agent-linux/dto"
-	"xray-agent-linux/logger"
-	"xray-agent-linux/mdstat"
+	"github.com/xray-team/xray-agent-linux/conf"
+	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/logger"
+	"github.com/xray-team/xray-agent-linux/mdstat"
 )
 
 type MDStatDataSource interface {

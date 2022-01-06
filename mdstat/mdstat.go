@@ -5,9 +5,9 @@ import (
 	"path/filepath"
 	"regexp"
 
-	"xray-agent-linux/dto"
-	"xray-agent-linux/logger"
-	"xray-agent-linux/reader"
+	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/logger"
+	"github.com/xray-team/xray-agent-linux/reader"
 )
 
 type mdStatDataSource struct {

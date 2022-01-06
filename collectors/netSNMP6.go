@@ -3,9 +3,9 @@ package collectors
 import (
 	"errors"
 
-	"xray-agent-linux/conf"
-	"xray-agent-linux/dto"
-	"xray-agent-linux/logger"
+	"github.com/xray-team/xray-agent-linux/conf"
+	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/logger"
 )
 
 type SNMP6DataSource interface {
@@ -49,8 +49,8 @@ func (c *NetSNMP6Collector) Collect() ([]dto.Metric, error) {
 	for counterName, value := range snmp6.Counters {
 		metrics = append(metrics,
 			dto.Metric{
-				Name:       counterName,
-				Value:      value,
+				Name:  counterName,
+				Value: value,
 				Attributes: []dto.MetricAttribute{
 					{
 						Name:  dto.ResourceAttr,

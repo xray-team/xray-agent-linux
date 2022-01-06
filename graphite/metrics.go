@@ -3,7 +3,7 @@ package graphite
 import (
 	"fmt"
 
-	"xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/dto"
 
 	"github.com/crazygreenpenguin/graphite"
 )

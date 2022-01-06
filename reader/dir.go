@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"xray-agent-linux/logger"
+	"github.com/xray-team/xray-agent-linux/logger"
 )
 
 func ReadDir(path, logPrefix string) ([]os.FileInfo, error) {
