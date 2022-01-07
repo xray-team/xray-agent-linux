@@ -47,7 +47,7 @@ func (c *CmdCollector) GetName() string {
 func (c *CmdCollector) Collect() ([]dto.Metric, error) {
 	metrics := make([]dto.Metric, 0, len(c.Config.Metrics))
 
-	for i, _ := range c.Config.Metrics {
+	for i := range c.Config.Metrics {
 		err := c.processPipeLine(&c.Config.Metrics[i], c.Config.Timeout, &metrics)
 		if err != nil {
 			logger.LogWarning(dto.CollectorNameCMD, err)

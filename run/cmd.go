@@ -44,7 +44,7 @@ func (r *cmdRunner) RunPipeLine(pipeLine []*exec.Cmd) (string, string, error) {
 		stderr bytes.Buffer
 	)
 
-	for i, _ := range pipeLine[:len(pipeLine)-1] {
+	for i := range pipeLine[:len(pipeLine)-1] {
 		var err error
 
 		//  Connect each command's standard output to the standard input of the next command
@@ -64,13 +64,13 @@ func (r *cmdRunner) RunPipeLine(pipeLine []*exec.Cmd) (string, string, error) {
 	pipeLine[len(pipeLine)-1].Stdout = &stdout
 	pipeLine[len(pipeLine)-1].Stderr = &stderr
 
-	for i, _ := range pipeLine {
+	for i := range pipeLine {
 		if err := pipeLine[i].Start(); err != nil {
 			return stdout.String(), stderr.String(), err
 		}
 	}
 
-	for i, _ := range pipeLine {
+	for i := range pipeLine {
 		if err := pipeLine[i].Wait(); err != nil {
 			return stdout.String(), stderr.String(), err
 		}

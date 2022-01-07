@@ -54,7 +54,7 @@ func (c *WirelessCollector) Collect() ([]dto.Metric, error) {
 	metrics := make([]dto.Metric, 0, 12*len(inventory))
 
 	// fill out
-	for ifName, _ := range inventory {
+	for ifName := range inventory {
 		wireless, err := c.DataSource.GetInterfaceData(ifName)
 		if err != nil {
 			return nil, err
