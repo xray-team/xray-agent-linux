@@ -17,6 +17,7 @@ type UptimeCollector struct {
 	DataSource UptimeDataSource
 }
 
+// NewUptimeCollector returns a new collector object.
 func NewUptimeCollector(cfg *conf.CollectorsConf, dataSource UptimeDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.LogWarning(logger.CollectorInitPrefix, errors.New("uptime collector init params error"))
@@ -34,10 +35,12 @@ func NewUptimeCollector(cfg *conf.CollectorsConf, dataSource UptimeDataSource) d
 	}
 }
 
+// GetName returns the collector's name.
 func (c *UptimeCollector) GetName() string {
 	return dto.CollectorNameUptime
 }
 
+// Collect collects and returns metrics.
 func (c *UptimeCollector) Collect() ([]dto.Metric, error) {
 	uptime, err := c.DataSource.GetData()
 	if err != nil {

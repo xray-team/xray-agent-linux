@@ -17,6 +17,7 @@ type NetSNMP6Collector struct {
 	DataSource SNMP6DataSource
 }
 
+// NewNetSNMP6Collector returns a new collector object.
 func NewNetSNMP6Collector(cfg *conf.CollectorsConf, dataSource SNMP6DataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.LogWarning(logger.CollectorInitPrefix, errors.New("net snmp6 collector init params error"))
@@ -34,10 +35,12 @@ func NewNetSNMP6Collector(cfg *conf.CollectorsConf, dataSource SNMP6DataSource) 
 	}
 }
 
+// GetName returns the collector's name.
 func (c *NetSNMP6Collector) GetName() string {
 	return dto.CollectorNameNetSNMP6
 }
 
+// Collect collects and returns metrics.
 func (c *NetSNMP6Collector) Collect() ([]dto.Metric, error) {
 	snmp6, err := c.DataSource.GetData()
 	if err != nil {

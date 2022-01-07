@@ -10,6 +10,7 @@ type NginxStubStatusCollector struct {
 	DataSource NginxStubStatusDataSource
 }
 
+// NewNginxStubStatusCollector returns a new collector object.
 func NewNginxStubStatusCollector(cfg *conf.CollectorsConf, dataSource NginxStubStatusDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		return nil
@@ -30,10 +31,12 @@ type NginxStubStatusDataSource interface {
 	GetData() (*dto.NginxStubStatus, error)
 }
 
+// GetName returns the collector's name.
 func (c *NginxStubStatusCollector) GetName() string {
 	return dto.CollectorNameNginx
 }
 
+// Collect collects and returns metrics.
 func (c *NginxStubStatusCollector) Collect() ([]dto.Metric, error) {
 	data, err := c.DataSource.GetData()
 	if err != nil {

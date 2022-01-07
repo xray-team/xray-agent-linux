@@ -17,6 +17,7 @@ type EntropyCollector struct {
 	DataSource EntropyDataSource
 }
 
+// NewEntropyCollector returns a new collector object.
 func NewEntropyCollector(cfg *conf.CollectorsConf, dataSource EntropyDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.LogWarning(logger.CollectorInitPrefix, errors.New("entropy collector init params error"))
@@ -34,10 +35,12 @@ func NewEntropyCollector(cfg *conf.CollectorsConf, dataSource EntropyDataSource)
 	}
 }
 
+// GetName returns the collector's name.
 func (c *EntropyCollector) GetName() string {
 	return dto.CollectorNameEntropy
 }
 
+// Collect collects and returns metrics.
 func (c *EntropyCollector) Collect() ([]dto.Metric, error) {
 	data, err := c.DataSource.GetData()
 	if err != nil {
