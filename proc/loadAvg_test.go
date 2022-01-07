@@ -68,6 +68,7 @@ func Test_loadAvgDataSource_GetData(t *testing.T) {
 
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetData() error = %v, wantErr %v", err, tt.wantErr)
+
 				return
 			}
 

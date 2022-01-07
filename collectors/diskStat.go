@@ -26,6 +26,7 @@ type DiskStatCollector struct {
 func NewDiskStatCollector(cfg *conf.CollectorsConf, diskStatDataSource DiskStatDataSource, classBlockDataSource ClassBlockDataSource) dto.Collector {
 	if cfg == nil || diskStatDataSource == nil || classBlockDataSource == nil {
 		logger.LogWarning(logger.CollectorInitPrefix, fmt.Errorf("%s collector init params error", dto.CollectorNameDiskStat))
+
 		return nil
 	}
 

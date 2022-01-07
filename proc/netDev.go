@@ -19,6 +19,7 @@ type netDevDataSource struct {
 	logPrefix string
 }
 
+// NewNetDevDataSource returns a new DataSource.
 func NewNetDevDataSource(filePath, logPrefix string) *netDevDataSource {
 	if filePath == "" {
 		return nil

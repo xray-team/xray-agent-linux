@@ -65,6 +65,7 @@ func RunModules(modules ...Module) {
 			switch sig {
 			case syscall.SIGTERM, syscall.SIGINT:
 				log.Printf("Got SIGTERM/SIGINT, exiting.")
+
 				return
 			}
 		}
