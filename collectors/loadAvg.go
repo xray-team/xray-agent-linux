@@ -17,6 +17,7 @@ type LoadAvgCollector struct {
 	DataSource LoadAvgDataSource
 }
 
+// NewLoadAvgCollector returns a new collector object.
 func NewLoadAvgCollector(cfg *conf.CollectorsConf, dataSource LoadAvgDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.LogWarning(logger.CollectorInitPrefix, errors.New("load avg collector init params error"))
@@ -35,10 +36,12 @@ func NewLoadAvgCollector(cfg *conf.CollectorsConf, dataSource LoadAvgDataSource)
 	}
 }
 
+// GetName returns the collector's name.
 func (c *LoadAvgCollector) GetName() string {
 	return dto.CollectorNameLoadAvg
 }
 
+// Collect collects and returns metrics.
 func (c *LoadAvgCollector) Collect() ([]dto.Metric, error) {
 	loadAvg, err := c.DataSource.GetData()
 	if err != nil {

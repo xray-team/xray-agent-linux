@@ -18,6 +18,7 @@ type CPUInfoCollector struct {
 	DataSource CPUInfoDataSource
 }
 
+// NewCpuInfoCollector returns a new collector object.
 func NewCpuInfoCollector(cfg *conf.CollectorsConf, dataSource CPUInfoDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.LogWarning(logger.CollectorInitPrefix, errors.New("cpu info collector init params error"))
@@ -36,10 +37,12 @@ func NewCpuInfoCollector(cfg *conf.CollectorsConf, dataSource CPUInfoDataSource)
 	}
 }
 
+// GetName returns the collector's name.
 func (c *CPUInfoCollector) GetName() string {
 	return dto.CollectorNameCPUInfo
 }
 
+// Collect collects and returns metrics.
 func (c *CPUInfoCollector) Collect() ([]dto.Metric, error) {
 	cpuInfo, err := c.DataSource.GetData()
 	if err != nil {

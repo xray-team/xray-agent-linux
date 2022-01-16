@@ -17,6 +17,7 @@ type NetStatCollector struct {
 	DataSource NetStatDataSource
 }
 
+// NewNetStatCollector returns a new collector object.
 func NewNetStatCollector(cfg *conf.CollectorsConf, dataSource NetStatDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.LogWarning(logger.CollectorInitPrefix, errors.New("net stat collector init params error"))
@@ -34,10 +35,12 @@ func NewNetStatCollector(cfg *conf.CollectorsConf, dataSource NetStatDataSource)
 	}
 }
 
+// GetName returns the collector's name.
 func (c *NetStatCollector) GetName() string {
 	return dto.CollectorNameNetStat
 }
 
+// Collect collects and returns metrics.
 func (c *NetStatCollector) Collect() ([]dto.Metric, error) {
 	netstat, err := c.DataSource.GetData()
 	if err != nil {

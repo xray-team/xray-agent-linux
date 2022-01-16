@@ -42,3 +42,5 @@ linters:
     - gochecknoglobals
     - goerr113
     - wrapcheck
+    - paralleltest
+    - exhaustivestruct

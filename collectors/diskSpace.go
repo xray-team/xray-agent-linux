@@ -2,8 +2,9 @@ package collectors
 
 import (
 	"fmt"
-	"golang.org/x/sys/unix"
 	"strings"
+
+	"golang.org/x/sys/unix"
 
 	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
@@ -19,9 +20,11 @@ type DiskSpaceCollector struct {
 	MountsDataSource MountsDataSource
 }
 
+// NewDiskSpaceCollector returns a new collector object.
 func NewDiskSpaceCollector(cfg *conf.CollectorsConf, mountsDataSource MountsDataSource) dto.Collector {
 	if cfg == nil || mountsDataSource == nil {
 		logger.LogWarning(logger.CollectorInitPrefix, fmt.Errorf("%s collector init params error", dto.CollectorNameDiskStat))
+
 		return nil
 	}
 
@@ -36,10 +39,12 @@ func NewDiskSpaceCollector(cfg *conf.CollectorsConf, mountsDataSource MountsData
 	}
 }
 
+// GetName returns the collector's name.
 func (c *DiskSpaceCollector) GetName() string {
 	return dto.CollectorNameDiskSpace
 }
 
+// Collect collects and returns metrics.
 func (c *DiskSpaceCollector) Collect() ([]dto.Metric, error) {
 	mounts, err := c.MountsDataSource.GetData()
 	if err != nil {

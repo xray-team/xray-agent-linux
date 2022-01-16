@@ -14,6 +14,7 @@ type memoryDataSource struct {
 	logPrefix string
 }
 
+// NewMemoryDataSource returns a new DataSource.
 func NewMemoryDataSource(filePath, logPrefix string) *memoryDataSource {
 	if filePath == "" {
 		return nil

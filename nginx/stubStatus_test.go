@@ -35,6 +35,7 @@ func Test_parseStubStatus(t *testing.T) {
 			got, err := parseStubStatus(tt.data)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("parseStubStatus() error = %v, wantErr %v", err, tt.wantErr)
+
 				return
 			}
 

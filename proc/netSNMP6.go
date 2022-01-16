@@ -13,6 +13,7 @@ type netSNMP6DataSource struct {
 	logPrefix string
 }
 
+// NewNetSNMP6DataSource returns a new DataSource.
 func NewNetSNMP6DataSource(filePath, logPrefix string) *netSNMP6DataSource {
 	if filePath == "" {
 		return nil

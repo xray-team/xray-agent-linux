@@ -29,6 +29,7 @@ type loadAvgDataSource struct {
 	logPrefix string
 }
 
+// NewLoadAvgDataSource returns a new DataSource.
 func NewLoadAvgDataSource(filePath, logPrefix string) *loadAvgDataSource {
 	if filePath == "" {
 		return nil

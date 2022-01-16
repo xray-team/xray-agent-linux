@@ -14,6 +14,7 @@ type netStatDataSource struct {
 	logPrefix string
 }
 
+// NewNetStatDataSource returns a new DataSource.
 func NewNetStatDataSource(filePath, logPrefix string) *netStatDataSource {
 	if filePath == "" {
 		return nil
@@ -25,7 +26,7 @@ func NewNetStatDataSource(filePath, logPrefix string) *netStatDataSource {
 	}
 }
 
-// GetData parse files /proc/net/netstat, /proc/net/snmp (/proc/$PID/net/netstat, /proc/$PID/net/snmp)
+// GetData parse files /proc/net/netstat, /proc/net/snmp (/proc/$PID/net/netstat, /proc/$PID/net/snmp).
 func (ds *netStatDataSource) GetData() (*dto.Netstat, error) {
 	// Initialize map for results
 	var out dto.Netstat

@@ -47,6 +47,7 @@ func (s *Stat) Start() {
 			stats, err := s.getStat()
 			if err != nil {
 				logger.LogWarning("getStat error", err)
+
 				continue
 			}
 			s.telemetryChan <- stats

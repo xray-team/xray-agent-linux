@@ -19,10 +19,12 @@ type PSStatCollector struct {
 	DataSource PSStatDataSource
 }
 
+// GetName returns the collector's name.
 func (c *PSStatCollector) GetName() string {
 	return dto.CollectorNamePSStat
 }
 
+// NewPSStatCollector returns a new collector object.
 func NewPSStatCollector(cfg *conf.CollectorsConf, dataSource PSStatDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.LogWarning(logger.CollectorInitPrefix, errors.New("PSStat collector init params error"))
@@ -40,6 +42,7 @@ func NewPSStatCollector(cfg *conf.CollectorsConf, dataSource PSStatDataSource) d
 	}
 }
 
+// Collect collects and returns metrics.
 func (c *PSStatCollector) Collect() ([]dto.Metric, error) {
 	psStats, err := c.DataSource.GetData()
 	if err != nil {

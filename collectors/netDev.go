@@ -23,6 +23,7 @@ type NetDevCollector struct {
 	ClassNetDataSource ClassNetDataSource
 }
 
+// NewNetDevCollector returns a new collector object.
 func NewNetDevCollector(cfg *conf.CollectorsConf, netDevDataSource NetDevDataSource, classNetDataSource ClassNetDataSource) dto.Collector {
 	if cfg == nil || netDevDataSource == nil || classNetDataSource == nil {
 		logger.LogWarning(logger.CollectorInitPrefix, fmt.Errorf("%s collector init params error", dto.CollectorNameNetDev))
@@ -41,10 +42,12 @@ func NewNetDevCollector(cfg *conf.CollectorsConf, netDevDataSource NetDevDataSou
 	}
 }
 
+// GetName returns the collector's name.
 func (c *NetDevCollector) GetName() string {
 	return dto.CollectorNameNetDev
 }
 
+// Collect collects and returns metrics.
 func (c *NetDevCollector) Collect() ([]dto.Metric, error) {
 	// Net Dev Inventory
 	inventory, err := c.ClassNetDataSource.GetData()

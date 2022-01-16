@@ -21,6 +21,7 @@ type uptimeDataSource struct {
 	logPrefix string
 }
 
+// NewUptimeDataSource returns a new DataSource.
 func NewUptimeDataSource(filePath, logPrefix string) *uptimeDataSource {
 	if filePath == "" {
 		return nil

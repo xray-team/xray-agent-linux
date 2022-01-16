@@ -17,6 +17,7 @@ type netARPDataSource struct {
 	logPrefix string
 }
 
+// NewNetARPDataSource returns a new DataSource.
 func NewNetARPDataSource(filePath, logPrefix string) *netARPDataSource {
 	if filePath == "" {
 		return nil

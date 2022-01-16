@@ -16,6 +16,7 @@ type psStatDataSource struct {
 	logPrefix string
 }
 
+// NewPSStatDataSource returns a new DataSource.
 func NewPSStatDataSource(filePath, logPrefix string) *psStatDataSource {
 	if filePath == "" {
 		return nil

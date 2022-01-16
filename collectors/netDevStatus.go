@@ -19,6 +19,7 @@ type NetDevStatusCollector struct {
 	ClassNetDataSource ClassNetDataSource
 }
 
+// NewNetDevStatusCollector returns a new collector object.
 func NewNetDevStatusCollector(cfg *conf.CollectorsConf, classNetDataSource ClassNetDataSource) dto.Collector {
 	if cfg == nil || classNetDataSource == nil {
 		logger.LogWarning(logger.CollectorInitPrefix, errors.New(fmt.Sprintf("%s collector init params error", dto.CollectorNameNetDevStatus)))
@@ -36,10 +37,12 @@ func NewNetDevStatusCollector(cfg *conf.CollectorsConf, classNetDataSource Class
 	}
 }
 
+// GetName returns the collector's name.
 func (c *NetDevStatusCollector) GetName() string {
 	return dto.CollectorNameNetDevStatus
 }
 
+// Collect collects and returns metrics.
 func (c *NetDevStatusCollector) Collect() ([]dto.Metric, error) {
 	// Net Dev Inventory
 	inventory, err := c.ClassNetDataSource.GetData()

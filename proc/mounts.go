@@ -15,6 +15,7 @@ type mountsDataSource struct {
 	logPrefix string
 }
 
+// NewMountsDataSource returns a new DataSource.
 func NewMountsDataSource(filePath, logPrefix string) *mountsDataSource {
 	if filePath == "" {
 		return nil

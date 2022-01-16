@@ -14,6 +14,7 @@ type diskStatsDataSource struct {
 	logPrefix string
 }
 
+// NewBlockDevDataSource returns a new DataSource.
 func NewBlockDevDataSource(filePath, logPrefix string) *diskStatsDataSource {
 	if filePath == "" {
 		return nil

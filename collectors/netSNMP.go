@@ -13,6 +13,7 @@ type netSNMPCollector struct {
 	DataSource NetStatDataSource
 }
 
+// NewNetSNMPCollector returns a new collector object.
 func NewNetSNMPCollector(cfg *conf.CollectorsConf, dataSource NetStatDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.LogWarning(logger.CollectorInitPrefix, errors.New("net snmp collector init params error"))
@@ -30,10 +31,12 @@ func NewNetSNMPCollector(cfg *conf.CollectorsConf, dataSource NetStatDataSource)
 	}
 }
 
+// GetName returns the collector's name.
 func (c *netSNMPCollector) GetName() string {
 	return dto.CollectorNameNetSNMP
 }
 
+// Collect collects and returns metrics.
 func (c *netSNMPCollector) Collect() ([]dto.Metric, error) {
 	netstat, err := c.DataSource.GetData()
 	if err != nil {

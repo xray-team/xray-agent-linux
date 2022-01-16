@@ -17,6 +17,7 @@ type StatCollector struct {
 	DataSource StatDataSource
 }
 
+// NewStatCollector returns a new collector object.
 func NewStatCollector(cfg *conf.CollectorsConf, dataSource StatDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.LogWarning(logger.CollectorInitPrefix, errors.New("stat collector init params error"))
@@ -34,10 +35,12 @@ func NewStatCollector(cfg *conf.CollectorsConf, dataSource StatDataSource) dto.C
 	}
 }
 
+// GetName returns the collector's name.
 func (c *StatCollector) GetName() string {
 	return dto.CollectorNameStat
 }
 
+// Collect collects and returns metrics.
 func (c *StatCollector) Collect() ([]dto.Metric, error) {
 	stat, err := c.DataSource.GetData()
 	if err != nil {

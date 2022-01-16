@@ -12,6 +12,7 @@ type entropyDataSource struct {
 	logPrefix string
 }
 
+// NewEntropyDataSource returns a new DataSource.
 func NewEntropyDataSource(filePath, logPrefix string) *entropyDataSource {
 	if filePath == "" {
 		return nil
