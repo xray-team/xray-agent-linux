@@ -2,7 +2,7 @@ package conf
 
 import "github.com/xray-team/xray-agent-linux/dto"
 
-// Config defines configuration object.
+// AgentConf defines configuration object.
 type AgentConf struct {
 	Flags              *Flags
 	TimeZoneOffset     int8
@@ -11,6 +11,7 @@ type AgentConf struct {
 	HostAttributes     []dto.MetricAttribute `json:"hostAttributes" validate:"dive"`
 }
 
+// Flags defines configuration passed by flags.
 type Flags struct {
 	ConfigFilePath *string
 	DryRun         *bool
