@@ -23,7 +23,7 @@ type DiskSpaceCollector struct {
 // NewDiskSpaceCollector returns a new collector object.
 func NewDiskSpaceCollector(cfg *conf.CollectorsConf, mountsDataSource MountsDataSource) dto.Collector {
 	if cfg == nil || mountsDataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, fmt.Errorf("%s collector init params error", dto.CollectorNameDiskStat))
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameDiskSpace)
 
 		return nil
 	}

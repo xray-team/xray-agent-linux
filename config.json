@@ -6,7 +6,9 @@
         "name": "Source",
         "value": "xray"
       }
-    ]
+    ],
+    "logLevel": "default",
+    "logOut": "syslog"
   },
   "collectors": {
     "rootPath": "/",
@@ -69,7 +71,10 @@
       "enabled": true,
       "diskTypes": [
         8,
-        9
+        9,
+        65,
+        66,
+        67
       ],
       "excludePartitions": false,
       "excludeByName": []

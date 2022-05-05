@@ -58,7 +58,7 @@ func (ds *loadAvgDataSource) GetData() (*dto.LoadAvg, error) {
 	// Last
 	la.Last, err = strconv.ParseFloat(fields[0], 64)
 	if err != nil {
-		logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "Last", err)
+		logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "Last", err.Error())
 
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (ds *loadAvgDataSource) GetData() (*dto.LoadAvg, error) {
 	// Last5m
 	la.Last5m, err = strconv.ParseFloat(fields[1], 64)
 	if err != nil {
-		logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "Last5m", err)
+		logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "Last5m", err.Error())
 
 		return nil, err
 	}
@@ -74,7 +74,7 @@ func (ds *loadAvgDataSource) GetData() (*dto.LoadAvg, error) {
 	// Last15m
 	la.Last15m, err = strconv.ParseFloat(fields[2], 64)
 	if err != nil {
-		logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "Last15m", err)
+		logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "Last15m", err.Error())
 
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func (ds *loadAvgDataSource) GetData() (*dto.LoadAvg, error) {
 
 	la.KernelSchedulingEntities, err = strconv.ParseInt(kse[1], 10, 64)
 	if err != nil {
-		logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "KernelSchedulingEntities", err)
+		logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "KernelSchedulingEntities", err.Error())
 
 		return nil, err
 	}

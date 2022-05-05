@@ -1,7 +1,6 @@
 package collectors
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/xray-team/xray-agent-linux/conf"
@@ -26,7 +25,8 @@ type NetDevCollector struct {
 // NewNetDevCollector returns a new collector object.
 func NewNetDevCollector(cfg *conf.CollectorsConf, netDevDataSource NetDevDataSource, classNetDataSource ClassNetDataSource) dto.Collector {
 	if cfg == nil || netDevDataSource == nil || classNetDataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, fmt.Errorf("%s collector init params error", dto.CollectorNameNetDev))
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameNetDev)
+
 		return nil
 	}
 

@@ -1,8 +1,6 @@
 package collectors
 
 import (
-	"fmt"
-
 	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
@@ -25,7 +23,7 @@ type DiskStatCollector struct {
 // NewDiskStatCollector returns a new collector object.
 func NewDiskStatCollector(cfg *conf.CollectorsConf, diskStatDataSource DiskStatDataSource, classBlockDataSource ClassBlockDataSource) dto.Collector {
 	if cfg == nil || diskStatDataSource == nil || classBlockDataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, fmt.Errorf("%s collector init params error", dto.CollectorNameDiskStat))
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameDiskStat)
 
 		return nil
 	}

@@ -1,8 +1,6 @@
 package collectors
 
 import (
-	"errors"
-
 	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
@@ -20,7 +18,8 @@ type StatCollector struct {
 // NewStatCollector returns a new collector object.
 func NewStatCollector(cfg *conf.CollectorsConf, dataSource StatDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, errors.New("stat collector init params error"))
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameStat)
+
 		return nil
 	}
 

@@ -67,7 +67,7 @@ func (ds *psStatDataSource) readProcessStat(filePath string) (*dto.ProcessStat, 
 	// PID
 	out.PID, err = strconv.ParseInt(fields[0], 10, 64)
 	if err != nil {
-		logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "PID", err)
+		logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "PID", err.Error())
 
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func (ds *psStatDataSource) readProcessStat(filePath string) (*dto.ProcessStat, 
 	// UTime
 	out.UTime, err = strconv.ParseInt(fields[13], 10, 64)
 	if err != nil {
-		logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "UTime", err)
+		logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "UTime", err.Error())
 
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func (ds *psStatDataSource) readProcessStat(filePath string) (*dto.ProcessStat, 
 	// STime
 	out.STime, err = strconv.ParseInt(fields[14], 10, 64)
 	if err != nil {
-		logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "STime", err)
+		logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "STime", err.Error())
 
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func (ds *psStatDataSource) readProcessStat(filePath string) (*dto.ProcessStat, 
 	// CuTime
 	out.CuTime, err = strconv.ParseInt(fields[15], 10, 64)
 	if err != nil {
-		logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "CuTime", err)
+		logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "CuTime", err.Error())
 
 		return nil, err
 	}
@@ -104,7 +104,7 @@ func (ds *psStatDataSource) readProcessStat(filePath string) (*dto.ProcessStat, 
 	// CsTime
 	out.CsTime, err = strconv.ParseInt(fields[16], 10, 64)
 	if err != nil {
-		logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "CsTime", err)
+		logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "CsTime", err.Error())
 
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func (ds *psStatDataSource) readProcessStat(filePath string) (*dto.ProcessStat, 
 	// GuestTime
 	out.GuestTime, err = strconv.ParseInt(fields[42], 10, 64)
 	if err != nil {
-		logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "GuestTime", err)
+		logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "GuestTime", err.Error())
 
 		return nil, err
 	}
@@ -120,7 +120,7 @@ func (ds *psStatDataSource) readProcessStat(filePath string) (*dto.ProcessStat, 
 	// CGuestTime
 	out.CGuestTime, err = strconv.ParseInt(fields[43], 10, 64)
 	if err != nil {
-		logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "CGuestTime", err)
+		logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "CGuestTime", err.Error())
 
 		return nil, err
 	}
@@ -128,7 +128,7 @@ func (ds *psStatDataSource) readProcessStat(filePath string) (*dto.ProcessStat, 
 	// Threads
 	out.Threads, err = strconv.ParseInt(fields[19], 10, 64)
 	if err != nil {
-		logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "Threads", err)
+		logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "Threads", err.Error())
 
 		return nil, err
 	}
@@ -136,7 +136,7 @@ func (ds *psStatDataSource) readProcessStat(filePath string) (*dto.ProcessStat, 
 	// VSize
 	out.VSize, err = strconv.ParseInt(fields[22], 10, 64)
 	if err != nil {
-		logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "VSize", err)
+		logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "VSize", err.Error())
 
 		return nil, err
 	}
@@ -144,7 +144,7 @@ func (ds *psStatDataSource) readProcessStat(filePath string) (*dto.ProcessStat, 
 	// Rss
 	out.Rss, err = strconv.ParseInt(fields[23], 10, 64)
 	if err != nil {
-		logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "Rss", err)
+		logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "Rss", err.Error())
 
 		return nil, err
 	}

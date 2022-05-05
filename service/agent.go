@@ -1,7 +1,7 @@
 package service
 
 import (
-	"log"
+	"fmt"
 	"os"
 	"os/signal"
 	"sync"
@@ -27,7 +27,7 @@ type Agent struct {
 	statSender Module
 }
 
-func NewAgent(f conf.Flags) (*Agent, error) {
+func NewAgent(f conf.Config) (*Agent, error) {
 	agent := &Agent{}
 	err := agent.init(f)
 	if err != nil {
@@ -45,14 +45,15 @@ func (a *Agent) Start() {
 func RunModules(modules ...Module) {
 	defer func() {
 		for _, m := range modules {
-			logger.Log.Printf("Stopping module %s", m.Title())
+			logger.Log.Info.Printf(logger.Message, logger.TagAgent, fmt.Sprintf("Stopping module %s", m.Title()))
+
 			m.Stop()
 		}
-		logger.Log.Printf("Stopped all modules")
+		logger.Log.Info.Printf(logger.Message, logger.TagAgent, "Stopped all modules")
 	}()
 
 	for _, m := range modules {
-		logger.Log.Printf("Starting module %s", m.Title())
+		logger.Log.Info.Printf(logger.Message, logger.TagAgent, fmt.Sprintf("Starting module %s", m.Title()))
 		go m.Start()
 	}
 
@@ -64,7 +65,7 @@ func RunModules(modules ...Module) {
 		case sig := <-signalChan:
 			switch sig {
 			case syscall.SIGTERM, syscall.SIGINT:
-				log.Printf("Got SIGTERM/SIGINT, exiting.")
+				logger.Log.Info.Printf(logger.Message, logger.TagAgent, "Got SIGTERM/SIGINT, exiting.")
 
 				return
 			}
@@ -72,28 +73,21 @@ func RunModules(modules ...Module) {
 	}
 }
 
-func (a *Agent) init(f conf.Flags) error {
+func (a *Agent) init(cfg conf.Config) error {
 	a.Lock()
 	defer a.Unlock()
-
-	cfg, err := conf.GetConfiguration(&f)
-	if err != nil {
-		logger.LogValidationError(logger.ConfigValidationPrefix, err)
-
-		return err
-	}
 
 	a.cfg = cfg.Agent
 	telemetryChan := make(chan *dto.Telemetry)
 
-	statsParser := stats.New(cfg, telemetryChan)
+	statsParser := stats.New(&cfg, telemetryChan)
 
 	// TODO TBD
 	cfg.TSDB.Graphite.DryRun = *cfg.Agent.Flags.DryRun
 
 	gr, err := graphite.New(cfg.TSDB.Graphite, telemetryChan)
 	if err != nil {
-		logger.Log.Printf("cannot init graphite. err %s", err)
+		logger.Log.Info.Printf("cannot init graphite. err %s", err)
 
 		return err
 	}

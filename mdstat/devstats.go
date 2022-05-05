@@ -25,7 +25,7 @@ func (ds *mdStatDataSource) parseDevs(path string) (map[string]dto.DevStats, err
 		if re.MatchString(d.Name()) {
 			devStat, err := ds.parseDev(filepath.Join(path, d.Name()))
 			if err != nil {
-				logger.Log.Printf("cannot parse dev %s. err: %s\n", d.Name(), err)
+				logger.Log.Debug.Printf(logger.MessageError, dto.CollectorNameMDStat, fmt.Sprintf("cannot parse dev %s: %s", d.Name(), err.Error()))
 
 				continue
 			}

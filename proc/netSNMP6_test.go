@@ -10,7 +10,7 @@ import (
 )
 
 func Test_netSNMP6DataSource_GetData(t *testing.T) {
-	logger.Init("")
+	logger.Init()
 
 	tests := []struct {
 		caseDescription string

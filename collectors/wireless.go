@@ -1,7 +1,6 @@
 package collectors
 
 import (
-	"errors"
 	"strings"
 
 	"github.com/xray-team/xray-agent-linux/conf"
@@ -22,7 +21,8 @@ type WirelessCollector struct {
 // NewWirelessCollector returns a new collector object.
 func NewWirelessCollector(cfg *conf.CollectorsConf, wirelessDataSource WirelessDataSource, classNetDataSource ClassNetDataSource) dto.Collector {
 	if cfg == nil || wirelessDataSource == nil || classNetDataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, errors.New("wireless collector init params error"))
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameWireless)
+
 		return nil
 	}
 

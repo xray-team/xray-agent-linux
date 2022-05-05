@@ -1,8 +1,6 @@
 package collectors
 
 import (
-	"errors"
-
 	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
@@ -20,7 +18,8 @@ type NetSNMP6Collector struct {
 // NewNetSNMP6Collector returns a new collector object.
 func NewNetSNMP6Collector(cfg *conf.CollectorsConf, dataSource SNMP6DataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, errors.New("net snmp6 collector init params error"))
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameNetSNMP6)
+
 		return nil
 	}
 

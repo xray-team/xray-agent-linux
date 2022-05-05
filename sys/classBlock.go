@@ -75,12 +75,12 @@ func (ds *classBlockDataSource) parseBlockUevent(filePath string) (*dto.BlockDev
 		case "MAJOR":
 			out.Major, err = strconv.ParseInt(fields[1], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, filePath, "MAJOR", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, filePath, "MAJOR", err.Error())
 			}
 		case "MINOR":
 			out.Minor, err = strconv.ParseInt(fields[1], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, filePath, "MAJOR", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, filePath, "MINOR", err.Error())
 			}
 		case "DEVNAME":
 			out.DevName = fields[1]

@@ -45,41 +45,41 @@ func (ds *memoryDataSource) GetData() (*dto.MemoryInfo, error) {
 		case "MemTotal:":
 			memoryInfo.MemTotal, err = strconv.ParseInt(fields[1], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "MemTotal", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "MemTotal", err.Error())
 				// mandatory field
 				return nil, err
 			}
 		case "MemFree:":
 			memoryInfo.MemFree, err = strconv.ParseInt(fields[1], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "MemFree", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "MemFree", err.Error())
 				// mandatory field
 				return nil, err
 			}
 		case "MemAvailable:":
 			memoryInfo.MemAvailable, err = strconv.ParseInt(fields[1], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "MemAvailable", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "MemAvailable", err.Error())
 			}
 		case "Buffers:":
 			memoryInfo.Buffers, err = strconv.ParseInt(fields[1], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "Buffers", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "Buffers", err.Error())
 			}
 		case "Cached:":
 			memoryInfo.Cached, err = strconv.ParseInt(fields[1], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "Cached", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "Cached", err.Error())
 			}
 		case "SwapTotal:":
 			memoryInfo.SwapTotal, err = strconv.ParseInt(fields[1], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "SwapTotal", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "SwapTotal", err.Error())
 			}
 		case "SwapFree:":
 			memoryInfo.SwapFree, err = strconv.ParseInt(fields[1], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "SwapFree", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "SwapFree", err.Error())
 			}
 		}
 	}

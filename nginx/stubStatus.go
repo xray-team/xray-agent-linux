@@ -37,7 +37,7 @@ func (ds *StubStatusClient) GetData() (*dto.NginxStubStatus, error) {
 	}
 
 	// logger
-	logger.LogHttpRequest(ds.logPrefix, req.RequestURI)
+	logger.Log.Debug.Printf(logger.MessageHttpRequest, ds.logPrefix, req.RequestURI)
 
 	resp, err := ds.client.Do(req)
 	if err != nil {

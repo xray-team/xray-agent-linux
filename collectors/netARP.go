@@ -1,7 +1,6 @@
 package collectors
 
 import (
-	"errors"
 	"strings"
 
 	"github.com/xray-team/xray-agent-linux/conf"
@@ -21,7 +20,8 @@ type NetARPCollector struct {
 // NewNetARPCollector returns a new collector object.
 func NewNetARPCollector(cfg *conf.CollectorsConf, dataSource NetARPDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, errors.New("net arp collector init params error"))
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameNetARP)
+
 		return nil
 	}
 

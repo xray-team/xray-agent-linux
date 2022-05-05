@@ -1,7 +1,6 @@
 package collectors
 
 import (
-	"errors"
 	"strconv"
 	"strings"
 
@@ -27,7 +26,8 @@ func (c *PSStatCollector) GetName() string {
 // NewPSStatCollector returns a new collector object.
 func NewPSStatCollector(cfg *conf.CollectorsConf, dataSource PSStatDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, errors.New("PSStat collector init params error"))
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNamePSStat)
+
 		return nil
 	}
 

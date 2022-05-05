@@ -1,7 +1,6 @@
 package collectors
 
 import (
-	"errors"
 	"strconv"
 
 	"github.com/xray-team/xray-agent-linux/conf"
@@ -21,7 +20,7 @@ type CPUInfoCollector struct {
 // NewCpuInfoCollector returns a new collector object.
 func NewCpuInfoCollector(cfg *conf.CollectorsConf, dataSource CPUInfoDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, errors.New("cpu info collector init params error"))
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameCPUInfo)
 
 		return nil
 	}

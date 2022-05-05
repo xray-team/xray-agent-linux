@@ -26,7 +26,7 @@ func (g *Graphite) Start() {
 	for t := range g.telemetryChan {
 		err := g.sendMetrics(t, g.cfg.DryRun)
 		if err != nil {
-			logger.Log.Printf("send metrics error %s", err)
+			logger.Log.Error.Printf(logger.Message, logger.TagAgent, fmt.Sprintf("send metrics error: %s", err.Error()))
 		}
 	}
 
@@ -60,7 +60,7 @@ func (g *Graphite) sendMetrics(telemetry *dto.Telemetry, dryRun bool) error {
 
 		// debug
 		if dryRun {
-			logger.Log.Printf("metrics %+v", gm)
+			logger.Log.Info.Printf("metrics %+v", gm)
 
 			continue
 		}

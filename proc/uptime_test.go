@@ -11,7 +11,7 @@ import (
 )
 
 func Test_uptimeDataSource_GetData(t *testing.T) {
-	logger.Init("")
+	logger.Init()
 
 	type args struct {
 		filePath string

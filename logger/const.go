@@ -1,7 +1,31 @@
 package logger
 
+import "log"
+
 const (
-	ConfPrefix             = "config"
-	ConfigValidationPrefix = "config validation"
-	CollectorInitPrefix    = "init collector"
+	StdoutFlags = log.LstdFlags
+	SyslogFlags = 0 // disable time in log for syslog
+)
+
+// Error tags
+const (
+	TagAgent  = "Agent"
+	TagConfig = "Config"
+)
+
+// Error messages
+const (
+	Message                   = "[%s] %s"
+	MessageError              = "[%s] Error: %s"
+	MessageInitCollectorError = "[%s] Collector init params error"
+
+	MessageReadFile           = "[%s] Reading file %s"
+	MessageReadFileError      = "[%s] Error while trying to read file %s : %s"
+	MessageReadFileFieldError = "[%s] Error while trying to read file %s, field %s : %s"
+	MessageReadDir            = "[%s] Reading dir %s"
+	MessageReadDirError       = "[%s] Error while trying to read dir %s"
+	MessageIsExist            = "[%s] Checking if file or directory exists %s"
+	MessageCmdRun             = "[%s] Exec command: '%s'"
+	MessageCmdRunError        = "[%s] Exec error: %s"
+	MessageHttpRequest        = "[%s] Doing request %s"
 )
