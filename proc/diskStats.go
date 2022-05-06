@@ -44,14 +44,14 @@ func (ds *diskStatsDataSource) GetData() ([]dto.DiskStat, error) {
 			// Major
 			disk.Major, err = strconv.ParseInt(fields[0], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "Major", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "Major", err.Error())
 
 				continue
 			}
 			// Miner
 			disk.Miner, err = strconv.ParseInt(fields[1], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "Minor", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "Minor", err.Error())
 
 				continue
 			}
@@ -60,77 +60,77 @@ func (ds *diskStatsDataSource) GetData() ([]dto.DiskStat, error) {
 			// ReadsCompletedSuccessfully
 			disk.ReadsCompletedSuccessfully, err = strconv.ParseUint(fields[3], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "ReadsCompletedSuccessfully", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "ReadsCompletedSuccessfully", err.Error())
 
 				continue
 			}
 			// ReadsMerged
 			disk.ReadsMerged, err = strconv.ParseUint(fields[4], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "ReadsMerged", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "ReadsMerged", err.Error())
 
 				continue
 			}
 			// SectorsRead
 			disk.SectorsRead, err = strconv.ParseUint(fields[5], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "SectorsRead", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "SectorsRead", err.Error())
 
 				continue
 			}
 			// TimeSpentReading
 			disk.TimeSpentReading, err = strconv.ParseUint(fields[6], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "TimeSpentReading", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "TimeSpentReading", err.Error())
 
 				continue
 			}
 			// WritesCompleted
 			disk.WritesCompleted, err = strconv.ParseUint(fields[7], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "WritesCompleted", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "WritesCompleted", err.Error())
 
 				continue
 			}
 			// WritesMerged
 			disk.WritesMerged, err = strconv.ParseUint(fields[8], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "WritesMerged", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "WritesMerged", err.Error())
 
 				continue
 			}
 			// SectorsWritten
 			disk.SectorsWritten, err = strconv.ParseUint(fields[9], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "SectorsWritten", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "SectorsWritten", err.Error())
 
 				continue
 			}
 			// TimeSpentWriting
 			disk.TimeSpentWriting, err = strconv.ParseUint(fields[10], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "TimeSpentWriting", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "TimeSpentWriting", err.Error())
 
 				continue
 			}
 			// IOsCurrentlyInProgress
 			disk.IOsCurrentlyInProgress, err = strconv.ParseUint(fields[11], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "IOsCurrentlyInProgress", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "IOsCurrentlyInProgress", err.Error())
 
 				continue
 			}
 			// TimeSpentDoingIOs
 			disk.TimeSpentDoingIOs, err = strconv.ParseUint(fields[12], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "TimeSpentDoingIOs", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "TimeSpentDoingIOs", err.Error())
 
 				continue
 			}
 			// WeightedTimeSpentDoingIOs
 			disk.WeightedTimeSpentDoingIOs, err = strconv.ParseUint(fields[13], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "WeightedTimeSpentDoingIOs", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "WeightedTimeSpentDoingIOs", err.Error())
 
 				continue
 			}
@@ -141,28 +141,28 @@ func (ds *diskStatsDataSource) GetData() ([]dto.DiskStat, error) {
 			// DiscardsCompletedSuccessfully
 			disk.DiscardsCompletedSuccessfully, err = strconv.ParseUint(fields[14], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "DiscardsCompletedSuccessfully", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "DiscardsCompletedSuccessfully", err.Error())
 
 				continue
 			}
 			// DiscardsMerged
 			disk.DiscardsMerged, err = strconv.ParseUint(fields[15], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "DiscardsMerged", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "DiscardsMerged", err.Error())
 
 				continue
 			}
 			// SectorsDiscarded
 			disk.SectorsDiscarded, err = strconv.ParseUint(fields[16], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "SectorsDiscarded", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "SectorsDiscarded", err.Error())
 
 				continue
 			}
 			// TimeSpentDiscarding
 			disk.TimeSpentDiscarding, err = strconv.ParseUint(fields[17], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "TimeSpentDiscarding", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "TimeSpentDiscarding", err.Error())
 
 				continue
 			}
@@ -173,14 +173,14 @@ func (ds *diskStatsDataSource) GetData() ([]dto.DiskStat, error) {
 			// FlushRequestsCompletedSuccessfully
 			disk.FlushRequestsCompletedSuccessfully, err = strconv.ParseUint(fields[16], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "FlushRequestsCompletedSuccessfully", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "FlushRequestsCompletedSuccessfully", err.Error())
 
 				continue
 			}
 			// TimeSpentFlushing
 			disk.TimeSpentFlushing, err = strconv.ParseUint(fields[17], 10, 64)
 			if err != nil {
-				logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "TimeSpentFlushing", err)
+				logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "TimeSpentFlushing", err.Error())
 
 				continue
 			}

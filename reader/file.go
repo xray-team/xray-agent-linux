@@ -14,13 +14,13 @@ import (
 func ReadFile(filePath, logPrefix string) ([]byte, error) {
 	filePath = filepath.Clean(filePath)
 	// logger
-	logger.LogReadFile(logPrefix, filePath)
+	logger.Log.Debug.Printf(logger.MessageReadFile, logPrefix, filePath)
 
 	// read file to memory
 	data, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		// logger
-		logger.LogReadFileError(logPrefix, filePath, err)
+		logger.Log.Debug.Printf(logger.MessageReadFileError, logPrefix, filePath, err)
 
 		return nil, err
 	}
@@ -50,7 +50,7 @@ func ReadMultilineFile(filePath, logPrefix string) ([]string, error) {
 	if len(linesStr) == 0 {
 		err = fmt.Errorf("no lines are parsed")
 		// logger
-		logger.LogReadFileError(logPrefix, filePath, err)
+		logger.Log.Debug.Printf(logger.MessageReadFileError, logPrefix, filePath, err)
 
 		return nil, err
 	}

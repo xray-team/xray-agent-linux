@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/crazygreenpenguin/graphite v1.0.2
 	github.com/go-playground/validator v9.31.0+incompatible
-	golang.org/x/sys v0.0.0-20211205182925-97ca703d548d
+	golang.org/x/sys v0.0.0-20220502124256-b6088ccd6cba
 )
 
 require (

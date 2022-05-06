@@ -42,7 +42,7 @@ func (ds *mdStatDataSource) GetData() (*dto.MDStats, error) {
 
 			mdStat, err := ds.parseMDStat(mdPath)
 			if err != nil {
-				logger.Log.Printf("cannot parse md %s. err: %s\n", d.Name(), err)
+				logger.Log.Debug.Printf(logger.MessageError, dto.CollectorNameMDStat, fmt.Sprintf("cannot parse md %s: %s", d.Name(), err.Error()))
 
 				continue
 			}
@@ -101,7 +101,7 @@ func (ds *mdStatDataSource) parseMDStat(path string) (dto.MDStat, error) {
 
 	out.StatRaidWithRedundancy, err = ds.parseStatsRaidWithRedundancy(path)
 	if err != nil {
-		logger.Log.Printf("cannot read dir %s. err: %s\n", path, err)
+		logger.Log.Debug.Printf("cannot read dir %s. err: %s\n", path, err)
 	}
 
 	return out, nil

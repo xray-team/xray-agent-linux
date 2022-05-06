@@ -9,12 +9,12 @@ import (
 
 func ReadDir(path, logPrefix string) ([]os.FileInfo, error) {
 	// logger
-	logger.LogReadDir(logPrefix, path)
+	logger.Log.Debug.Printf(logger.MessageReadDir, logPrefix, path)
 
 	f, err := ioutil.ReadDir(path)
 	if err != nil {
 		// logger
-		logger.LogReadDirError(logPrefix, path)
+		logger.Log.Debug.Printf(logger.MessageReadDirError, logPrefix, path)
 
 		return nil, err
 	}
@@ -24,7 +24,7 @@ func ReadDir(path, logPrefix string) ([]os.FileInfo, error) {
 
 func IsExist(path, logPrefix string) bool {
 	// logger
-	logger.LogIsExist(logPrefix, path)
+	logger.Log.Debug.Printf(logger.MessageIsExist, logPrefix, path)
 
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		return false

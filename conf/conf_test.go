@@ -10,7 +10,7 @@ import (
 )
 
 func TestReadConfigFile(t *testing.T) {
-	logger.Init("")
+	logger.Init()
 
 	tests := []struct {
 		name     string
@@ -36,6 +36,8 @@ func TestReadConfigFile(t *testing.T) {
 							Value: "xray",
 						},
 					},
+					LogLevel: "default",
+					LogOut:   "syslog",
 				},
 				Collectors: &conf.CollectorsConf{
 					RootPath:          "/",

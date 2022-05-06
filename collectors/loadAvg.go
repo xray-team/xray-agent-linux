@@ -1,8 +1,6 @@
 package collectors
 
 import (
-	"errors"
-
 	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
@@ -20,7 +18,7 @@ type LoadAvgCollector struct {
 // NewLoadAvgCollector returns a new collector object.
 func NewLoadAvgCollector(cfg *conf.CollectorsConf, dataSource LoadAvgDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, errors.New("load avg collector init params error"))
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameLoadAvg)
 
 		return nil
 	}

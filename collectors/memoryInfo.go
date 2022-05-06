@@ -1,8 +1,6 @@
 package collectors
 
 import (
-	"errors"
-
 	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
@@ -20,7 +18,8 @@ type MemoryInfoCollector struct {
 // NewMemoryInfoCollector returns a new collector object.
 func NewMemoryInfoCollector(cfg *conf.CollectorsConf, dataSource MemoryDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, errors.New("memory info collector init params error"))
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameMemoryInfo)
+
 		return nil
 	}
 

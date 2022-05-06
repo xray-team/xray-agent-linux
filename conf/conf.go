@@ -39,7 +39,7 @@ func GetConfiguration(flags *Flags) (*Config, error) {
 }
 
 func ReadConfigFile(filePath string) (*Config, error) {
-	data, err := reader.ReadFile(filePath, logger.ConfPrefix)
+	data, err := reader.ReadFile(filePath, logger.TagConfig)
 	if err != nil {
 		return nil, err
 	}

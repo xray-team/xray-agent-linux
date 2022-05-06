@@ -2,7 +2,6 @@ package collectors
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"os/exec"
 	"strings"
@@ -25,7 +24,7 @@ type CmdCollector struct {
 // NewCmdCollector returns a new collector object.
 func NewCmdCollector(cfg *conf.CollectorsConf, dataSource CmdDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, errors.New("cmd collector init params error"))
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameCMD)
 
 		return nil
 	}
@@ -53,7 +52,7 @@ func (c *CmdCollector) Collect() ([]dto.Metric, error) {
 	for i := range c.Config.Metrics {
 		err := c.processPipeLine(&c.Config.Metrics[i], c.Config.Timeout, &metrics)
 		if err != nil {
-			logger.LogWarning(dto.CollectorNameCMD, err)
+			logger.Log.Error.Printf(logger.MessageCmdRunError, dto.CollectorNameCMD, err.Error())
 		}
 	}
 

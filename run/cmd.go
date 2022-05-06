@@ -28,7 +28,7 @@ func (r *cmdRunner) Run(cmd *exec.Cmd) (string, string, error) {
 	cmd.Stderr = &stderr
 
 	// logger
-	logger.LogCmdRun(r.logPrefix, cmd.String())
+	logger.Log.Debug.Printf(logger.MessageCmdRun, r.logPrefix, cmd.String())
 
 	err := cmd.Run()
 	if err != nil {
@@ -58,7 +58,7 @@ func (r *cmdRunner) RunPipeLine(pipeLine []*exec.Cmd) (string, string, error) {
 	}
 
 	// logger
-	logger.LogCmdRun(r.logPrefix, "pipeline")
+	logger.Log.Debug.Printf(logger.MessageCmdRun, r.logPrefix, "pipeline")
 
 	// Last command
 	pipeLine[len(pipeLine)-1].Stdout = &stdout

@@ -1,7 +1,6 @@
 package collectors
 
 import (
-	"errors"
 	"strconv"
 	"strings"
 
@@ -23,7 +22,7 @@ type MDStatCollector struct {
 // NewMDStatCollector returns a new collector object.
 func NewMDStatCollector(cfg *conf.CollectorsConf, dataSource MDStatDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, errors.New("md stat collector init params error"))
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameMDStat)
 		return nil
 	}
 

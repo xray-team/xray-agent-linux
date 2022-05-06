@@ -1,8 +1,6 @@
 package collectors
 
 import (
-	"errors"
-
 	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
@@ -25,7 +23,8 @@ func (c *PSCollector) GetName() string {
 // NewPSCollector returns a new collector object.
 func NewPSCollector(cfg *conf.CollectorsConf, dataSource PSDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, errors.New("PS collector init params error"))
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNamePS)
+
 		return nil
 	}
 

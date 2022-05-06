@@ -1,8 +1,6 @@
 package collectors
 
 import (
-	"errors"
-
 	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
@@ -20,7 +18,7 @@ type NetStatCollector struct {
 // NewNetStatCollector returns a new collector object.
 func NewNetStatCollector(cfg *conf.CollectorsConf, dataSource NetStatDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.LogWarning(logger.CollectorInitPrefix, errors.New("net stat collector init params error"))
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameNetStat)
 		return nil
 	}
 

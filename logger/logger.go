@@ -1,71 +1,97 @@
 package logger
 
 import (
+	"fmt"
+	"io"
+	"io/ioutil"
 	"log"
+	"log/syslog"
 	"os"
 
 	"github.com/go-playground/validator"
 )
 
-// Log is global logger variable.
+// Log are global logger variable.
 // nolint: gochecknoglobals
-var Log Logger
+var (
+	Log *LogSeverity
+)
+
+type LogSeverity struct {
+	Info  *log.Logger
+	Error *log.Logger
+	Debug *log.Logger
+}
 
 // Init logger.
-func Init(prefix string) {
-	Log = log.New(os.Stdout, prefix, log.LstdFlags|log.Lshortfile)
+func Init() {
+	Log.SetDefault(os.Stdout, StdoutFlags)
 }
 
-// Logger interface implements one method - Printf.
-// You can use the stdlib logger *logger.Logger.
-type Logger interface {
-	Printf(format string, v ...interface{})
+func (logSeverity *LogSeverity) SetDefault(out io.Writer, flags int) {
+	Log = &LogSeverity{
+		Info:  log.New(out, "", flags),
+		Error: log.New(out, "", flags),
+		Debug: log.New(ioutil.Discard, "", flags),
+	}
 }
 
-func LogReadFile(logPrefix, filePath string) {
-	Log.Printf("[%s] Reading file %s", logPrefix, filePath)
+func (logSeverity *LogSeverity) SetDebug(out io.Writer, flags int) {
+	Log = &LogSeverity{
+		Info:  log.New(out, "", flags),
+		Error: log.New(out, "", flags),
+		Debug: log.New(out, "", flags),
+	}
 }
 
-func LogReadFileError(logPrefix, filePath string, err error) {
-	Log.Printf("[%s] Error while trying to read file %s : %s", logPrefix, filePath, err.Error())
+func SetLogger(out, level string) error {
+	switch out {
+	case "stdout":
+		setStdoutLogger(level)
+	case "syslog":
+		err := setSyslogLogger(level)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
-func LogReadFileFieldError(logPrefix, filePath, field string, err error) {
-	Log.Printf("[%s] Error while trying to read file %s, field %s : %s", logPrefix, filePath, field, err.Error())
+func setStdoutLogger(level string) {
+	switch level {
+	case "debug":
+		Log.SetDebug(os.Stdout, StdoutFlags)
+	default:
+		Log.SetDefault(os.Stdout, StdoutFlags)
+	}
 }
 
-func LogReadDir(logPrefix, path string) {
-	Log.Printf("[%s] Reading dir %s", logPrefix, path)
+func setSyslogLogger(level string) error {
+	// connect to local instance of syslog
+	sysLog, err := syslog.Dial("", "", syslog.LOG_DEBUG|syslog.LOG_DAEMON, "xray-agent")
+	if err != nil {
+		return err
+	}
+
+	switch level {
+	case "debug":
+		Log.SetDebug(sysLog, SyslogFlags)
+	default:
+		Log.SetDefault(sysLog, SyslogFlags)
+	}
+
+	return nil
 }
 
-func LogReadDirError(logPrefix, path string) {
-	Log.Printf("[%s] Error while trying to read dir %s", logPrefix, path)
-}
-
-func LogIsExist(logPrefix, path string) {
-	Log.Printf("[%s] Checking if file or directory exists %s", logPrefix, path)
-}
-
-func LogWarning(logPrefix string, err error) {
-	Log.Printf("[%s] %s", logPrefix, err.Error())
-}
-
-func LogValidationError(logPrefix string, err error) {
+func LogValidationError(err error) {
 	switch err.(type) {
 	case validator.ValidationErrors:
 		errs := err.(validator.ValidationErrors)
 		for _, e := range errs {
-			Log.Printf("[%s] invalid field: '%s', invalid value: '%v', tag: '%s', param: '%s'", logPrefix, e.Namespace(), e.Value(), e.Tag(), e.Param())
+			Log.Error.Printf(Message, TagConfig, fmt.Sprintf("invalid field: '%s', invalid value: '%v', tag: '%s', param: '%s'", e.Namespace(), e.Value(), e.Tag(), e.Param()))
 		}
 	default:
-		Log.Printf("[%s] %s", logPrefix, err.Error())
+		Log.Error.Printf(Message, TagConfig, err.Error())
 	}
-}
-
-func LogCmdRun(logPrefix, command string) {
-	Log.Printf("[%s] Exec command: '%s'", logPrefix, command)
-}
-
-func LogHttpRequest(logPrefix, req string) {
-	Log.Printf("[%s] Doing request %s", logPrefix, req)
 }

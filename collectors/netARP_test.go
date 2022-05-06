@@ -10,7 +10,7 @@ import (
 )
 
 func TestNetARPCollector_Collect(t *testing.T) {
-	logger.Init("")
+	logger.Init()
 
 	tests := []struct {
 		name     string

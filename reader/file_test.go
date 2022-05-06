@@ -7,7 +7,7 @@ import (
 )
 
 func TestReadStringFile(t *testing.T) {
-	logger.Init("")
+	logger.Init()
 
 	tests := []struct {
 		caseDescription string

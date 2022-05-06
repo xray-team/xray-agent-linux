@@ -58,7 +58,7 @@ func (ds *mountsDataSource) GetData() ([]dto.Mounts, error) {
 		mount.Dump, err = strconv.ParseInt(fields[4], 10, 64)
 
 		if err != nil {
-			logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "Dump", err)
+			logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "Dump", err.Error())
 
 			continue
 		}
@@ -66,7 +66,7 @@ func (ds *mountsDataSource) GetData() ([]dto.Mounts, error) {
 		mount.Pass, err = strconv.ParseInt(fields[5], 10, 64)
 
 		if err != nil {
-			logger.LogReadFileFieldError(ds.logPrefix, ds.filePath, "Pass", err)
+			logger.Log.Debug.Printf(logger.MessageReadFileFieldError, ds.logPrefix, ds.filePath, "Pass", err.Error())
 
 			continue
 		}

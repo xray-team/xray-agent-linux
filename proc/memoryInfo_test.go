@@ -10,7 +10,7 @@ import (
 )
 
 func Test_memoryDataSource_GetData(t *testing.T) {
-	logger.Init("")
+	logger.Init()
 
 	tests := []struct {
 		caseDescription string

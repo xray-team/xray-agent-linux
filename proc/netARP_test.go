@@ -10,7 +10,7 @@ import (
 )
 
 func Test_netARPDataSource_GetData(t *testing.T) {
-	logger.Init("")
+	logger.Init()
 
 	type args struct {
 		filePath string

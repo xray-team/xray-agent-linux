@@ -9,7 +9,8 @@ import (
 )
 
 func main() {
-	logger.Init("")
+	// init default logger
+	logger.Init()
 
 	// Parse flags
 	var f conf.Flags
@@ -17,8 +18,31 @@ func main() {
 	f.DryRun = flag.Bool("dryrun", false, "test run")
 	flag.Parse()
 
-	agent, err := service.NewAgent(f)
+	// Read and parse config
+	cfg, err := conf.GetConfiguration(&f)
 	if err != nil {
+		logger.LogValidationError(err)
+
+		return
+	}
+
+	// update logger params
+	if *f.DryRun {
+		err = logger.SetLogger("stdout", "debug")
+	} else {
+		err = logger.SetLogger(cfg.Agent.LogOut, cfg.Agent.LogLevel)
+	}
+
+	if err != nil {
+		logger.Log.Error.Printf(logger.MessageSetLogParamsError, logger.TagAgent, err.Error())
+
+		return
+	}
+
+	agent, err := service.NewAgent(*cfg)
+	if err != nil {
+		logger.Log.Error.Printf(logger.MessageError, logger.TagAgent, err.Error())
+
 		return
 	}
 
