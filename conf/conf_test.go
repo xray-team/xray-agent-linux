@@ -36,6 +36,8 @@ func TestReadConfigFile(t *testing.T) {
 							Value: "xray",
 						},
 					},
+					LogLevel: "default",
+					LogOut:   "syslog",
 				},
 				Collectors: &conf.CollectorsConf{
 					RootPath:          "/",

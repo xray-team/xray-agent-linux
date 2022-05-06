@@ -26,16 +26,23 @@ func main() {
 		return
 	}
 
-	// Set logger params
-	err = logger.SetLogger(cfg.Agent.LogOut, cfg.Agent.LogLevel)
+	// update logger params
+	if *f.DryRun {
+		err = logger.SetLogger("stdout", "debug")
+	} else {
+		err = logger.SetLogger(cfg.Agent.LogOut, cfg.Agent.LogLevel)
+	}
+
 	if err != nil {
-		logger.Log.Error.Printf("can't set logger: %s", err)
+		logger.Log.Error.Printf(logger.MessageSetLogParamsError, logger.TagAgent, err.Error())
 
 		return
 	}
 
 	agent, err := service.NewAgent(*cfg)
 	if err != nil {
+		logger.Log.Error.Printf(logger.MessageError, logger.TagAgent, err.Error())
+
 		return
 	}
 

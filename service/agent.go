@@ -87,7 +87,7 @@ func (a *Agent) init(cfg conf.Config) error {
 
 	gr, err := graphite.New(cfg.TSDB.Graphite, telemetryChan)
 	if err != nil {
-		logger.Log.Info.Printf("cannot init graphite. err %s", err)
+		logger.Log.Error.Printf(logger.MessageError, logger.TagAgent, fmt.Sprintf("cannot init graphite: %s", err.Error()))
 
 		return err
 	}

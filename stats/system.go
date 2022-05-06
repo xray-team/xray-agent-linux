@@ -1,7 +1,6 @@
 package stats
 
 import (
-	"fmt"
 	"net/http"
 	"path/filepath"
 	"time"
@@ -38,7 +37,7 @@ func (s *Stat) Start() {
 	// start first time before ticker
 	stats, err := s.getStat()
 	if err != nil {
-		logger.Log.Error.Printf(logger.Message, logger.TagAgent, fmt.Sprintf("getStat error: %s", err.Error()))
+		logger.Log.Error.Printf(logger.MessageCollectError, logger.TagAgent, err.Error())
 	}
 	s.telemetryChan <- stats
 
@@ -47,7 +46,7 @@ func (s *Stat) Start() {
 		case <-ticker.C:
 			stats, err := s.getStat()
 			if err != nil {
-				logger.Log.Error.Printf(logger.Message, logger.TagAgent, fmt.Sprintf("getStat error: %s", err.Error()))
+				logger.Log.Error.Printf(logger.MessageCollectError, logger.TagAgent, err.Error())
 
 				continue
 			}
@@ -87,7 +86,7 @@ func (s *Stat) getStat() (*dto.Telemetry, error) {
 
 		m, err := s.Collect(collector)
 		if err != nil {
-			logger.Log.Error.Printf(logger.Message, collector.GetName(), fmt.Sprintf("collect error: %s", err.Error()))
+			logger.Log.Error.Printf(logger.MessageCollectError, collector.GetName(), err.Error())
 		}
 
 		numMetrics += len(m)

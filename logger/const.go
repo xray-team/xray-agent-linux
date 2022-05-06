@@ -18,6 +18,8 @@ const (
 	Message                   = "[%s] %s"
 	MessageError              = "[%s] Error: %s"
 	MessageInitCollectorError = "[%s] Collector init params error"
+	MessageCollectError       = "[%s] Collect error: %s"
+	MessageSetLogParamsError  = "[%s] Can't set logger params: %s"
 
 	MessageReadFile           = "[%s] Reading file %s"
 	MessageReadFileError      = "[%s] Error while trying to read file %s : %s"

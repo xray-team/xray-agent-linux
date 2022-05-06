@@ -12,7 +12,9 @@
         "name": "Source",
         "value": "xray"
       }
-    ]
+    ],
+    "logLevel": "default",
+    "logOut": "syslog"
   },
   "collectors": {
     "rootPath": "/",
