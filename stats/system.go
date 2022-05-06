@@ -5,12 +5,26 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/xray-team/xray-agent-linux/collectors/cpuInfo"
+	"github.com/xray-team/xray-agent-linux/collectors/diskSpace"
+	"github.com/xray-team/xray-agent-linux/collectors/entropy"
+	"github.com/xray-team/xray-agent-linux/collectors/loadAvg"
+	"github.com/xray-team/xray-agent-linux/collectors/mdStat"
+	"github.com/xray-team/xray-agent-linux/collectors/memoryInfo"
+	"github.com/xray-team/xray-agent-linux/collectors/netARP"
+	"github.com/xray-team/xray-agent-linux/collectors/netSNMP"
+	"github.com/xray-team/xray-agent-linux/collectors/netSNMP6"
+	"github.com/xray-team/xray-agent-linux/collectors/netStat"
+	"github.com/xray-team/xray-agent-linux/collectors/nginx"
+	"github.com/xray-team/xray-agent-linux/collectors/ps"
+	"github.com/xray-team/xray-agent-linux/collectors/psStat"
+	"github.com/xray-team/xray-agent-linux/collectors/stat"
+	"github.com/xray-team/xray-agent-linux/collectors/uptime"
+
 	"github.com/xray-team/xray-agent-linux/collectors"
 	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
-	"github.com/xray-team/xray-agent-linux/mdstat"
-	"github.com/xray-team/xray-agent-linux/nginx"
 	"github.com/xray-team/xray-agent-linux/proc"
 	"github.com/xray-team/xray-agent-linux/run"
 	"github.com/xray-team/xray-agent-linux/sys"
@@ -193,26 +207,26 @@ func (s *Stat) collectorSummaryToMetrics(cs dto.CollectorSummary) []dto.Metric {
 func (s *Stat) initCollectors() []dto.Collector {
 	return []dto.Collector{
 		// /proc/uptime
-		collectors.NewUptimeCollector(s.cfg.Collectors,
-			proc.NewUptimeDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, proc.UptimePath), dto.CollectorNameUptime)),
+		uptime.NewUptimeCollector(s.cfg.Collectors,
+			uptime.NewUptimeDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, uptime.UptimePath), dto.CollectorNameUptime)),
 		// /proc/loadavg
-		collectors.NewLoadAvgCollector(s.cfg.Collectors,
-			proc.NewLoadAvgDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, proc.LoadAvgPath), dto.CollectorNameLoadAvg)),
+		loadAvg.NewLoadAvgCollector(s.cfg.Collectors,
+			loadAvg.NewLoadAvgDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, loadAvg.LoadAvgPath), dto.CollectorNameLoadAvg)),
 		// PS
-		collectors.NewPSCollector(s.cfg.Collectors,
-			proc.NewPSDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath), dto.CollectorNamePS)),
+		ps.NewPSCollector(s.cfg.Collectors,
+			ps.NewPSDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath), dto.CollectorNamePS)),
 		// PS stat
-		collectors.NewPSStatCollector(s.cfg.Collectors,
-			proc.NewPSStatDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath), dto.CollectorNamePSStat)),
+		psStat.NewPSStatCollector(s.cfg.Collectors,
+			psStat.NewPSStatDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath), dto.CollectorNamePSStat)),
 		// /proc/stat
-		collectors.NewStatCollector(s.cfg.Collectors,
-			proc.NewStatDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, proc.StatPath), dto.CollectorNameStat)),
+		stat.NewStatCollector(s.cfg.Collectors,
+			stat.NewStatDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, stat.StatPath), dto.CollectorNameStat)),
 		// /proc/cpuinfo
-		collectors.NewCpuInfoCollector(s.cfg.Collectors,
-			proc.NewCPUInfoDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, proc.CPUInfoPath), dto.CollectorNameCPUInfo)),
+		cpuInfo.NewCpuInfoCollector(s.cfg.Collectors,
+			cpuInfo.NewCPUInfoDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, cpuInfo.CPUInfoPath), dto.CollectorNameCPUInfo)),
 		// /proc/meminfo
-		collectors.NewMemoryInfoCollector(s.cfg.Collectors,
-			proc.NewMemoryDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, proc.MemInfoPath), dto.CollectorNameMemoryInfo)),
+		memoryInfo.NewMemoryInfoCollector(s.cfg.Collectors,
+			memoryInfo.NewMemoryDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, memoryInfo.MemInfoPath), dto.CollectorNameMemoryInfo)),
 		// /proc/diskstat
 		collectors.NewDiskStatCollector(
 			s.cfg.Collectors,
@@ -220,7 +234,7 @@ func (s *Stat) initCollectors() []dto.Collector {
 			sys.NewClassBlockDataSource(filepath.Join(s.cfg.Collectors.RootPath, sys.ClassBlockDir), dto.CollectorNameDiskStat),
 		),
 		// disk space
-		collectors.NewDiskSpaceCollector(s.cfg.Collectors, proc.NewMountsDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, proc.MountsPath), dto.CollectorNameDiskSpace)),
+		diskSpace.NewDiskSpaceCollector(s.cfg.Collectors, diskSpace.NewMountsDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, diskSpace.MountsPath), dto.CollectorNameDiskSpace)),
 		// /proc/net/dev
 		collectors.NewNetDevCollector(
 			s.cfg.Collectors,
@@ -237,25 +251,25 @@ func (s *Stat) initCollectors() []dto.Collector {
 			sys.NewClassNetDataSource(filepath.Join(s.cfg.Collectors.RootPath, sys.ClassNetDir), dto.CollectorNameWireless),
 		),
 		// /proc/net/arp
-		collectors.NewNetARPCollector(s.cfg.Collectors,
-			proc.NewNetARPDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, proc.NetArpPath), dto.CollectorNameNetARP)),
+		netARP.NewNetARPCollector(s.cfg.Collectors,
+			netARP.NewNetARPDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, netARP.NetArpPath), dto.CollectorNameNetARP)),
 		// /proc/net/netstat
-		collectors.NewNetStatCollector(s.cfg.Collectors,
-			proc.NewNetStatDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, proc.NetStatPath), dto.CollectorNameNetStat)),
+		netStat.NewNetStatCollector(s.cfg.Collectors,
+			netStat.NewNetStatDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, netStat.NetStatPath), dto.CollectorNameNetStat)),
 		// /proc/net/snmp
-		collectors.NewNetSNMPCollector(s.cfg.Collectors,
-			proc.NewNetStatDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, proc.NetSNMPPath), dto.CollectorNameNetSNMP)),
+		netSNMP.NewNetSNMPCollector(s.cfg.Collectors,
+			netStat.NewNetStatDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, netSNMP.NetSNMPPath), dto.CollectorNameNetSNMP)),
 		// /proc/net/snmp6
-		collectors.NewNetSNMP6Collector(s.cfg.Collectors,
-			proc.NewNetSNMP6DataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, proc.NetSNMP6Path), dto.CollectorNameNetSNMP6)),
+		netSNMP6.NewNetSNMP6Collector(s.cfg.Collectors,
+			netSNMP6.NewNetSNMP6DataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, netSNMP6.NetSNMP6Path), dto.CollectorNameNetSNMP6)),
 		// mdStat
-		collectors.NewMDStatCollector(s.cfg.Collectors,
-			mdstat.NewMDStatDataSource(filepath.Join(s.cfg.Collectors.RootPath, mdstat.MDStatPath), dto.CollectorNameMDStat)),
+		mdStat.NewMDStatCollector(s.cfg.Collectors,
+			mdStat.NewMDStatDataSource(filepath.Join(s.cfg.Collectors.RootPath, mdStat.MDStatPath), dto.CollectorNameMDStat)),
 		// CMD collector
 		collectors.NewCmdCollector(s.cfg.Collectors,
 			run.NewCmdRunner(dto.CollectorNameCMD)),
 		// nginx
-		collectors.NewNginxStubStatusCollector(s.cfg.Collectors,
+		nginx.NewNginxStubStatusCollector(s.cfg.Collectors,
 			nginx.NewStubStatusClient(
 				s.cfg.Collectors.NginxStubStatus,
 				&http.Client{
@@ -265,8 +279,8 @@ func (s *Stat) initCollectors() []dto.Collector {
 			),
 		),
 		// entropy
-		collectors.NewEntropyCollector(s.cfg.Collectors,
-			proc.NewEntropyDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, proc.EntropyPath), dto.CollectorNameEntropy),
+		entropy.NewEntropyCollector(s.cfg.Collectors,
+			entropy.NewEntropyDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, entropy.EntropyPath), dto.CollectorNameEntropy),
 		),
 	}
 }
