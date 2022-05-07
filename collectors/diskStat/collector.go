@@ -79,10 +79,10 @@ func (c *DiskStatCollector) Collect() ([]dto.Metric, error) {
 		attrs := []dto.MetricAttribute{
 			{
 				Name:  dto.ResourceAttr,
-				Value: dto.ResourceDiskStat,
+				Value: ResourceName,
 			},
 			{
-				Name:  dto.SetNameDiskStatDev,
+				Name:  SetNameDev,
 				Value: stat.Dev,
 			},
 		}
@@ -95,87 +95,87 @@ func (c *DiskStatCollector) Collect() ([]dto.Metric, error) {
 func genMetricsDiskStat(attrs []dto.MetricAttribute, diskStat DiskStat) []dto.Metric {
 	return []dto.Metric{
 		{
-			Name:       dto.MetricDiskStatReadsCompletedSuccessfully,
+			Name:       MetricReadsCompletedSuccessfully,
 			Value:      diskStat.ReadsCompletedSuccessfully,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatReadsMerged,
+			Name:       MetricReadsMerged,
 			Value:      diskStat.ReadsMerged,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatSectorsRead,
+			Name:       MetricSectorsRead,
 			Value:      diskStat.SectorsRead,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatTimeSpentReading,
+			Name:       MetricTimeSpentReading,
 			Value:      diskStat.TimeSpentReading,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatWritesCompleted,
+			Name:       MetricWritesCompleted,
 			Value:      diskStat.WritesCompleted,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatWritesMerged,
+			Name:       MetricWritesMerged,
 			Value:      diskStat.WritesMerged,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatSectorsWritten,
+			Name:       MetricSectorsWritten,
 			Value:      diskStat.SectorsWritten,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatTimeSpentWriting,
+			Name:       MetricTimeSpentWriting,
 			Value:      diskStat.TimeSpentWriting,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatIOsCurrentlyInProgress,
+			Name:       MetricIOsCurrentlyInProgress,
 			Value:      diskStat.IOsCurrentlyInProgress,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatTimeSpentDoingIOs,
+			Name:       MetricTimeSpentDoingIOs,
 			Value:      diskStat.TimeSpentDoingIOs,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatWeightedTimeSpentDoingIOs,
+			Name:       MetricWeightedTimeSpentDoingIOs,
 			Value:      diskStat.WeightedTimeSpentDoingIOs,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatDiscardsCompletedSuccessfully,
+			Name:       MetricDiscardsCompletedSuccessfully,
 			Value:      diskStat.DiscardsCompletedSuccessfully,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatDiscardsMerged,
+			Name:       MetricDiscardsMerged,
 			Value:      diskStat.DiscardsMerged,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatSectorsDiscarded,
+			Name:       MetricSectorsDiscarded,
 			Value:      diskStat.SectorsDiscarded,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatTimeSpentDiscarding,
+			Name:       MetricTimeSpentDiscarding,
 			Value:      diskStat.TimeSpentDiscarding,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatFlushRequestsCompletedSuccessfully,
+			Name:       MetricFlushRequestsCompletedSuccessfully,
 			Value:      diskStat.FlushRequestsCompletedSuccessfully,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskStatTimeSpentFlushing,
+			Name:       MetricTimeSpentFlushing,
 			Value:      diskStat.TimeSpentFlushing,
 			Attributes: attrs,
 		},

@@ -61,10 +61,10 @@ func (c *DiskSpaceCollector) Collect() ([]dto.Metric, error) {
 		attrs := []dto.MetricAttribute{
 			{
 				Name:  dto.ResourceAttr,
-				Value: dto.ResourceDiskSpace,
+				Value: ResourceName,
 			},
 			{
-				Name:  dto.SetNameDiskSpaceMountPoint,
+				Name:  SetNameMountPoint,
 				Value: rewriteMount(mount.MountPoint),
 			},
 		}
@@ -131,42 +131,42 @@ func rewriteMount(mount string) string {
 func genMetricsDiskSpace(attrs []dto.MetricAttribute, diskSpace *DiskSpaceUsage) []dto.Metric {
 	return []dto.Metric{
 		{
-			Name:       dto.MetricDiskSpaceBytesAvailable,
+			Name:       MetricBytesAvailable,
 			Value:      diskSpace.Bytes.Available,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskSpaceBytesFree,
+			Name:       MetricBytesFree,
 			Value:      diskSpace.Bytes.Free,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskSpaceBytesFreePercent,
+			Name:       MetricBytesFreePercent,
 			Value:      calculateDiskFreePercentage(diskSpace.Bytes),
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskSpaceBytesUsed,
+			Name:       MetricBytesUsed,
 			Value:      diskSpace.Bytes.Used,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskSpaceBytesTotal,
+			Name:       MetricBytesTotal,
 			Value:      diskSpace.Bytes.Total,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskSpaceInodesFree,
+			Name:       MetricInodesFree,
 			Value:      diskSpace.Inodes.Free,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskSpaceInodesUsed,
+			Name:       MetricInodesUsed,
 			Value:      diskSpace.Inodes.Used,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricDiskSpaceInodesTotal,
+			Name:       MetricInodesTotal,
 			Value:      diskSpace.Inodes.Total,
 			Attributes: attrs,
 		},

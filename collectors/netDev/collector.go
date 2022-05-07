@@ -134,92 +134,92 @@ func genMetricsNetDevStatistics(ifName string, statistics NetDevStatistics) []dt
 	attrs := []dto.MetricAttribute{
 		{
 			Name:  dto.ResourceAttr,
-			Value: dto.ResourceNetDev,
+			Value: ResourceName,
 		},
 		{
-			Name:  dto.SetNameNetDevInterface,
+			Name:  SetNameInterface,
 			Value: ifName,
 		},
 	}
 
 	return []dto.Metric{
 		{
-			Name:       dto.MetricNetDevStatisticsRxBytes,
+			Name:       MetricStatisticsRxBytes,
 			Value:      statistics.RxBytes,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatisticsRxPackets,
+			Name:       MetricStatisticsRxPackets,
 			Value:      statistics.RxPackets,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatisticsRxErrs,
+			Name:       MetricStatisticsRxErrs,
 			Value:      statistics.RxErrs,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatisticsRxDrop,
+			Name:       MetricStatisticsRxDrop,
 			Value:      statistics.RxDrop,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatisticsRxFifoErrs,
+			Name:       MetricStatisticsRxFifoErrs,
 			Value:      statistics.RxFifoErrs,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatisticsRxFrameErrs,
+			Name:       MetricStatisticsRxFrameErrs,
 			Value:      statistics.RxFrameErrs,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatisticsRxCompressed,
+			Name:       MetricStatisticsRxCompressed,
 			Value:      statistics.RxCompressed,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatisticsMulticast,
+			Name:       MetricStatisticsMulticast,
 			Value:      statistics.Multicast,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatisticsTxBytes,
+			Name:       MetricStatisticsTxBytes,
 			Value:      statistics.TxBytes,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatisticsTxPackets,
+			Name:       MetricStatisticsTxPackets,
 			Value:      statistics.TxPackets,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatisticsTxErrs,
+			Name:       MetricStatisticsTxErrs,
 			Value:      statistics.TxErrs,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatisticsTxDrop,
+			Name:       MetricStatisticsTxDrop,
 			Value:      statistics.TxDrop,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatisticsTxFifoErrs,
+			Name:       MetricStatisticsTxFifoErrs,
 			Value:      statistics.TxFifoErrs,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatisticsCollisions,
+			Name:       MetricStatisticsCollisions,
 			Value:      statistics.Collisions,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatisticsTxCarrierErrs,
+			Name:       MetricStatisticsTxCarrierErrs,
 			Value:      statistics.TxCarrierErrs,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatisticsTxCompressed,
+			Name:       MetricStatisticsTxCompressed,
 			Value:      statistics.TxCompressed,
 			Attributes: attrs,
 		},

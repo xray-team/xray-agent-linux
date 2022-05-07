@@ -55,15 +55,15 @@ func (c *NetARPCollector) Collect() ([]dto.Metric, error) {
 
 		metrics = append(metrics,
 			dto.Metric{
-				Name:  dto.MetricNetARPEntries,
+				Name:  MetricEntries,
 				Value: value,
 				Attributes: []dto.MetricAttribute{
 					{
 						Name:  dto.ResourceAttr,
-						Value: dto.ResourceNetARP,
+						Value: ResourceName,
 					},
 					{
-						Name:  dto.SetNameNetARPInterface,
+						Name:  SetNameInterface,
 						Value: devName,
 					},
 				},
@@ -76,15 +76,15 @@ func (c *NetARPCollector) Collect() ([]dto.Metric, error) {
 
 		metrics = append(metrics,
 			dto.Metric{
-				Name:  dto.MetricNetARPIncompleteEntries,
+				Name:  MetricIncompleteEntries,
 				Value: value,
 				Attributes: []dto.MetricAttribute{
 					{
 						Name:  dto.ResourceAttr,
-						Value: dto.ResourceNetARP,
+						Value: ResourceName,
 					},
 					{
-						Name:  dto.SetNameNetARPInterface,
+						Name:  SetNameInterface,
 						Value: devName,
 					},
 				},

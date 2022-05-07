@@ -85,51 +85,51 @@ func (c *PSStatCollector) Collect() ([]dto.Metric, error) {
 					attrs := []dto.MetricAttribute{
 						{
 							Name:  dto.ResourceAttr,
-							Value: dto.ResourcePSStat,
+							Value: ResourceName,
 						},
 						{
-							Name:  dto.SetNamePSStatProcessName,
+							Name:  SetNameProcessName,
 							Value: psName,
 						},
 						{
-							Name:  dto.SetNamePSStatPID,
+							Name:  SetNamePID,
 							Value: strconv.FormatInt(psStat.PID, 10),
 						},
 					}
 
 					metrics = append(metrics,
 						dto.Metric{
-							Name:       dto.MetricPSStatUser,
+							Name:       MetricUser,
 							Value:      psStat.UTime + psStat.CuTime,
 							Attributes: attrs,
 						},
 						dto.Metric{
-							Name:       dto.MetricPSStatSystem,
+							Name:       MetricSystem,
 							Value:      psStat.STime + psStat.CsTime,
 							Attributes: attrs,
 						},
 						dto.Metric{
-							Name:       dto.MetricPSStatGuest,
+							Name:       MetricGuest,
 							Value:      psStat.GuestTime + psStat.CGuestTime,
 							Attributes: attrs,
 						},
 						dto.Metric{
-							Name:       dto.MetricPSStatTotal,
+							Name:       MetricTotal,
 							Value:      psStat.UTime + psStat.CuTime + psStat.STime + psStat.CsTime + psStat.GuestTime + psStat.CGuestTime,
 							Attributes: attrs,
 						},
 						dto.Metric{
-							Name:       dto.MetricPSStatThreads,
+							Name:       MetricThreads,
 							Value:      psStat.Threads,
 							Attributes: attrs,
 						},
 						dto.Metric{
-							Name:       dto.MetricPSStatVirtualMemorySize,
+							Name:       MetricVirtualMemorySize,
 							Value:      psStat.VSize,
 							Attributes: attrs,
 						},
 						dto.Metric{
-							Name:       dto.MetricPSStatResidentMemorySize,
+							Name:       MetricResidentMemorySize,
 							Value:      psStat.Rss * 4096, // 4096 - memory page size
 							Attributes: attrs,
 						},
@@ -144,56 +144,56 @@ func (c *PSStatCollector) Collect() ([]dto.Metric, error) {
 		attrs := []dto.MetricAttribute{
 			{
 				Name:  dto.ResourceAttr,
-				Value: dto.ResourcePSStat,
+				Value: ResourceName,
 			},
 			{
-				Name:  dto.SetNamePSStatProcessName,
+				Name:  SetNameProcessName,
 				Value: psName,
 			},
 			{
-				Name:  dto.SetNamePSStatPID,
-				Value: dto.SetValuePSStatPIDTotal,
+				Name:  SetNamePID,
+				Value: SetValuePIDTotal,
 			},
 		}
 
 		metrics = append(metrics,
 			dto.Metric{
-				Name:       dto.MetricPSStatUser,
+				Name:       MetricUser,
 				Value:      st.uTime,
 				Attributes: attrs,
 			},
 			dto.Metric{
-				Name:       dto.MetricPSStatSystem,
+				Name:       MetricSystem,
 				Value:      st.sTime,
 				Attributes: attrs,
 			},
 			dto.Metric{
-				Name:       dto.MetricPSStatGuest,
+				Name:       MetricGuest,
 				Value:      st.guestTime,
 				Attributes: attrs,
 			},
 			dto.Metric{
-				Name:       dto.MetricPSStatTotal,
+				Name:       MetricTotal,
 				Value:      st.totalTime,
 				Attributes: attrs,
 			},
 			dto.Metric{
-				Name:       dto.MetricPSStatVirtualMemorySize,
+				Name:       MetricVirtualMemorySize,
 				Value:      st.vSize,
 				Attributes: attrs,
 			},
 			dto.Metric{
-				Name:       dto.MetricPSStatResidentMemorySize,
+				Name:       MetricResidentMemorySize,
 				Value:      st.rss * 4096, // 4096 - memory page size
 				Attributes: attrs,
 			},
 			dto.Metric{
-				Name:       dto.MetricPSStatThreads,
+				Name:       MetricThreads,
 				Value:      st.threads,
 				Attributes: attrs,
 			},
 			dto.Metric{
-				Name:       dto.MetricPSStatProcesses,
+				Name:       MetricProcesses,
 				Value:      st.processCount,
 				Attributes: attrs,
 			},

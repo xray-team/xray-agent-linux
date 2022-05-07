@@ -46,43 +46,43 @@ func (c *NginxStubStatusCollector) Collect() ([]dto.Metric, error) {
 	attrs := []dto.MetricAttribute{
 		{
 			Name:  dto.ResourceAttr,
-			Value: dto.ResourceNginxStubStatus,
+			Value: ResourceName,
 		},
 	}
 
 	return []dto.Metric{
 		{
-			Name:       dto.MetricNginxStubStatusActive,
+			Name:       MetricStubStatusActive,
 			Value:      data.Active,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNginxStubStatusAccepts,
+			Name:       MetricStubStatusAccepts,
 			Value:      data.Accepts,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNginxStubStatusHandled,
+			Name:       MetricStubStatusHandled,
 			Value:      data.Handled,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNginxStubStatusRequests,
+			Name:       MetricStubStatusRequests,
 			Value:      data.Requests,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNginxStubStatusReading,
+			Name:       MetricStubStatusReading,
 			Value:      data.Reading,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNginxStubStatusWriting,
+			Name:       MetricStubStatusWriting,
 			Value:      data.Writing,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNginxStubStatusWaiting,
+			Name:       MetricStubStatusWaiting,
 			Value:      data.Waiting,
 			Attributes: attrs,
 		},

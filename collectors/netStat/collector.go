@@ -7,7 +7,7 @@ import (
 )
 
 type NetStatDataSource interface {
-	GetData() (*dto.Netstat, error)
+	GetData() (*Netstat, error)
 }
 
 type NetStatCollector struct {
@@ -56,10 +56,10 @@ func (c *NetStatCollector) Collect() ([]dto.Metric, error) {
 					Attributes: []dto.MetricAttribute{
 						{
 							Name:  dto.ResourceAttr,
-							Value: dto.ResourceNetStat,
+							Value: ResourceName,
 						},
 						{
-							Name:  dto.SetNameNetStatExt,
+							Name:  SetNameExt,
 							Value: extName,
 						},
 					},

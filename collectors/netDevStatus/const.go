@@ -4,6 +4,18 @@ const (
 	CollectorName = "NetDevStatus"
 )
 
+// Metrics
+const (
+	ResourceName     = "NetDevStatus"
+	SetNameInterface = "Interface"
+
+	MetricOperState = "OperState"
+	MetricLinkFlaps = "LinkFlaps"
+	MetricSpeed     = "Speed"
+	MetricDuplex    = "Duplex"
+	MetricMTU       = "MTU"
+)
+
 // RFC2863
 var NetDevOperStates = map[string]int{
 	"up":             1,

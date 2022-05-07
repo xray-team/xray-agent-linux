@@ -41,7 +41,7 @@ func NewPSCollector(cfg *conf.CollectorsConf, dataSource PSDataSource) dto.Colle
 
 // Collect collects and returns metrics.
 func (c *PSCollector) Collect() ([]dto.Metric, error) {
-	ps, err := c.DataSource.GetData()
+	data, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err
 	}
@@ -49,64 +49,64 @@ func (c *PSCollector) Collect() ([]dto.Metric, error) {
 	attrs := []dto.MetricAttribute{
 		{
 			Name:  dto.ResourceAttr,
-			Value: dto.ResourceProcesses,
+			Value: ResourceName,
 		},
 	}
 
 	return []dto.Metric{
 		{
-			Name:       dto.MetricProcessesCount,
-			Value:      ps.Count,
+			Name:       MetricProcessesCount,
+			Value:      data.Count,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricProcessesLimit,
-			Value:      ps.Limit,
+			Name:       MetricProcessesLimit,
+			Value:      data.Limit,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricProcessesInStateRunning,
-			Value:      ps.InStateRunning,
+			Name:       MetricProcessesInStateRunning,
+			Value:      data.InStateRunning,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricProcessesInStateIdle,
-			Value:      ps.InStateIdle,
+			Name:       MetricProcessesInStateIdle,
+			Value:      data.InStateIdle,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricProcessesInStateDead,
-			Value:      ps.InStateDead,
+			Name:       MetricProcessesInStateDead,
+			Value:      data.InStateDead,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricProcessesInStateStopped,
-			Value:      ps.InStateStopped,
+			Name:       MetricProcessesInStateStopped,
+			Value:      data.InStateStopped,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricProcessesInStateSleeping,
-			Value:      ps.InStateSleeping,
+			Name:       MetricProcessesInStateSleeping,
+			Value:      data.InStateSleeping,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricProcessesInStateDiskSleep,
-			Value:      ps.InStateDiskSleep,
+			Name:       MetricProcessesInStateDiskSleep,
+			Value:      data.InStateDiskSleep,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricProcessesInStateZombie,
-			Value:      ps.InStateZombie,
+			Name:       MetricProcessesInStateZombie,
+			Value:      data.InStateZombie,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricProcessesThreadsCount,
-			Value:      ps.Threads,
+			Name:       MetricProcessesThreadsCount,
+			Value:      data.Threads,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricProcessesThreadsLimit,
-			Value:      ps.ThreadsLimit,
+			Name:       MetricProcessesThreadsLimit,
+			Value:      data.ThreadsLimit,
 			Attributes: attrs,
 		},
 	}, nil

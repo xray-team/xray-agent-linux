@@ -41,7 +41,7 @@ func (c *MemoryInfoCollector) GetName() string {
 
 // Collect collects and returns metrics.
 func (c *MemoryInfoCollector) Collect() ([]dto.Metric, error) {
-	memoryInfo, err := c.DataSource.GetData()
+	data, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err
 	}
@@ -49,49 +49,49 @@ func (c *MemoryInfoCollector) Collect() ([]dto.Metric, error) {
 	attrs := []dto.MetricAttribute{
 		{
 			Name:  dto.ResourceAttr,
-			Value: dto.ResourceMemory,
+			Value: ResourceName,
 		},
 	}
 
 	return []dto.Metric{
 		{
-			Name:       dto.MetricMemoryTotal,
-			Value:      memoryInfo.MemTotal,
+			Name:       MetricMemoryTotal,
+			Value:      data.MemTotal,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricMemoryFree,
-			Value:      memoryInfo.MemFree,
+			Name:       MetricMemoryFree,
+			Value:      data.MemFree,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricMemoryAvailable,
-			Value:      memoryInfo.MemAvailable,
+			Name:       MetricMemoryAvailable,
+			Value:      data.MemAvailable,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricMemoryUsed,
-			Value:      memoryInfo.MemTotal - memoryInfo.MemAvailable,
+			Name:       MetricMemoryUsed,
+			Value:      data.MemTotal - data.MemAvailable,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricMemoryBuffers,
-			Value:      memoryInfo.Buffers,
+			Name:       MetricMemoryBuffers,
+			Value:      data.Buffers,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricMemoryCached,
-			Value:      memoryInfo.Cached,
+			Name:       MetricMemoryCached,
+			Value:      data.Cached,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricMemorySwapTotal,
-			Value:      memoryInfo.SwapTotal,
+			Name:       MetricMemorySwapTotal,
+			Value:      data.SwapTotal,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricMemorySwapFree,
-			Value:      memoryInfo.SwapFree,
+			Name:       MetricMemorySwapFree,
+			Value:      data.SwapFree,
 			Attributes: attrs,
 		},
 	}, nil

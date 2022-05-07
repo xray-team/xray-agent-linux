@@ -97,37 +97,37 @@ func genMetricsNetDevStatus(ifName string, status *NetDevStatus) []dto.Metric {
 	attrs := []dto.MetricAttribute{
 		{
 			Name:  dto.ResourceAttr,
-			Value: dto.ResourceNetDevStatus,
+			Value: ResourceName,
 		},
 		{
-			Name:  dto.SetNameNetDevInterface,
+			Name:  SetNameInterface,
 			Value: ifName,
 		},
 	}
 
 	return []dto.Metric{
 		{
-			Name:       dto.MetricNetDevStatusOperState,
+			Name:       MetricOperState,
 			Value:      NetDevOperStates[strings.ToLower(status.OperState)],
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatusSpeed,
+			Name:       MetricSpeed,
 			Value:      status.Speed,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatusLinkFlaps,
+			Name:       MetricLinkFlaps,
 			Value:      convertCarrierChangesToLinkFlaps(status.CarrierChanges),
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatusDuplex,
+			Name:       MetricDuplex,
 			Value:      NetDevDuplexStates[strings.ToLower(status.Duplex)],
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricNetDevStatusMTU,
+			Name:       MetricMTU,
 			Value:      status.MTU,
 			Attributes: attrs,
 		},

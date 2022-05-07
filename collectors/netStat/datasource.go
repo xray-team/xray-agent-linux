@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
 
@@ -27,9 +26,9 @@ func NewNetStatDataSource(filePath, logPrefix string) *netStatDataSource {
 }
 
 // GetData parse files /proc/net/netstat, /proc/net/snmp (/proc/$PID/net/netstat, /proc/$PID/net/snmp).
-func (ds *netStatDataSource) GetData() (*dto.Netstat, error) {
+func (ds *netStatDataSource) GetData() (*Netstat, error) {
 	// Initialize map for results
-	var out dto.Netstat
+	var out Netstat
 	out.Ext = make(map[string]map[string]int64)
 
 	// read file to memory

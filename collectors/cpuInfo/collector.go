@@ -52,14 +52,14 @@ func (c *CPUInfoCollector) Collect() ([]dto.Metric, error) {
 
 	for _, cpu := range cpuInfo.CPU {
 		metrics = append(metrics, dto.Metric{
-			Name: dto.MetricCPUInfoMHz,
+			Name: MetricMHz,
 			Attributes: []dto.MetricAttribute{
 				{
 					Name:  dto.ResourceAttr,
-					Value: dto.ResourceCPUInfo,
+					Value: ResourceName,
 				},
 				{
-					Name:  dto.SetNameCPUInfoProcessor,
+					Name:  SetNameProcessor,
 					Value: strconv.Itoa(cpu.ProcessorNumber),
 				},
 			},

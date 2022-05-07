@@ -7,7 +7,7 @@ import (
 )
 
 type SNMP6DataSource interface {
-	GetData() (*dto.NetSNMP6, error)
+	GetData() (*NetSNMP6, error)
 }
 
 type NetSNMP6Collector struct {
@@ -56,7 +56,7 @@ func (c *NetSNMP6Collector) Collect() ([]dto.Metric, error) {
 				Attributes: []dto.MetricAttribute{
 					{
 						Name:  dto.ResourceAttr,
-						Value: dto.ResourceNetSNMP6,
+						Value: ResourceName,
 					},
 				},
 			},

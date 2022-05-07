@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/xray-team/xray-agent-linux/collectors/netStat"
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
@@ -15,7 +14,7 @@ func Test_netStatDataSource_GetData(t *testing.T) {
 	tests := []struct {
 		caseDescription string
 		filePath        string
-		want            *dto.Netstat
+		want            *netStat.Netstat
 		wantErr         bool
 	}{
 		{
@@ -27,7 +26,7 @@ func Test_netStatDataSource_GetData(t *testing.T) {
 		{
 			caseDescription: "netstat-kernel4.15.0-66-generic",
 			filePath:        "./testFiles/netstat-kernel4.15.0-66-generic",
-			want: &dto.Netstat{
+			want: &netStat.Netstat{
 				Ext: map[string]map[string]int64{
 					"TcpExt": {
 						"SyncookiesSent":            1,
@@ -170,7 +169,7 @@ func Test_netStatDataSource_GetData(t *testing.T) {
 		{
 			caseDescription: "snmp-kernel4.15.0-66-generic-real",
 			filePath:        "./testFiles/snmp-kernel4.15.0-66-generic-real",
-			want: &dto.Netstat{Ext: map[string]map[string]int64{
+			want: &netStat.Netstat{Ext: map[string]map[string]int64{
 				"Ip": {
 					"Forwarding":      1,
 					"DefaultTTL":      64,

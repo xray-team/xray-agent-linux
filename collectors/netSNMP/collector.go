@@ -54,10 +54,10 @@ func (c *netSNMPCollector) Collect() ([]dto.Metric, error) {
 					Attributes: []dto.MetricAttribute{
 						{
 							Name:  dto.ResourceAttr,
-							Value: dto.ResourceNetSNMP,
+							Value: ResourceName,
 						},
 						{
-							Name:  dto.SetNameNetSNMPExt,
+							Name:  SetNameExt,
 							Value: extName,
 						},
 					},

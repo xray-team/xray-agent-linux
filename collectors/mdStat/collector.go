@@ -52,12 +52,12 @@ func (c *MDStatCollector) Collect() ([]dto.Metric, error) {
 
 	resourceAttr := dto.MetricAttribute{
 		Name:  dto.ResourceAttr,
-		Value: dto.ResourceMDStat,
+		Value: ResourceName,
 	}
 
 	for mdName, stat := range mdStat.Stats {
 		mdNameAttr := dto.MetricAttribute{
-			Name:  dto.SetNameMDStatMD,
+			Name:  SetNameMD,
 			Value: mdName,
 		}
 
@@ -66,22 +66,22 @@ func (c *MDStatCollector) Collect() ([]dto.Metric, error) {
 
 		metrics = append(metrics,
 			dto.Metric{
-				Name:       dto.MetricMDStatLevel,
+				Name:       MetricLevel,
 				Value:      level,
 				Attributes: []dto.MetricAttribute{resourceAttr, mdNameAttr},
 			},
 			dto.Metric{
-				Name:       dto.MetricMDStatNumDisks,
+				Name:       MetricNumDisks,
 				Value:      stat.NumDisks,
 				Attributes: []dto.MetricAttribute{resourceAttr, mdNameAttr},
 			},
 			dto.Metric{
-				Name:       dto.MetricMDStatArrayState,
+				Name:       MetricArrayState,
 				Value:      MDStatsArrayStates[stat.ArrayState],
 				Attributes: []dto.MetricAttribute{resourceAttr, mdNameAttr},
 			},
 			dto.Metric{
-				Name:       dto.MetricMDStatArraySize,
+				Name:       MetricArraySize,
 				Value:      stat.ArraySizeKBytes,
 				Attributes: []dto.MetricAttribute{resourceAttr, mdNameAttr},
 			})
@@ -89,32 +89,32 @@ func (c *MDStatCollector) Collect() ([]dto.Metric, error) {
 		if stat.StatRaidWithRedundancy != nil {
 			metrics = append(metrics,
 				dto.Metric{
-					Name:       dto.MetricMDStatSyncAction,
+					Name:       MetricSyncAction,
 					Value:      MDStatsSyncActions[stat.StatRaidWithRedundancy.SyncAction],
 					Attributes: []dto.MetricAttribute{resourceAttr, mdNameAttr},
 				},
 				dto.Metric{
-					Name:       dto.MetricMDStatNumDegraded,
+					Name:       MetricNumDegraded,
 					Value:      stat.StatRaidWithRedundancy.NumDegraded,
 					Attributes: []dto.MetricAttribute{resourceAttr, mdNameAttr},
 				},
 				dto.Metric{
-					Name:       dto.MetricMDStatMismatchCnt,
+					Name:       MetricMismatchCnt,
 					Value:      stat.StatRaidWithRedundancy.MismatchCnt,
 					Attributes: []dto.MetricAttribute{resourceAttr, mdNameAttr},
 				},
 				dto.Metric{
-					Name:       dto.MetricMDStatSyncCompletedSectors,
+					Name:       MetricSyncCompletedSectors,
 					Value:      stat.StatRaidWithRedundancy.SyncCompletedSectors,
 					Attributes: []dto.MetricAttribute{resourceAttr, mdNameAttr},
 				},
 				dto.Metric{
-					Name:       dto.MetricMDStatNumSectors,
+					Name:       MetricNumSectors,
 					Value:      stat.StatRaidWithRedundancy.NumSectors,
 					Attributes: []dto.MetricAttribute{resourceAttr, mdNameAttr},
 				},
 				dto.Metric{
-					Name:       dto.MetricMDStatSyncSpeed,
+					Name:       MetricSyncSpeed,
 					Value:      stat.StatRaidWithRedundancy.SyncSpeed,
 					Attributes: []dto.MetricAttribute{resourceAttr, mdNameAttr},
 				},
@@ -123,7 +123,7 @@ func (c *MDStatCollector) Collect() ([]dto.Metric, error) {
 		// Dev Stats
 		for devName, devStat := range stat.DevStats {
 			devNameAttr := dto.MetricAttribute{
-				Name:  dto.SetNameMDStatDev,
+				Name:  SetNameDev,
 				Value: devName,
 			}
 
@@ -132,7 +132,7 @@ func (c *MDStatCollector) Collect() ([]dto.Metric, error) {
 			if devStat.Slot == "none" {
 				metrics = append(metrics,
 					dto.Metric{
-						Name:       dto.MetricMDStatDevSlot,
+						Name:       MetricDevSlot,
 						Value:      -1,
 						Attributes: []dto.MetricAttribute{resourceAttr, mdNameAttr, devNameAttr},
 					},
@@ -140,7 +140,7 @@ func (c *MDStatCollector) Collect() ([]dto.Metric, error) {
 			} else {
 				metrics = append(metrics,
 					dto.Metric{
-						Name:       dto.MetricMDStatDevSlot,
+						Name:       MetricDevSlot,
 						Value:      devStat.Slot,
 						Attributes: []dto.MetricAttribute{resourceAttr, mdNameAttr, devNameAttr},
 					},
@@ -150,12 +150,12 @@ func (c *MDStatCollector) Collect() ([]dto.Metric, error) {
 			metrics = append(metrics,
 				// State
 				dto.Metric{
-					Name:       dto.MetricMDStatDevState,
+					Name:       MetricDevState,
 					Value:      MDStatsDevStates[devStat.State],
 					Attributes: []dto.MetricAttribute{resourceAttr, mdNameAttr, devNameAttr},
 				},
 				dto.Metric{
-					Name:       dto.MetricMDStatDevErrors,
+					Name:       MetricDevErrors,
 					Value:      devStat.Errors,
 					Attributes: []dto.MetricAttribute{resourceAttr, mdNameAttr, devNameAttr},
 				},

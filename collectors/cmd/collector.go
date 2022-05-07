@@ -108,7 +108,7 @@ func (c *CmdCollector) processPipeLine(cfg *conf.CMDMetricConf, timeout int, out
 			Attributes: append([]dto.MetricAttribute{
 				{
 					Name:  dto.ResourceAttr,
-					Value: dto.ResourceCMD,
+					Value: ResourceName,
 				},
 			}, cfg.Attributes...),
 			Value: values[i],

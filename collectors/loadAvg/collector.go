@@ -49,28 +49,28 @@ func (c *LoadAvgCollector) Collect() ([]dto.Metric, error) {
 	attrs := []dto.MetricAttribute{
 		{
 			Name:  dto.ResourceAttr,
-			Value: dto.ResourceLoadAvg,
+			Value: ResourceName,
 		},
 	}
 
 	return []dto.Metric{
 		{
-			Name:       dto.MetricLoadAvgLast,
+			Name:       MetricLast,
 			Value:      loadAvg.Last,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricLoadAvgLast5m,
+			Name:       MetricLast5m,
 			Value:      loadAvg.Last5m,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricLoadAvgLast15m,
+			Name:       MetricLast15m,
 			Value:      loadAvg.Last15m,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricLoadAvgKernelSchedulingEntities,
+			Name:       MetricKernelSchedulingEntities,
 			Value:      loadAvg.KernelSchedulingEntities,
 			Attributes: attrs,
 		},

@@ -1,4 +1,4 @@
-package dto
+package netStat
 
 /*
 netstat -s = content of file /proc/net/netstat + content of file /proc/net/snmp
@@ -96,9 +96,4 @@ netstat -s = content of file /proc/net/netstat + content of file /proc/net/snmp
 // Netstat describes the content of the files /proc/net/netstat, /proc/net/snmp (/proc/$PID/net/netstat, /proc/$PID/net/snmp)
 type Netstat struct {
 	Ext map[string]map[string]int64
-}
-
-// NetSNMP6 describes the content of the file /proc/net/snmp6 (/proc/$PID/net/snmp6)
-type NetSNMP6 struct {
-	Counters map[string]int64
 }

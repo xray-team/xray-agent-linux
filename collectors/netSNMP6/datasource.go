@@ -4,7 +4,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
 
@@ -26,7 +25,7 @@ func NewNetSNMP6DataSource(filePath, logPrefix string) *netSNMP6DataSource {
 }
 
 // GetData parse file /proc/net/snmp6 (/proc/$PID/net/snmp6)
-func (ds *netSNMP6DataSource) GetData() (*dto.NetSNMP6, error) {
+func (ds *netSNMP6DataSource) GetData() (*NetSNMP6, error) {
 	// read file to memory
 	lines, err := reader.ReadMultilineFile(ds.filePath, ds.logPrefix)
 	if err != nil {
@@ -34,7 +33,7 @@ func (ds *netSNMP6DataSource) GetData() (*dto.NetSNMP6, error) {
 	}
 
 	// Initialize map for results
-	var out dto.NetSNMP6
+	var out NetSNMP6
 	out.Counters = make(map[string]int64, len(lines))
 
 	// loop for file lines

@@ -47,12 +47,12 @@ func (c *EntropyCollector) Collect() ([]dto.Metric, error) {
 
 	return []dto.Metric{
 		{
-			Name:  dto.MetricEntropyAvailable,
+			Name:  MetricEntropyAvailable,
 			Value: data.Available,
 			Attributes: []dto.MetricAttribute{
 				{
 					Name:  dto.ResourceAttr,
-					Value: dto.ResourceEntropy,
+					Value: ResourceName,
 				},
 			},
 		},

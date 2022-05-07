@@ -41,7 +41,7 @@ func (c *UptimeCollector) GetName() string {
 
 // Collect collects and returns metrics.
 func (c *UptimeCollector) Collect() ([]dto.Metric, error) {
-	uptime, err := c.DataSource.GetData()
+	data, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err
 	}
@@ -49,19 +49,19 @@ func (c *UptimeCollector) Collect() ([]dto.Metric, error) {
 	attrs := []dto.MetricAttribute{
 		{
 			Name:  dto.ResourceAttr,
-			Value: dto.ResourceUptime,
+			Value: ResourceName,
 		},
 	}
 
 	return []dto.Metric{
 		{
-			Name:       dto.MetricUptimeUptime,
-			Value:      uptime.Uptime,
+			Name:       MetricUptime,
+			Value:      data.Uptime,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricUptimeIdle,
-			Value:      uptime.Idle,
+			Name:       MetricIdle,
+			Value:      data.Idle,
 			Attributes: attrs,
 		},
 	}, nil

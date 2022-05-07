@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/xray-team/xray-agent-linux/collectors/netSNMP6"
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
@@ -15,7 +14,7 @@ func Test_netSNMP6DataSource_GetData(t *testing.T) {
 	tests := []struct {
 		caseDescription string
 		filePath        string
-		want            *dto.NetSNMP6
+		want            *netSNMP6.NetSNMP6
 		wantErr         bool
 	}{
 		{
@@ -27,7 +26,7 @@ func Test_netSNMP6DataSource_GetData(t *testing.T) {
 		{
 			caseDescription: "snmp6",
 			filePath:        "./testFiles/snmp6-kernel5.4.0-40-generic",
-			want: &dto.NetSNMP6{
+			want: &netSNMP6.NetSNMP6{
 				Counters: map[string]int64{
 					"Ip6InReceives":                  1,
 					"Ip6InHdrErrors":                 2,

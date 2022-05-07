@@ -23,6 +23,27 @@ const (
 	SlotFile   = "slot"
 )
 
+// Metrics
+const (
+	ResourceName = "MDStat"
+	SetNameMD    = "MD"
+	SetNameDev   = "Dev"
+
+	MetricLevel                = "Level"
+	MetricNumDisks             = "NumDisks"
+	MetricArrayState           = "ArrayState"
+	MetricArraySize            = "ArraySize"
+	MetricSyncAction           = "SyncAction"
+	MetricNumDegraded          = "NumDegraded"
+	MetricMismatchCnt          = "MismatchCnt"
+	MetricSyncCompletedSectors = "SyncCompletedSectors"
+	MetricNumSectors           = "NumSectors"
+	MetricSyncSpeed            = "SyncSpeed"
+	MetricDevSlot              = "Slot"
+	MetricDevState             = "State"
+	MetricDevErrors            = "Errors"
+)
+
 var (
 	MDStatsArrayStates = map[string]int{
 		"clear":         1, // no devices, no size, no level

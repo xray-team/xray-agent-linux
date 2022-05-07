@@ -109,72 +109,72 @@ func genMetricsNetDevWireless(ifName string, iwconfig *Iwconfig) []dto.Metric {
 	attrs := []dto.MetricAttribute{
 		{
 			Name:  dto.ResourceAttr,
-			Value: dto.ResourceWireless,
+			Value: ResourceName,
 		},
 		{
-			Name:  dto.SetNameWirelessInterface,
+			Name:  SetNameInterface,
 			Value: ifName,
 		},
 	}
 
 	return []dto.Metric{
 		{
-			Name:       dto.MetricWirelessFrequency,
+			Name:       MetricWirelessFrequency,
 			Value:      iwconfig.Frequency,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricWirelessBitRate,
+			Name:       MetricWirelessBitRate,
 			Value:      iwconfig.BitRate,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricWirelessTxPower,
+			Name:       MetricWirelessTxPower,
 			Value:      iwconfig.TxPower,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricWirelessLinkQuality,
+			Name:       MetricWirelessLinkQuality,
 			Value:      iwconfig.LinkQuality,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricWirelessLinkQualityLimit,
+			Name:       MetricWirelessLinkQualityLimit,
 			Value:      iwconfig.LinkQualityLimit,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricWirelessSignalLevel,
+			Name:       MetricWirelessSignalLevel,
 			Value:      iwconfig.SignalLevel,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricWirelessRxInvalidNwid,
+			Name:       MetricWirelessRxInvalidNwid,
 			Value:      iwconfig.RxInvalidNwid,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricWirelessRxInvalidCrypt,
+			Name:       MetricWirelessRxInvalidCrypt,
 			Value:      iwconfig.RxInvalidCrypt,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricWirelessRxInvalidFrag,
+			Name:       MetricWirelessRxInvalidFrag,
 			Value:      iwconfig.RxInvalidFrag,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricWirelessTxExcessiveRetries,
+			Name:       MetricWirelessTxExcessiveRetries,
 			Value:      iwconfig.TxExcessiveRetries,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricWirelessInvalidMisc,
+			Name:       MetricWirelessInvalidMisc,
 			Value:      iwconfig.InvalidMisc,
 			Attributes: attrs,
 		},
 		{
-			Name:       dto.MetricWirelessMissedBeacon,
+			Name:       MetricWirelessMissedBeacon,
 			Value:      iwconfig.MissedBeacon,
 			Attributes: attrs,
 		},
