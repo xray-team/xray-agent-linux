@@ -21,7 +21,7 @@ type MDStatCollector struct {
 // NewMDStatCollector returns a new collector object.
 func NewMDStatCollector(cfg *conf.CollectorsConf, dataSource MDStatDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameMDStat)
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 		return nil
 	}
 
@@ -38,7 +38,7 @@ func NewMDStatCollector(cfg *conf.CollectorsConf, dataSource MDStatDataSource) d
 
 // GetName returns the collector's name.
 func (c *MDStatCollector) GetName() string {
-	return dto.CollectorNameMDStat
+	return CollectorName
 }
 
 // Collect collects and returns metrics.

@@ -1,3 +1,6 @@
 package uptime
 
-const UptimePath = "/uptime"
+const (
+	CollectorName = "Uptime"
+	UptimePath    = "/uptime"
+)

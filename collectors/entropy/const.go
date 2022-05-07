@@ -1,3 +1,6 @@
 package entropy
 
-const EntropyPath = "/sys/kernel/random/entropy_avail"
+const (
+	CollectorName = "Entropy"
+	EntropyPath   = "/sys/kernel/random/entropy_avail"
+)

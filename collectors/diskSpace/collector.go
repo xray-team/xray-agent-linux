@@ -23,7 +23,7 @@ type DiskSpaceCollector struct {
 // NewDiskSpaceCollector returns a new collector object.
 func NewDiskSpaceCollector(cfg *conf.CollectorsConf, mountsDataSource MountsDataSource) dto.Collector {
 	if cfg == nil || mountsDataSource == nil {
-		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameDiskSpace)
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
@@ -41,7 +41,7 @@ func NewDiskSpaceCollector(cfg *conf.CollectorsConf, mountsDataSource MountsData
 
 // GetName returns the collector's name.
 func (c *DiskSpaceCollector) GetName() string {
-	return dto.CollectorNameDiskSpace
+	return CollectorName
 }
 
 // Collect collects and returns metrics.

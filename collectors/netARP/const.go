@@ -1,3 +1,6 @@
 package netARP
 
-const NetArpPath = "/net/arp"
+const (
+	CollectorName = "NetARP"
+	NetArpPath    = "/net/arp"
+)

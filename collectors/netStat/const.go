@@ -1,3 +1,6 @@
 package netStat
 
-const NetStatPath = "/net/netstat"
+const (
+	CollectorName = "NetStat"
+	NetStatPath   = "/net/netstat"
+)

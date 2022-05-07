@@ -17,13 +17,13 @@ type PSCollector struct {
 
 // GetName returns the collector's name.
 func (c *PSCollector) GetName() string {
-	return dto.CollectorNamePS
+	return CollectorName
 }
 
 // NewPSCollector returns a new collector object.
 func NewPSCollector(cfg *conf.CollectorsConf, dataSource PSDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNamePS)
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}

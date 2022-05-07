@@ -1,3 +1,6 @@
 package diskSpace
 
-const MountsPath = "/mounts"
+const (
+	CollectorName = "DiskSpace"
+	MountsPath    = "/mounts"
+)

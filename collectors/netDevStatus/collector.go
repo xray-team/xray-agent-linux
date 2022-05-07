@@ -20,7 +20,7 @@ type NetDevStatusCollector struct {
 // NewNetDevStatusCollector returns a new collector object.
 func NewNetDevStatusCollector(cfg *conf.CollectorsConf, classNetDataSource ClassNetStatusDataSource) dto.Collector {
 	if cfg == nil || classNetDataSource == nil {
-		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameNetDevStatus)
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
@@ -38,7 +38,7 @@ func NewNetDevStatusCollector(cfg *conf.CollectorsConf, classNetDataSource Class
 
 // GetName returns the collector's name.
 func (c *NetDevStatusCollector) GetName() string {
-	return dto.CollectorNameNetDevStatus
+	return CollectorName
 }
 
 // Collect collects and returns metrics.
@@ -108,7 +108,7 @@ func genMetricsNetDevStatus(ifName string, status *NetDevStatus) []dto.Metric {
 	return []dto.Metric{
 		{
 			Name:       dto.MetricNetDevStatusOperState,
-			Value:      dto.NetDevOperStates[strings.ToLower(status.OperState)],
+			Value:      NetDevOperStates[strings.ToLower(status.OperState)],
 			Attributes: attrs,
 		},
 		{
@@ -123,7 +123,7 @@ func genMetricsNetDevStatus(ifName string, status *NetDevStatus) []dto.Metric {
 		},
 		{
 			Name:       dto.MetricNetDevStatusDuplex,
-			Value:      dto.NetDevDuplexStates[strings.ToLower(status.Duplex)],
+			Value:      NetDevDuplexStates[strings.ToLower(status.Duplex)],
 			Attributes: attrs,
 		},
 		{

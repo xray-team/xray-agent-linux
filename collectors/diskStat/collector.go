@@ -23,7 +23,7 @@ type DiskStatCollector struct {
 // NewDiskStatCollector returns a new collector object.
 func NewDiskStatCollector(cfg *conf.CollectorsConf, diskStatDataSource DiskStatDataSource, classBlockDataSource ClassBlockDataSource) dto.Collector {
 	if cfg == nil || diskStatDataSource == nil || classBlockDataSource == nil {
-		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameDiskStat)
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
@@ -42,7 +42,7 @@ func NewDiskStatCollector(cfg *conf.CollectorsConf, diskStatDataSource DiskStatD
 
 // GetName returns the collector's name.
 func (c *DiskStatCollector) GetName() string {
-	return dto.CollectorNameDiskStat
+	return CollectorName
 }
 
 // Collect collects and returns metrics.

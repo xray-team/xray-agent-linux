@@ -1,3 +1,6 @@
 package loadAvg
 
-const LoadAvgPath = "/loadavg"
+const (
+	CollectorName = "LoadAvg"
+	LoadAvgPath   = "/loadavg"
+)

@@ -24,7 +24,7 @@ type CmdCollector struct {
 // NewCmdCollector returns a new collector object.
 func NewCmdCollector(cfg *conf.CollectorsConf, dataSource CmdDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameCMD)
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
@@ -42,7 +42,7 @@ func NewCmdCollector(cfg *conf.CollectorsConf, dataSource CmdDataSource) dto.Col
 
 // GetName returns the collector's name.
 func (c *CmdCollector) GetName() string {
-	return dto.CollectorNameCMD
+	return CollectorName
 }
 
 // Collect collects and returns metrics.
@@ -52,7 +52,7 @@ func (c *CmdCollector) Collect() ([]dto.Metric, error) {
 	for i := range c.Config.Metrics {
 		err := c.processPipeLine(&c.Config.Metrics[i], c.Config.Timeout, &metrics)
 		if err != nil {
-			logger.Log.Error.Printf(logger.MessageCmdRunError, dto.CollectorNameCMD, err.Error())
+			logger.Log.Error.Printf(logger.MessageCmdRunError, CollectorName, err.Error())
 		}
 	}
 

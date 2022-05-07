@@ -1,6 +1,8 @@
 package mdStat
 
 const (
+	CollectorName = "MDStat"
+
 	MDStatPath  = "/sys/block"
 	MDSubFolder = "md"
 	// in md directory

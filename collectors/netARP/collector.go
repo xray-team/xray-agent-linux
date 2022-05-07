@@ -20,7 +20,7 @@ type NetARPCollector struct {
 // NewNetARPCollector returns a new collector object.
 func NewNetARPCollector(cfg *conf.CollectorsConf, dataSource NetARPDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameNetARP)
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
@@ -38,7 +38,7 @@ func NewNetARPCollector(cfg *conf.CollectorsConf, dataSource NetARPDataSource) d
 
 // GetName returns the collector's name.
 func (c *NetARPCollector) GetName() string {
-	return dto.CollectorNameNetARP
+	return CollectorName
 }
 
 // Collect collects and returns metrics.

@@ -6,7 +6,6 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
@@ -25,7 +24,7 @@ func (ds *mdStatDataSource) parseDevs(path string) (map[string]DevStats, error) 
 		if re.MatchString(d.Name()) {
 			devStat, err := ds.parseDev(filepath.Join(path, d.Name()))
 			if err != nil {
-				logger.Log.Debug.Printf(logger.MessageError, dto.CollectorNameMDStat, fmt.Sprintf("cannot parse dev %s: %s", d.Name(), err.Error()))
+				logger.Log.Debug.Printf(logger.MessageError, CollectorName, fmt.Sprintf("cannot parse dev %s: %s", d.Name(), err.Error()))
 
 				continue
 			}

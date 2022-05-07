@@ -1,3 +1,6 @@
 package netDev
 
-const NetDevPath = "/net/dev"
+const (
+	CollectorName = "NetDev"
+	NetDevPath    = "/net/dev"
+)

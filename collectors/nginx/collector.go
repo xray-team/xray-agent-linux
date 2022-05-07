@@ -33,7 +33,7 @@ type NginxStubStatusDataSource interface {
 
 // GetName returns the collector's name.
 func (c *NginxStubStatusCollector) GetName() string {
-	return dto.CollectorNameNginx
+	return CollectorName
 }
 
 // Collect collects and returns metrics.

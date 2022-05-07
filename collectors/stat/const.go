@@ -1,3 +1,6 @@
 package stat
 
-const StatPath = "/stat"
+const (
+	CollectorName = "Stat"
+	StatPath      = "/stat"
+)

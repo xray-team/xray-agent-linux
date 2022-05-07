@@ -1,3 +1,6 @@
 package netSNMP6
 
-const NetSNMP6Path = "/net/snmp6"
+const (
+	CollectorName = "NetSNMP6"
+	NetSNMP6Path  = "/net/snmp6"
+)

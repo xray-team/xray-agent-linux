@@ -1,3 +1,6 @@
 package cpuInfo
 
-const CPUInfoPath = "/cpuinfo"
+const (
+	CollectorName = "CPUInfo"
+	CPUInfoPath   = "/cpuinfo"
+)

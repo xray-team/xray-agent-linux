@@ -1,3 +1,6 @@
 package diskStat
 
-const DiskStatsPath = "/diskstats"
+const (
+	CollectorName = "DiskStat"
+	DiskStatsPath = "/diskstats"
+)

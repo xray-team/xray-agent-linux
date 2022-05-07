@@ -1,3 +1,6 @@
 package memoryInfo
 
-const MemInfoPath = "/meminfo"
+const (
+	CollectorName = "MemoryInfo"
+	MemInfoPath   = "/meminfo"
+)

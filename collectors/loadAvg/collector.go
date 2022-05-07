@@ -18,7 +18,7 @@ type LoadAvgCollector struct {
 // NewLoadAvgCollector returns a new collector object.
 func NewLoadAvgCollector(cfg *conf.CollectorsConf, dataSource LoadAvgDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameLoadAvg)
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
@@ -36,7 +36,7 @@ func NewLoadAvgCollector(cfg *conf.CollectorsConf, dataSource LoadAvgDataSource)
 
 // GetName returns the collector's name.
 func (c *LoadAvgCollector) GetName() string {
-	return dto.CollectorNameLoadAvg
+	return CollectorName
 }
 
 // Collect collects and returns metrics.

@@ -20,13 +20,13 @@ type PSStatCollector struct {
 
 // GetName returns the collector's name.
 func (c *PSStatCollector) GetName() string {
-	return dto.CollectorNamePSStat
+	return CollectorName
 }
 
 // NewPSStatCollector returns a new collector object.
 func NewPSStatCollector(cfg *conf.CollectorsConf, dataSource PSStatDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNamePSStat)
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}

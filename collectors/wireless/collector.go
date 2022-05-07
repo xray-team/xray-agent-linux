@@ -25,7 +25,7 @@ type WirelessCollector struct {
 // NewWirelessCollector returns a new collector object.
 func NewWirelessCollector(cfg *conf.CollectorsConf, wirelessDataSource WirelessDataSource, classNetDataSource ClassNetDataSource) dto.Collector {
 	if cfg == nil || wirelessDataSource == nil || classNetDataSource == nil {
-		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameWireless)
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
@@ -44,7 +44,7 @@ func NewWirelessCollector(cfg *conf.CollectorsConf, wirelessDataSource WirelessD
 
 // GetName returns the collector's name.
 func (c *WirelessCollector) GetName() string {
-	return dto.CollectorNameWireless
+	return CollectorName
 }
 
 // Collect collects and returns metrics.

@@ -18,7 +18,7 @@ type MemoryInfoCollector struct {
 // NewMemoryInfoCollector returns a new collector object.
 func NewMemoryInfoCollector(cfg *conf.CollectorsConf, dataSource MemoryDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
-		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameMemoryInfo)
+		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
@@ -36,7 +36,7 @@ func NewMemoryInfoCollector(cfg *conf.CollectorsConf, dataSource MemoryDataSourc
 
 // GetName returns the collector's name.
 func (c *MemoryInfoCollector) GetName() string {
-	return dto.CollectorNameMemoryInfo
+	return CollectorName
 }
 
 // Collect collects and returns metrics.
