@@ -3,20 +3,18 @@ package nginx
 import (
 	"reflect"
 	"testing"
-
-	"github.com/xray-team/xray-agent-linux/dto"
 )
 
 func Test_parseStubStatus(t *testing.T) {
 	tests := []struct {
 		name    string
 		data    []byte
-		want    *dto.NginxStubStatus
+		want    *StubStatus
 		wantErr bool
 	}{
 		{
 			data: []byte("Active connections: 1 \nserver accepts handled requests\n 2 3 4 \nReading: 5 Writing: 6 Waiting: 7 \n"),
-			want: &dto.NginxStubStatus{
+			want: &StubStatus{
 				Active:   1,
 				Accepts:  2,
 				Handled:  3,

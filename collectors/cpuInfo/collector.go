@@ -9,7 +9,7 @@ import (
 )
 
 type CPUInfoDataSource interface {
-	GetData() (*dto.CPUInfo, error)
+	GetData() (*CPUInfo, error)
 }
 
 type CPUInfoCollector struct {

@@ -10,7 +10,7 @@ import (
 )
 
 type PSStatDataSource interface {
-	GetData() (*dto.PSStat, error)
+	GetData() (*PSStat, error)
 }
 
 type PSStatCollector struct {

@@ -1,4 +1,4 @@
-package dto
+package cpuInfo
 
 // CPUInfo describes the content of the file /proc/cpuinfo
 type CPUInfo struct {

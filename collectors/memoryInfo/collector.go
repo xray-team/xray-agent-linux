@@ -7,7 +7,7 @@ import (
 )
 
 type MemoryDataSource interface {
-	GetData() (*dto.MemoryInfo, error)
+	GetData() (*MemoryInfo, error)
 }
 
 type MemoryInfoCollector struct {

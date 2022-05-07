@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/xray-team/xray-agent-linux/collectors/mdStat"
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
@@ -15,7 +14,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 	tests := []struct {
 		name    string
 		path    string
-		want    *dto.MDStats
+		want    *mdStat.MDStats
 		wantErr bool
 	}{
 		{
@@ -27,15 +26,15 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 		{
 			name: "RAID1-create-missing",
 			path: "./testFiles/RAID1-create-missing",
-			want: &dto.MDStats{
-				Stats: map[string]dto.MDStat{
+			want: &mdStat.MDStats{
+				Stats: map[string]mdStat.MDStat{
 					"md0": {
 						Level:               "raid1",
 						NumDisks:            2,
 						ArrayState:          "clean",
 						ArraySizeKBytes:     0,
 						ComponentSizeKBytes: 7334912,
-						StatRaidWithRedundancy: &dto.StatRaidWithRedundancy{
+						StatRaidWithRedundancy: &mdStat.StatRaidWithRedundancy{
 							SyncAction:           "idle",
 							NumDegraded:          1,
 							MismatchCnt:          0,
@@ -43,7 +42,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 							NumSectors:           0,
 							SyncSpeed:            0,
 						},
-						DevStats: map[string]dto.DevStats{
+						DevStats: map[string]mdStat.DevStats{
 							"sdb1": {
 								Slot:   "0",
 								State:  "in_sync",
@@ -57,7 +56,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 						ArrayState:          "clean",
 						ArraySizeKBytes:     0,
 						ComponentSizeKBytes: 13621248,
-						StatRaidWithRedundancy: &dto.StatRaidWithRedundancy{
+						StatRaidWithRedundancy: &mdStat.StatRaidWithRedundancy{
 							SyncAction:           "idle",
 							NumDegraded:          1,
 							MismatchCnt:          0,
@@ -65,7 +64,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 							NumSectors:           0,
 							SyncSpeed:            0,
 						},
-						DevStats: map[string]dto.DevStats{
+						DevStats: map[string]mdStat.DevStats{
 							"sdb2": {
 								Slot:   "0",
 								State:  "in_sync",
@@ -79,15 +78,15 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 		{
 			name: "RAID1-resync-DELAYED",
 			path: "./testFiles/RAID1-resync-DELAYED",
-			want: &dto.MDStats{
-				Stats: map[string]dto.MDStat{
+			want: &mdStat.MDStats{
+				Stats: map[string]mdStat.MDStat{
 					"md0": {
 						Level:               "raid1",
 						NumDisks:            2,
 						ArrayState:          "clean",
 						ArraySizeKBytes:     0,
 						ComponentSizeKBytes: 7334912,
-						StatRaidWithRedundancy: &dto.StatRaidWithRedundancy{
+						StatRaidWithRedundancy: &mdStat.StatRaidWithRedundancy{
 							SyncAction:           "recover",
 							NumDegraded:          1,
 							MismatchCnt:          0,
@@ -95,7 +94,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 							NumSectors:           14669824,
 							SyncSpeed:            200246,
 						},
-						DevStats: map[string]dto.DevStats{
+						DevStats: map[string]mdStat.DevStats{
 							"sdb1": {
 								Slot:   "0",
 								State:  "in_sync",
@@ -114,7 +113,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 						ArrayState:          "clean",
 						ArraySizeKBytes:     0,
 						ComponentSizeKBytes: 13621248,
-						StatRaidWithRedundancy: &dto.StatRaidWithRedundancy{
+						StatRaidWithRedundancy: &mdStat.StatRaidWithRedundancy{
 							SyncAction:           "recover",
 							NumDegraded:          1,
 							MismatchCnt:          0,
@@ -122,7 +121,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 							NumSectors:           0,
 							SyncSpeed:            0,
 						},
-						DevStats: map[string]dto.DevStats{
+						DevStats: map[string]mdStat.DevStats{
 							"sdb2": {
 								Slot:   "0",
 								State:  "in_sync",
@@ -141,15 +140,15 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 		{
 			name: "RAID1-ok",
 			path: "./testFiles/RAID1-ok",
-			want: &dto.MDStats{
-				Stats: map[string]dto.MDStat{
+			want: &mdStat.MDStats{
+				Stats: map[string]mdStat.MDStat{
 					"md0": {
 						Level:               "raid1",
 						NumDisks:            2,
 						ArrayState:          "clean",
 						ArraySizeKBytes:     0,
 						ComponentSizeKBytes: 7334912,
-						StatRaidWithRedundancy: &dto.StatRaidWithRedundancy{
+						StatRaidWithRedundancy: &mdStat.StatRaidWithRedundancy{
 							SyncAction:           "idle",
 							NumDegraded:          0,
 							MismatchCnt:          0,
@@ -157,7 +156,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 							NumSectors:           0,
 							SyncSpeed:            0,
 						},
-						DevStats: map[string]dto.DevStats{
+						DevStats: map[string]mdStat.DevStats{
 							"sdb1": {
 								Slot:   "0",
 								State:  "in_sync",
@@ -176,7 +175,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 						ArrayState:          "clean",
 						ArraySizeKBytes:     0,
 						ComponentSizeKBytes: 13621248,
-						StatRaidWithRedundancy: &dto.StatRaidWithRedundancy{
+						StatRaidWithRedundancy: &mdStat.StatRaidWithRedundancy{
 							SyncAction:           "idle",
 							NumDegraded:          0,
 							MismatchCnt:          0,
@@ -184,7 +183,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 							NumSectors:           0,
 							SyncSpeed:            0,
 						},
-						DevStats: map[string]dto.DevStats{
+						DevStats: map[string]mdStat.DevStats{
 							"sdb2": {
 								Slot:   "0",
 								State:  "in_sync",
@@ -203,15 +202,15 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 		{
 			name: "RAID1-with-spare",
 			path: "./testFiles/RAID1-with-spare",
-			want: &dto.MDStats{
-				Stats: map[string]dto.MDStat{
+			want: &mdStat.MDStats{
+				Stats: map[string]mdStat.MDStat{
 					"md0": {
 						Level:               "raid1",
 						NumDisks:            2,
 						ArrayState:          "clean",
 						ArraySizeKBytes:     0,
 						ComponentSizeKBytes: 7334912,
-						StatRaidWithRedundancy: &dto.StatRaidWithRedundancy{
+						StatRaidWithRedundancy: &mdStat.StatRaidWithRedundancy{
 							SyncAction:           "idle",
 							NumDegraded:          0,
 							MismatchCnt:          0,
@@ -219,7 +218,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 							NumSectors:           0,
 							SyncSpeed:            0,
 						},
-						DevStats: map[string]dto.DevStats{
+						DevStats: map[string]mdStat.DevStats{
 							"sdb1": {
 								Slot:   "0",
 								State:  "in_sync",
@@ -243,7 +242,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 						ArrayState:          "clean",
 						ArraySizeKBytes:     0,
 						ComponentSizeKBytes: 13621248,
-						StatRaidWithRedundancy: &dto.StatRaidWithRedundancy{
+						StatRaidWithRedundancy: &mdStat.StatRaidWithRedundancy{
 							SyncAction:           "idle",
 							NumDegraded:          0,
 							MismatchCnt:          0,
@@ -251,7 +250,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 							NumSectors:           0,
 							SyncSpeed:            0,
 						},
-						DevStats: map[string]dto.DevStats{
+						DevStats: map[string]mdStat.DevStats{
 							"sdb2": {
 								Slot:   "0",
 								State:  "in_sync",
@@ -275,15 +274,15 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 		{
 			name: "RAID5-and-RAID0",
 			path: "./testFiles/RAID5-and-RAID0",
-			want: &dto.MDStats{
-				Stats: map[string]dto.MDStat{
+			want: &mdStat.MDStats{
+				Stats: map[string]mdStat.MDStat{
 					"md0": {
 						Level:               "raid5",
 						NumDisks:            3,
 						ArrayState:          "clean",
 						ArraySizeKBytes:     0,
 						ComponentSizeKBytes: 7334912,
-						StatRaidWithRedundancy: &dto.StatRaidWithRedundancy{
+						StatRaidWithRedundancy: &mdStat.StatRaidWithRedundancy{
 							SyncAction:           "idle",
 							NumDegraded:          0,
 							MismatchCnt:          0,
@@ -291,7 +290,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 							NumSectors:           0,
 							SyncSpeed:            0,
 						},
-						DevStats: map[string]dto.DevStats{
+						DevStats: map[string]mdStat.DevStats{
 							"sdb1": {
 								Slot:   "0",
 								State:  "in_sync",
@@ -316,7 +315,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 						ArraySizeKBytes:        0,
 						ComponentSizeKBytes:    0,
 						StatRaidWithRedundancy: nil,
-						DevStats: map[string]dto.DevStats{
+						DevStats: map[string]mdStat.DevStats{
 							"sdb2": {
 								Slot:   "0",
 								State:  "in_sync",
@@ -335,15 +334,15 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 		{
 			name: "RAID6",
 			path: "./testFiles/RAID6",
-			want: &dto.MDStats{
-				Stats: map[string]dto.MDStat{
+			want: &mdStat.MDStats{
+				Stats: map[string]mdStat.MDStat{
 					"md0": {
 						Level:               "raid6",
 						NumDisks:            4,
 						ArrayState:          "clean",
 						ArraySizeKBytes:     0,
 						ComponentSizeKBytes: 10475520,
-						StatRaidWithRedundancy: &dto.StatRaidWithRedundancy{
+						StatRaidWithRedundancy: &mdStat.StatRaidWithRedundancy{
 							SyncAction:           "idle",
 							NumDegraded:          0,
 							MismatchCnt:          0,
@@ -351,7 +350,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 							NumSectors:           0,
 							SyncSpeed:            0,
 						},
-						DevStats: map[string]dto.DevStats{
+						DevStats: map[string]mdStat.DevStats{
 							"sdb1": {
 								Slot:   "0",
 								State:  "in_sync",
@@ -380,15 +379,15 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 		{
 			name: "RAID10",
 			path: "./testFiles/RAID10",
-			want: &dto.MDStats{
-				Stats: map[string]dto.MDStat{
+			want: &mdStat.MDStats{
+				Stats: map[string]mdStat.MDStat{
 					"md0": {
 						Level:               "raid10",
 						NumDisks:            4,
 						ArrayState:          "clean",
 						ArraySizeKBytes:     0,
 						ComponentSizeKBytes: 10475520,
-						StatRaidWithRedundancy: &dto.StatRaidWithRedundancy{
+						StatRaidWithRedundancy: &mdStat.StatRaidWithRedundancy{
 							SyncAction:           "idle",
 							NumDegraded:          0,
 							MismatchCnt:          0,
@@ -396,7 +395,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 							NumSectors:           0,
 							SyncSpeed:            0,
 						},
-						DevStats: map[string]dto.DevStats{
+						DevStats: map[string]mdStat.DevStats{
 							"sdb1": {
 								Slot:   "0",
 								State:  "in_sync",
@@ -425,15 +424,15 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 		{
 			name: "RAID1-fake",
 			path: "./testFiles/RAID1-fake",
-			want: &dto.MDStats{
-				Stats: map[string]dto.MDStat{
+			want: &mdStat.MDStats{
+				Stats: map[string]mdStat.MDStat{
 					"md0": {
 						Level:               "raid1",
 						NumDisks:            2,
 						ArrayState:          "clean",
 						ArraySizeKBytes:     10000000,
 						ComponentSizeKBytes: 7334912,
-						StatRaidWithRedundancy: &dto.StatRaidWithRedundancy{
+						StatRaidWithRedundancy: &mdStat.StatRaidWithRedundancy{
 							SyncAction:           "idle",
 							NumDegraded:          0,
 							MismatchCnt:          42,
@@ -441,7 +440,7 @@ func Test_mdStatDataSource_GetData(t *testing.T) {
 							NumSectors:           0,
 							SyncSpeed:            0,
 						},
-						DevStats: map[string]dto.DevStats{
+						DevStats: map[string]mdStat.DevStats{
 							"sdb1": {
 								Slot:   "0",
 								State:  "in_sync",

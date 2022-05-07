@@ -6,13 +6,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
 
-func (ds *mdStatDataSource) parseStatsRaidWithRedundancy(path string) (*dto.StatRaidWithRedundancy, error) {
+func (ds *mdStatDataSource) parseStatsRaidWithRedundancy(path string) (*StatRaidWithRedundancy, error) {
 	var (
-		out dto.StatRaidWithRedundancy
+		out StatRaidWithRedundancy
 		err error
 	)
 

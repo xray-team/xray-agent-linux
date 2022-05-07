@@ -1,6 +1,6 @@
-package dto
+package nginx
 
-type NginxStubStatus struct {
+type StubStatus struct {
 	Active   uint64 // The current number of active client connections including Waiting connections.
 	Accepts  uint64 // The total number of accepted client connections.
 	Handled  uint64 // The total number of handled connections.

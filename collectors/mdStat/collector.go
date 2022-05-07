@@ -10,7 +10,7 @@ import (
 )
 
 type MDStatDataSource interface {
-	GetData() (*dto.MDStats, error)
+	GetData() (*MDStats, error)
 }
 
 type MDStatCollector struct {

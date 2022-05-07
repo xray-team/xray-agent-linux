@@ -7,7 +7,7 @@ import (
 )
 
 type EntropyDataSource interface {
-	GetData() (*dto.Entropy, error)
+	GetData() (*Entropy, error)
 }
 
 type EntropyCollector struct {

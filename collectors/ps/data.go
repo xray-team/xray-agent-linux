@@ -1,4 +1,4 @@
-package dto
+package ps
 
 type PS struct {
 	Count            int64

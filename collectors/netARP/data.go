@@ -1,4 +1,4 @@
-package dto
+package netARP
 
 // NetArp describes the content of the file /proc/net/arp
 type NetArp struct {

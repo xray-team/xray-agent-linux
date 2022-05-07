@@ -1,4 +1,4 @@
-package dto
+package psStat
 
 type PSStat struct {
 	PS []ProcessStat

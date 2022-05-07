@@ -28,7 +28,7 @@ func NewNginxStubStatusCollector(cfg *conf.CollectorsConf, dataSource NginxStubS
 }
 
 type NginxStubStatusDataSource interface {
-	GetData() (*dto.NginxStubStatus, error)
+	GetData() (*StubStatus, error)
 }
 
 // GetName returns the collector's name.

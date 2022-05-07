@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
 
@@ -30,13 +29,13 @@ func NewPSDataSource(filePath, logPrefix string) *psDataSource {
 	}
 }
 
-func (ds *psDataSource) GetData() (*dto.PS, error) {
+func (ds *psDataSource) GetData() (*PS, error) {
 	f, err := reader.ReadDir(ds.filePath, ds.logPrefix)
 	if err != nil {
 		return nil, err
 	}
 
-	var ps dto.PS
+	var ps PS
 
 	for _, ff := range f {
 		if ff.IsDir() && psPidRe.Match([]byte(ff.Name())) {

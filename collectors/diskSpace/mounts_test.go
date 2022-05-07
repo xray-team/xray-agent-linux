@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/xray-team/xray-agent-linux/collectors/diskSpace"
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
@@ -15,19 +14,19 @@ func Test_mountsDataSource_GetData(t *testing.T) {
 	tests := []struct {
 		caseDescription string
 		filePath        string
-		want            []dto.Mounts
+		want            []diskSpace.Mounts
 		wantErr         bool
 	}{
 		{
 			caseDescription: "no file",
 			filePath:        "./testFiles/nofile",
-			want:            []dto.Mounts{},
+			want:            []diskSpace.Mounts{},
 			wantErr:         true,
 		},
 		{
 			caseDescription: "kernel4.15",
 			filePath:        "./testFiles/mounts-kernel4.15.0-66-generic",
-			want: []dto.Mounts{
+			want: []diskSpace.Mounts{
 				{
 					Dev:            "sysfs",
 					MountPoint:     "/sys",

@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
 
@@ -33,8 +32,8 @@ func NewUptimeDataSource(filePath, logPrefix string) *uptimeDataSource {
 	}
 }
 
-func (ds *uptimeDataSource) GetData() (*dto.Uptime, error) {
-	var uptime dto.Uptime
+func (ds *uptimeDataSource) GetData() (*Uptime, error) {
+	var uptime Uptime
 
 	// read file to memory
 	data, err := reader.ReadFile(ds.filePath, ds.logPrefix)

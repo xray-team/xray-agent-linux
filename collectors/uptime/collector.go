@@ -7,7 +7,7 @@ import (
 )
 
 type UptimeDataSource interface {
-	GetData() (*dto.Uptime, error)
+	GetData() (*Uptime, error)
 }
 
 type UptimeCollector struct {

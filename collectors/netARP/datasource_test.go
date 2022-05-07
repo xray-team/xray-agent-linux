@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/xray-team/xray-agent-linux/collectors/netARP"
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
@@ -19,7 +18,7 @@ func Test_netARPDataSource_GetData(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    []dto.ARPEntry
+		want    []netARP.ARPEntry
 		wantErr bool
 	}{
 		/*
@@ -30,7 +29,7 @@ func Test_netARPDataSource_GetData(t *testing.T) {
 		{
 			name: "success",
 			args: args{"./testFiles/netarp-ubuntu-2gb-nbg1-1_4.15.0-66-generic"},
-			want: []dto.ARPEntry{
+			want: []netARP.ARPEntry{
 				{IP: "172.31.1.1", HWType: "0x1", Flags: "0x2", HWAddress: "d2:74:7f:6e:37:e3", Mask: "*", Device: "eth0"},
 				{IP: "10.0.0.205", HWType: "0x1", Flags: "0x2", HWAddress: "00:16:3e:41:52:5c", Mask: "*", Device: "lxdbr0"},
 			},
@@ -39,7 +38,7 @@ func Test_netARPDataSource_GetData(t *testing.T) {
 		{
 			name: "success additional columns",
 			args: args{"./testFiles/netarp-ubuntu-2gb-nbg1-1_4.15.0-66-generic-add-col"},
-			want: []dto.ARPEntry{
+			want: []netARP.ARPEntry{
 				{IP: "172.31.1.1", HWType: "0x1", Flags: "0x2", HWAddress: "d2:74:7f:6e:37:e3", Mask: "*", Device: "eth0"},
 				{IP: "10.0.0.205", HWType: "0x1", Flags: "0x2", HWAddress: "00:16:3e:41:52:5c", Mask: "*", Device: "lxdbr0"},
 			},

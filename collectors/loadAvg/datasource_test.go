@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/xray-team/xray-agent-linux/collectors/loadAvg"
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
@@ -15,7 +14,7 @@ func Test_loadAvgDataSource_GetData(t *testing.T) {
 	tests := []struct {
 		caseDescription string
 		filePath        string
-		want            *dto.LoadAvg
+		want            *loadAvg.LoadAvg
 		wantErr         bool
 	}{
 		{
@@ -27,7 +26,7 @@ func Test_loadAvgDataSource_GetData(t *testing.T) {
 		{
 			caseDescription: "desktop",
 			filePath:        "./testFiles/loadavg-desktop",
-			want: &dto.LoadAvg{
+			want: &loadAvg.LoadAvg{
 				Last:                     1.61,
 				Last5m:                   2.11,
 				Last15m:                  2.26,
@@ -38,7 +37,7 @@ func Test_loadAvgDataSource_GetData(t *testing.T) {
 		{
 			caseDescription: "server",
 			filePath:        "./testFiles/loadavg-server",
-			want: &dto.LoadAvg{
+			want: &loadAvg.LoadAvg{
 				Last:                     43.07,
 				Last5m:                   44.18,
 				Last15m:                  48.25,
@@ -49,7 +48,7 @@ func Test_loadAvgDataSource_GetData(t *testing.T) {
 		{
 			caseDescription: "server-unused",
 			filePath:        "./testFiles/loadavg-server-unused",
-			want: &dto.LoadAvg{
+			want: &loadAvg.LoadAvg{
 				Last:                     0.0,
 				Last5m:                   0.0,
 				Last15m:                  0.0,

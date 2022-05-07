@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
@@ -41,8 +40,8 @@ func NewLoadAvgDataSource(filePath, logPrefix string) *loadAvgDataSource {
 	}
 }
 
-func (ds *loadAvgDataSource) GetData() (*dto.LoadAvg, error) {
-	var la = dto.LoadAvg{}
+func (ds *loadAvgDataSource) GetData() (*LoadAvg, error) {
+	var la = LoadAvg{}
 
 	// read file to memory
 	data, err := reader.ReadFile(ds.filePath, ds.logPrefix)

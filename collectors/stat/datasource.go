@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
 
@@ -28,9 +27,9 @@ func NewStatDataSource(filePath, logPrefix string) *statDataSource {
 	}
 }
 
-func (ds *statDataSource) GetData() (*dto.Stat, error) {
-	stats := dto.Stat{
-		PerCPU: make(map[string]dto.CPUStats),
+func (ds *statDataSource) GetData() (*Stat, error) {
+	stats := Stat{
+		PerCPU: make(map[string]CPUStats),
 	}
 
 	lines, err := reader.ReadMultilineFile(ds.filePath, ds.logPrefix)
@@ -53,7 +52,7 @@ func (ds *statDataSource) GetData() (*dto.Stat, error) {
 		if cpuRE.Match([]byte(fields[0])) {
 			var (
 				cpuName  string
-				cpuStats dto.CPUStats
+				cpuStats CPUStats
 			)
 
 			cpuName, cpuStats, err = parseProcStatCPULine(line)
@@ -113,9 +112,9 @@ func (ds *statDataSource) GetData() (*dto.Stat, error) {
 	return &stats, nil
 }
 
-func parseProcStatCPULine(line string) (string, dto.CPUStats, error) {
+func parseProcStatCPULine(line string) (string, CPUStats, error) {
 	var (
-		out     dto.CPUStats
+		out     CPUStats
 		cpuName string
 	)
 
@@ -135,18 +134,18 @@ func parseProcStatCPULine(line string) (string, dto.CPUStats, error) {
 	)
 
 	if err != nil && err != io.EOF {
-		return cpuName, dto.CPUStats{}, fmt.Errorf("can't parse cpu line: %s: %s", line, err.Error())
+		return cpuName, CPUStats{}, fmt.Errorf("can't parse cpu line: %s: %s", line, err.Error())
 	}
 
 	if count < 8 {
-		return cpuName, dto.CPUStats{}, fmt.Errorf("can't parse cpu line: %s", line)
+		return cpuName, CPUStats{}, fmt.Errorf("can't parse cpu line: %s", line)
 	}
 
 	return cpuName, out, nil
 }
 
-func parseProcStatSoftIRQLine(line string) (dto.SoftIRQStat, error) {
-	out := dto.SoftIRQStat{}
+func parseProcStatSoftIRQLine(line string) (SoftIRQStat, error) {
+	out := SoftIRQStat{}
 
 	_, err := fmt.Sscanf(line, "softirq %d %d %d %d %d %d %d %d %d %d %d",
 		&out.Total,
@@ -163,7 +162,7 @@ func parseProcStatSoftIRQLine(line string) (dto.SoftIRQStat, error) {
 	)
 
 	if err != nil {
-		return dto.SoftIRQStat{}, fmt.Errorf("can't parse softirq line: %s: %s", line, err.Error())
+		return SoftIRQStat{}, fmt.Errorf("can't parse softirq line: %s: %s", line, err.Error())
 	}
 
 	return out, nil

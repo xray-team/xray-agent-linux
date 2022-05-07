@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/xray-team/xray-agent-linux/collectors/memoryInfo"
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
@@ -15,7 +14,7 @@ func Test_memoryDataSource_GetData(t *testing.T) {
 	tests := []struct {
 		caseDescription string
 		filePath        string
-		want            *dto.MemoryInfo
+		want            *memoryInfo.MemoryInfo
 		wantErr         bool
 	}{
 		{
@@ -27,7 +26,7 @@ func Test_memoryDataSource_GetData(t *testing.T) {
 		{
 			caseDescription: "mint19.2",
 			filePath:        "./testFiles/meminfo-Mint19.2-linux5.0.0-32-generic",
-			want: &dto.MemoryInfo{
+			want: &memoryInfo.MemoryInfo{
 				MemTotal:     16316304,
 				MemFree:      6823340,
 				MemAvailable: 11863620,
@@ -41,7 +40,7 @@ func Test_memoryDataSource_GetData(t *testing.T) {
 		{
 			caseDescription: "debian7.11",
 			filePath:        "./testFiles/meminfo-debian7.11-linux2.6.32-openvz",
-			want: &dto.MemoryInfo{
+			want: &memoryInfo.MemoryInfo{
 				MemTotal:     264115680,
 				MemFree:      22077932,
 				MemAvailable: 414156072,

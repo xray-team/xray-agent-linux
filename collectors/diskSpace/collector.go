@@ -12,7 +12,7 @@ import (
 )
 
 type MountsDataSource interface {
-	GetData() ([]dto.Mounts, error)
+	GetData() ([]Mounts, error)
 }
 
 type DiskSpaceCollector struct {
@@ -80,8 +80,8 @@ func (c *DiskSpaceCollector) Collect() ([]dto.Metric, error) {
 	return metrics, nil
 }
 
-func (c *DiskSpaceCollector) filterMounts(mounts []dto.Mounts) []dto.Mounts {
-	out := make([]dto.Mounts, 0)
+func (c *DiskSpaceCollector) filterMounts(mounts []Mounts) []Mounts {
+	out := make([]Mounts, 0)
 
 	// FS type
 	for _, mount := range mounts {
@@ -96,9 +96,9 @@ func (c *DiskSpaceCollector) filterMounts(mounts []dto.Mounts) []dto.Mounts {
 }
 
 // getDiskSpaceUsage returns disk usage info and error if any.
-func (c *DiskSpaceCollector) getDiskSpaceUsage(path string) (*dto.DiskSpaceUsage, error) {
+func (c *DiskSpaceCollector) getDiskSpaceUsage(path string) (*DiskSpaceUsage, error) {
 	var (
-		out  dto.DiskSpaceUsage
+		out  DiskSpaceUsage
 		stat unix.Statfs_t
 	)
 
@@ -128,7 +128,7 @@ func rewriteMount(mount string) string {
 	return fmt.Sprintf("root%s", mount)
 }
 
-func genMetricsDiskSpace(attrs []dto.MetricAttribute, diskSpace *dto.DiskSpaceUsage) []dto.Metric {
+func genMetricsDiskSpace(attrs []dto.MetricAttribute, diskSpace *DiskSpaceUsage) []dto.Metric {
 	return []dto.Metric{
 		{
 			Name:       dto.MetricDiskSpaceBytesAvailable,
@@ -173,7 +173,7 @@ func genMetricsDiskSpace(attrs []dto.MetricAttribute, diskSpace *dto.DiskSpaceUs
 	}
 }
 
-func calculateDiskFreePercentage(info dto.DiskSpaceBlockInfo) float64 {
+func calculateDiskFreePercentage(info DiskSpaceBlockInfo) float64 {
 	// prevent division by zero
 	if float64(info.Used+info.Available) == 0 {
 		return 0

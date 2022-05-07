@@ -1,4 +1,4 @@
-package dto
+package stat
 
 // Stat partially describes the content of the file /proc/stat
 type Stat struct {

@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/xray-team/xray-agent-linux/collectors/uptime"
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
@@ -20,19 +19,19 @@ func Test_uptimeDataSource_GetData(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want *dto.Uptime
+		want *uptime.Uptime
 		err  error
 	}{
 		{
 			name: "success",
 			args: args{filePath: "./testFiles/uptime"},
-			want: &dto.Uptime{Uptime: 117332.61, Idle: 116056.85},
+			want: &uptime.Uptime{Uptime: 117332.61, Idle: 116056.85},
 			err:  nil,
 		},
 		{
 			name: "success 210 days",
 			args: args{filePath: "./testFiles/uptime-210days"},
-			want: &dto.Uptime{Uptime: 18144238.28, Idle: 286741938.89},
+			want: &uptime.Uptime{Uptime: 18144238.28, Idle: 286741938.89},
 			err:  nil,
 		},
 		{

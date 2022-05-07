@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/xray-team/xray-agent-linux/collectors/netARP"
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
@@ -15,7 +14,7 @@ func TestNetARPCollector_Collect(t *testing.T) {
 	tests := []struct {
 		name     string
 		filePath string
-		want     *dto.NetArp
+		want     *netARP.NetArp
 		wantErr  bool
 	}{
 		{
@@ -26,7 +25,7 @@ func TestNetARPCollector_Collect(t *testing.T) {
 		{
 			name:     "with-incomplets",
 			filePath: "./testFiles/netarp-with-incomplets",
-			want: &dto.NetArp{
+			want: &netARP.NetArp{
 				Entries: map[string]uint{
 					"Total":  7,
 					"wlp2s0": 4,

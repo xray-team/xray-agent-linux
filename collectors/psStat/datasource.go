@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
@@ -31,13 +30,13 @@ func NewPSStatDataSource(filePath, logPrefix string) *psStatDataSource {
 	}
 }
 
-func (ds *psStatDataSource) GetData() (*dto.PSStat, error) {
+func (ds *psStatDataSource) GetData() (*PSStat, error) {
 	f, err := reader.ReadDir(ds.filePath, ds.logPrefix)
 	if err != nil {
 		return nil, err
 	}
 
-	out := dto.PSStat{PS: make([]dto.ProcessStat, 0)}
+	out := PSStat{PS: make([]ProcessStat, 0)}
 
 	for _, ff := range f {
 		if ff.IsDir() && psPidRe.Match([]byte(ff.Name())) {
@@ -53,7 +52,7 @@ func (ds *psStatDataSource) GetData() (*dto.PSStat, error) {
 	return &out, nil
 }
 
-func (ds *psStatDataSource) readProcessStat(filePath string) (*dto.ProcessStat, error) {
+func (ds *psStatDataSource) readProcessStat(filePath string) (*ProcessStat, error) {
 	// read file to memory
 	data, err := reader.ReadFile(filePath, ds.logPrefix)
 	if err != nil {
@@ -65,7 +64,7 @@ func (ds *psStatDataSource) readProcessStat(filePath string) (*dto.ProcessStat, 
 		return nil, fmt.Errorf("not valid stat file: %s", ds.filePath)
 	}
 
-	var out dto.ProcessStat
+	var out ProcessStat
 
 	// PID
 	out.PID, err = strconv.ParseInt(fields[0], 10, 64)

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
 
@@ -29,13 +28,13 @@ func NewNetARPDataSource(filePath, logPrefix string) *netARPDataSource {
 	}
 }
 
-func (ds *netARPDataSource) GetData() ([]dto.ARPEntry, error) {
+func (ds *netARPDataSource) GetData() ([]ARPEntry, error) {
 	lines, err := reader.ReadMultilineFile(ds.filePath, ds.logPrefix)
 	if err != nil {
 		return nil, err
 	}
 
-	out := make([]dto.ARPEntry, 0, len(lines)-1) // minus header line
+	out := make([]ARPEntry, 0, len(lines)-1) // minus header line
 
 	for i, line := range lines {
 		fields := strings.Fields(line)
@@ -53,7 +52,7 @@ func (ds *netARPDataSource) GetData() ([]dto.ARPEntry, error) {
 			continue
 		}
 
-		entry := dto.ARPEntry{
+		entry := ARPEntry{
 			IP:        fields[0],
 			HWType:    fields[1],
 			Flags:     fields[2],

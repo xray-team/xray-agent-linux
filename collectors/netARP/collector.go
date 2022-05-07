@@ -9,7 +9,7 @@ import (
 )
 
 type NetARPDataSource interface {
-	GetData() ([]dto.ARPEntry, error)
+	GetData() ([]ARPEntry, error)
 }
 
 type NetARPCollector struct {
@@ -95,13 +95,13 @@ func (c *NetARPCollector) Collect() ([]dto.Metric, error) {
 	return metrics, nil
 }
 
-func (c *NetARPCollector) GetNetArp() (*dto.NetArp, error) {
+func (c *NetARPCollector) GetNetArp() (*NetArp, error) {
 	arpTable, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err
 	}
 
-	var out dto.NetArp
+	var out NetArp
 	out.Entries = make(map[string]uint)
 	out.IncompleteEntries = make(map[string]uint)
 

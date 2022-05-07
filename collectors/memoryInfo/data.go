@@ -1,4 +1,4 @@
-package dto
+package memoryInfo
 
 // MemoryInfo partially describes the content of the file /proc/meminfo
 type MemoryInfo struct {

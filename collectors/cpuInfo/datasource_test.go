@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/xray-team/xray-agent-linux/collectors/cpuInfo"
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
@@ -15,7 +14,7 @@ func Test_cpuInfoDataSource_GetData(t *testing.T) {
 	tests := []struct {
 		caseDescription string
 		filePath        string
-		want            *dto.CPUInfo
+		want            *cpuInfo.CPUInfo
 		wantErr         bool
 	}{
 		{
@@ -27,8 +26,8 @@ func Test_cpuInfoDataSource_GetData(t *testing.T) {
 		{
 			caseDescription: "kernel5.0",
 			filePath:        "./testFiles/cpuinfo-kernel5.0.0-32-generic",
-			want: &dto.CPUInfo{
-				CPU: []dto.CPU{
+			want: &cpuInfo.CPUInfo{
+				CPU: []cpuInfo.CPU{
 					{
 						ProcessorNumber: 0,
 						VendorID:        "GenuineIntel",
@@ -80,8 +79,8 @@ func Test_cpuInfoDataSource_GetData(t *testing.T) {
 		{
 			caseDescription: "2 cpu",
 			filePath:        "./testFiles/cpuinfo-2cpu-kernel5.4.0-48-generic",
-			want: &dto.CPUInfo{
-				CPU: []dto.CPU{
+			want: &cpuInfo.CPUInfo{
+				CPU: []cpuInfo.CPU{
 					{
 						ProcessorNumber: 0,
 						VendorID:        "GenuineIntel",

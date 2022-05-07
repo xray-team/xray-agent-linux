@@ -1,4 +1,4 @@
-package dto
+package uptime
 
 // Uptime describes the content of the file /proc/uptime
 type Uptime struct {

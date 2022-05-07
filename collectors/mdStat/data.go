@@ -1,4 +1,4 @@
-package dto
+package mdStat
 
 // https://www.kernel.org/doc/html/v4.15/admin-guide/md.html
 // https://github.com/torvalds/linux/blob/master/Documentation/admin-guide/md.rst

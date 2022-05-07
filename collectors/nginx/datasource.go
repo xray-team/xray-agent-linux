@@ -8,7 +8,6 @@ import (
 	"strconv"
 
 	"github.com/xray-team/xray-agent-linux/conf"
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
@@ -30,7 +29,7 @@ func NewStubStatusClient(config *conf.NginxStubStatus, client *http.Client, logP
 	}
 }
 
-func (ds *StubStatusClient) GetData() (*dto.NginxStubStatus, error) {
+func (ds *StubStatusClient) GetData() (*StubStatus, error) {
 	req, err := http.NewRequest("GET", ds.config.Endpoint, nil)
 	if err != nil {
 		return nil, err
@@ -58,9 +57,9 @@ func (ds *StubStatusClient) GetData() (*dto.NginxStubStatus, error) {
 	return parseStubStatus(respBody)
 }
 
-func parseStubStatus(data []byte) (*dto.NginxStubStatus, error) {
+func parseStubStatus(data []byte) (*StubStatus, error) {
 	var (
-		out dto.NginxStubStatus
+		out StubStatus
 		err error
 	)
 

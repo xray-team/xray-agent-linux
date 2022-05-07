@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
 
@@ -26,9 +25,9 @@ func NewCPUInfoDataSource(filePath, logPrefix string) *cpuInfoDataSource {
 	}
 }
 
-func (ds *cpuInfoDataSource) GetData() (*dto.CPUInfo, error) {
-	var out dto.CPUInfo
-	out.CPU = make([]dto.CPU, 0)
+func (ds *cpuInfoDataSource) GetData() (*CPUInfo, error) {
+	var out CPUInfo
+	out.CPU = make([]CPU, 0)
 
 	// read file to memory
 	data, err := reader.ReadFile(ds.filePath, ds.logPrefix)
@@ -45,7 +44,7 @@ func (ds *cpuInfoDataSource) GetData() (*dto.CPUInfo, error) {
 			continue
 		}
 
-		var cpuInfo = dto.CPU{}
+		var cpuInfo = CPU{}
 
 		for _, line := range lines {
 			columns := strings.Split(line, ":")

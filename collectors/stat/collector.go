@@ -7,7 +7,7 @@ import (
 )
 
 type StatDataSource interface {
-	GetData() (*dto.Stat, error)
+	GetData() (*Stat, error)
 }
 
 type StatCollector struct {
@@ -284,7 +284,7 @@ func (c *StatCollector) Collect() ([]dto.Metric, error) {
 }
 
 // calculateTotalCPUUsage - Calculates Total CPU Usage
-func calculateTotalCPUUsage(stats dto.CPUStats) uint64 {
+func calculateTotalCPUUsage(stats CPUStats) uint64 {
 	return stats.User +
 		stats.GuestNice +
 		stats.Guest +

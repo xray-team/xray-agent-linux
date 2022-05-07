@@ -3,7 +3,6 @@ package entropy
 import (
 	"fmt"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
 
@@ -24,9 +23,9 @@ func NewEntropyDataSource(filePath, logPrefix string) *entropyDataSource {
 	}
 }
 
-func (ds *entropyDataSource) GetData() (*dto.Entropy, error) {
+func (ds *entropyDataSource) GetData() (*Entropy, error) {
 	var (
-		entropy dto.Entropy
+		entropy Entropy
 		err     error
 	)
 

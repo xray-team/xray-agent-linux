@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/xray-team/xray-agent-linux/collectors/stat"
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
@@ -15,7 +14,7 @@ func Test_statDataSource_GetData(t *testing.T) {
 	tests := []struct {
 		caseDescription string
 		filePath        string
-		want            *dto.Stat
+		want            *stat.Stat
 		wantErr         bool
 	}{
 		{
@@ -27,8 +26,8 @@ func Test_statDataSource_GetData(t *testing.T) {
 		{
 			caseDescription: "kernel5.0",
 			filePath:        "./testFiles/stat-kernel5.0.0-32-generic",
-			want: &dto.Stat{
-				CPU: dto.CPUStats{
+			want: &stat.Stat{
+				CPU: stat.CPUStats{
 					User:      1029062,
 					Nice:      1454,
 					System:    269719,
@@ -40,7 +39,7 @@ func Test_statDataSource_GetData(t *testing.T) {
 					Guest:     25,
 					GuestNice: 27,
 				},
-				PerCPU: map[string]dto.CPUStats{
+				PerCPU: map[string]stat.CPUStats{
 					"0": {
 						User:      257829,
 						Nice:      162,
@@ -96,7 +95,7 @@ func Test_statDataSource_GetData(t *testing.T) {
 				Processes:        31992,
 				ProcessesRunning: 3,
 				ProcessesBlocked: 1,
-				SoftIRQ: dto.SoftIRQStat{
+				SoftIRQ: stat.SoftIRQStat{
 					Total:   46493915,
 					Hi:      4993583,
 					Timer:   14688474,

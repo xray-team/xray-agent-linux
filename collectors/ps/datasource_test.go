@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/xray-team/xray-agent-linux/collectors/ps"
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
@@ -15,7 +14,7 @@ func Test_psDataSource_GetData(t *testing.T) {
 	tests := []struct {
 		caseDescription string
 		path            string
-		want            *dto.PS
+		want            *ps.PS
 		wantErr         bool
 	}{
 		{
@@ -27,7 +26,7 @@ func Test_psDataSource_GetData(t *testing.T) {
 		{
 			caseDescription: "proc1",
 			path:            "./testFiles/proc1",
-			want: &dto.PS{
+			want: &ps.PS{
 				Count:            9,
 				Limit:            32768,
 				Threads:          22,

@@ -7,7 +7,7 @@ import (
 )
 
 type PSDataSource interface {
-	GetData() (*dto.PS, error)
+	GetData() (*PS, error)
 }
 
 type PSCollector struct {

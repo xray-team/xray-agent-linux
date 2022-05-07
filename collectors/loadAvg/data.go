@@ -1,4 +1,4 @@
-package dto
+package loadAvg
 
 // LoadAvg partially describes the content of the file /proc/loadavg
 type LoadAvg struct {

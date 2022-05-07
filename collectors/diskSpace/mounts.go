@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
@@ -27,8 +26,8 @@ func NewMountsDataSource(filePath, logPrefix string) *mountsDataSource {
 	}
 }
 
-func (ds *mountsDataSource) GetData() ([]dto.Mounts, error) {
-	out := make([]dto.Mounts, 0)
+func (ds *mountsDataSource) GetData() ([]Mounts, error) {
+	out := make([]Mounts, 0)
 
 	lines, err := reader.ReadMultilineFile(ds.filePath, ds.logPrefix)
 	if err != nil {
@@ -49,7 +48,7 @@ func (ds *mountsDataSource) GetData() ([]dto.Mounts, error) {
 			continue
 		}
 
-		var mount dto.Mounts
+		var mount Mounts
 
 		mount.Dev = fields[0]
 		mount.MountPoint = fields[1]

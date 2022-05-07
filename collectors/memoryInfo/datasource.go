@@ -4,7 +4,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
@@ -26,8 +25,8 @@ func NewMemoryDataSource(filePath, logPrefix string) *memoryDataSource {
 	}
 }
 
-func (ds *memoryDataSource) GetData() (*dto.MemoryInfo, error) {
-	memoryInfo := dto.MemoryInfo{}
+func (ds *memoryDataSource) GetData() (*MemoryInfo, error) {
+	memoryInfo := MemoryInfo{}
 
 	lines, err := reader.ReadMultilineFile(ds.filePath, ds.logPrefix)
 	if err != nil {

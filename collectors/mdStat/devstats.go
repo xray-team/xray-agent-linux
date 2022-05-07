@@ -11,8 +11,8 @@ import (
 	"github.com/xray-team/xray-agent-linux/reader"
 )
 
-func (ds *mdStatDataSource) parseDevs(path string) (map[string]dto.DevStats, error) {
-	var out = make(map[string]dto.DevStats)
+func (ds *mdStatDataSource) parseDevs(path string) (map[string]DevStats, error) {
+	var out = make(map[string]DevStats)
 
 	dirs, err := reader.ReadDir(path, ds.logPrefix)
 	if err != nil {
@@ -37,9 +37,9 @@ func (ds *mdStatDataSource) parseDevs(path string) (map[string]dto.DevStats, err
 	return out, nil
 }
 
-func (ds *mdStatDataSource) parseDev(path string) (dto.DevStats, error) {
+func (ds *mdStatDataSource) parseDev(path string) (DevStats, error) {
 	var (
-		out dto.DevStats
+		out DevStats
 		err error
 	)
 
@@ -47,19 +47,19 @@ func (ds *mdStatDataSource) parseDev(path string) (dto.DevStats, error) {
 	// "none" if device is spare ...
 	out.Slot, err = reader.ReadStringFile(filepath.Join(path, SlotFile), ds.logPrefix)
 	if err != nil {
-		return dto.DevStats{}, fmt.Errorf("cannot read mdstat file %s. %s", SlotFile, err)
+		return DevStats{}, fmt.Errorf("cannot read mdstat file %s. %s", SlotFile, err)
 	}
 
 	// Errors
 	out.Errors, err = reader.ReadInt64File(filepath.Join(path, ErrorsFile), ds.logPrefix)
 	if err != nil {
-		return dto.DevStats{}, fmt.Errorf("cannot read mdstat file %s. %s", ErrorsFile, err)
+		return DevStats{}, fmt.Errorf("cannot read mdstat file %s. %s", ErrorsFile, err)
 	}
 
 	// State
 	out.State, err = reader.ReadStringFile(filepath.Join(path, StateFile), ds.logPrefix)
 	if err != nil {
-		return dto.DevStats{}, fmt.Errorf("cannot read mdstat file %s. %s", StateFile, err)
+		return DevStats{}, fmt.Errorf("cannot read mdstat file %s. %s", StateFile, err)
 	}
 
 	return out, nil

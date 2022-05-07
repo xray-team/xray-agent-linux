@@ -7,7 +7,7 @@ import (
 )
 
 type LoadAvgDataSource interface {
-	GetData() (*dto.LoadAvg, error)
+	GetData() (*LoadAvg, error)
 }
 
 type LoadAvgCollector struct {
