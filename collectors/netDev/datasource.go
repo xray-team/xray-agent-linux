@@ -1,4 +1,4 @@
-package proc
+package netDev
 
 /*
 /proc/net/dev
@@ -9,7 +9,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
@@ -31,8 +30,8 @@ func NewNetDevDataSource(filePath, logPrefix string) *netDevDataSource {
 	}
 }
 
-func (ds *netDevDataSource) GetData() (map[string]dto.NetDevStatistics, error) {
-	out := make(map[string]dto.NetDevStatistics)
+func (ds *netDevDataSource) GetData() (map[string]NetDevStatistics, error) {
+	out := make(map[string]NetDevStatistics)
 
 	lines, err := reader.ReadMultilineFile(ds.filePath, ds.logPrefix)
 	if err != nil {
@@ -50,7 +49,7 @@ func (ds *netDevDataSource) GetData() (map[string]dto.NetDevStatistics, error) {
 		// parse interface name and trim ":"
 		ifaceName := strings.TrimSuffix(fields[0], ":")
 
-		var netDevStatistics dto.NetDevStatistics
+		var netDevStatistics NetDevStatistics
 
 		// Rx.Bytes
 		netDevStatistics.RxBytes, err = strconv.ParseUint(fields[1], 10, 64)

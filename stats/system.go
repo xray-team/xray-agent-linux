@@ -5,13 +5,17 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/xray-team/xray-agent-linux/collectors/cmd"
 	"github.com/xray-team/xray-agent-linux/collectors/cpuInfo"
 	"github.com/xray-team/xray-agent-linux/collectors/diskSpace"
+	"github.com/xray-team/xray-agent-linux/collectors/diskStat"
 	"github.com/xray-team/xray-agent-linux/collectors/entropy"
 	"github.com/xray-team/xray-agent-linux/collectors/loadAvg"
 	"github.com/xray-team/xray-agent-linux/collectors/mdStat"
 	"github.com/xray-team/xray-agent-linux/collectors/memoryInfo"
 	"github.com/xray-team/xray-agent-linux/collectors/netARP"
+	"github.com/xray-team/xray-agent-linux/collectors/netDev"
+	"github.com/xray-team/xray-agent-linux/collectors/netDevStatus"
 	"github.com/xray-team/xray-agent-linux/collectors/netSNMP"
 	"github.com/xray-team/xray-agent-linux/collectors/netSNMP6"
 	"github.com/xray-team/xray-agent-linux/collectors/netStat"
@@ -20,8 +24,8 @@ import (
 	"github.com/xray-team/xray-agent-linux/collectors/psStat"
 	"github.com/xray-team/xray-agent-linux/collectors/stat"
 	"github.com/xray-team/xray-agent-linux/collectors/uptime"
+	"github.com/xray-team/xray-agent-linux/collectors/wireless"
 
-	"github.com/xray-team/xray-agent-linux/collectors"
 	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
@@ -228,26 +232,26 @@ func (s *Stat) initCollectors() []dto.Collector {
 		memoryInfo.NewMemoryInfoCollector(s.cfg.Collectors,
 			memoryInfo.NewMemoryDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, memoryInfo.MemInfoPath), dto.CollectorNameMemoryInfo)),
 		// /proc/diskstat
-		collectors.NewDiskStatCollector(
+		diskStat.NewDiskStatCollector(
 			s.cfg.Collectors,
-			proc.NewBlockDevDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, proc.DiskStatsPath), dto.CollectorNameDiskStat),
+			diskStat.NewBlockDevDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, diskStat.DiskStatsPath), dto.CollectorNameDiskStat),
 			sys.NewClassBlockDataSource(filepath.Join(s.cfg.Collectors.RootPath, sys.ClassBlockDir), dto.CollectorNameDiskStat),
 		),
 		// disk space
 		diskSpace.NewDiskSpaceCollector(s.cfg.Collectors, diskSpace.NewMountsDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, diskSpace.MountsPath), dto.CollectorNameDiskSpace)),
 		// /proc/net/dev
-		collectors.NewNetDevCollector(
+		netDev.NewNetDevCollector(
 			s.cfg.Collectors,
-			proc.NewNetDevDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, proc.NetDevPath), dto.CollectorNameNetDev),
+			netDev.NewNetDevDataSource(filepath.Join(s.cfg.Collectors.RootPath, proc.ProcPath, netDev.NetDevPath), dto.CollectorNameNetDev),
 			sys.NewClassNetDataSource(filepath.Join(s.cfg.Collectors.RootPath, sys.ClassNetDir), dto.CollectorNameNetDev),
 		),
 		// /sys/class/net
-		collectors.NewNetDevStatusCollector(s.cfg.Collectors,
+		netDevStatus.NewNetDevStatusCollector(s.cfg.Collectors,
 			sys.NewClassNetDataSource(filepath.Join(s.cfg.Collectors.RootPath, sys.ClassNetDir), dto.CollectorNameNetDevStatus)),
 		// iwconfig
-		collectors.NewWirelessCollector(
+		wireless.NewWirelessCollector(
 			s.cfg.Collectors,
-			run.NewIwconfigDataSource(run.NewCmdRunner(dto.CollectorNameWireless)),
+			wireless.NewIwconfigDataSource(run.NewCmdRunner(dto.CollectorNameWireless)),
 			sys.NewClassNetDataSource(filepath.Join(s.cfg.Collectors.RootPath, sys.ClassNetDir), dto.CollectorNameWireless),
 		),
 		// /proc/net/arp
@@ -266,7 +270,7 @@ func (s *Stat) initCollectors() []dto.Collector {
 		mdStat.NewMDStatCollector(s.cfg.Collectors,
 			mdStat.NewMDStatDataSource(filepath.Join(s.cfg.Collectors.RootPath, mdStat.MDStatPath), dto.CollectorNameMDStat)),
 		// CMD collector
-		collectors.NewCmdCollector(s.cfg.Collectors,
+		cmd.NewCmdCollector(s.cfg.Collectors,
 			run.NewCmdRunner(dto.CollectorNameCMD)),
 		// nginx
 		nginx.NewNginxStubStatusCollector(s.cfg.Collectors,

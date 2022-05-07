@@ -1,4 +1,4 @@
-package collectors
+package netDevStatus
 
 import "testing"
 

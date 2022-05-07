@@ -1,12 +1,11 @@
-package proc_test
+package diskStat_test
 
 import (
 	"reflect"
 	"testing"
 
-	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/collectors/diskStat"
 	"github.com/xray-team/xray-agent-linux/logger"
-	"github.com/xray-team/xray-agent-linux/proc"
 )
 
 func Test_diskStatsDataSource_GetData(t *testing.T) {
@@ -15,19 +14,19 @@ func Test_diskStatsDataSource_GetData(t *testing.T) {
 	tests := []struct {
 		caseDescription string
 		filePath        string
-		want            []dto.DiskStat
+		want            []diskStat.DiskStat
 		wantErr         bool
 	}{
 		{
 			caseDescription: "no file",
-			filePath:        "./testfiles/diskstat/nofile",
+			filePath:        "./testFiles/nofile",
 			want:            nil,
 			wantErr:         true,
 		},
 		{
 			caseDescription: "kernel 4.15",
-			filePath:        "./testfiles/diskstat/diskstats-kernel4.15.0-66-generic",
-			want: []dto.DiskStat{
+			filePath:        "./testFiles/diskstats-kernel4.15.0-66-generic",
+			want: []diskStat.DiskStat{
 				{
 					Major:                         7,
 					Miner:                         0,
@@ -113,8 +112,8 @@ func Test_diskStatsDataSource_GetData(t *testing.T) {
 		},
 		{
 			caseDescription: "kernel 5.0",
-			filePath:        "./testfiles/diskstat/diskstats-kernel5.0.0-32-generic",
-			want: []dto.DiskStat{
+			filePath:        "./testFiles/diskstats-kernel5.0.0-32-generic",
+			want: []diskStat.DiskStat{
 				{
 					Major:                         8,
 					Miner:                         0,
@@ -204,7 +203,7 @@ func Test_diskStatsDataSource_GetData(t *testing.T) {
 		tt := testCase
 
 		t.Run(tt.caseDescription, func(t *testing.T) {
-			blockDevDataSource := proc.NewBlockDevDataSource(tt.filePath, "")
+			blockDevDataSource := diskStat.NewBlockDevDataSource(tt.filePath, "")
 			got, err := blockDevDataSource.GetData()
 
 			if (err != nil) != tt.wantErr {

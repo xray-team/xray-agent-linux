@@ -1,10 +1,9 @@
-package proc
+package diskStat
 
 import (
 	"strconv"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 	"github.com/xray-team/xray-agent-linux/reader"
 )
@@ -26,8 +25,8 @@ func NewBlockDevDataSource(filePath, logPrefix string) *diskStatsDataSource {
 	}
 }
 
-func (ds *diskStatsDataSource) GetData() ([]dto.DiskStat, error) {
-	out := make([]dto.DiskStat, 0)
+func (ds *diskStatsDataSource) GetData() ([]DiskStat, error) {
+	out := make([]DiskStat, 0)
 	// read file to memory
 	lines, err := reader.ReadMultilineFile(ds.filePath, ds.logPrefix)
 	if err != nil {
@@ -37,7 +36,7 @@ func (ds *diskStatsDataSource) GetData() ([]dto.DiskStat, error) {
 	for _, v := range lines {
 		fields := strings.Fields(v)
 
-		var disk dto.DiskStat
+		var disk DiskStat
 
 		// before Kernel 4.18
 		if len(fields) >= 14 {

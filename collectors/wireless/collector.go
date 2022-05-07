@@ -1,4 +1,4 @@
-package collectors
+package wireless
 
 import (
 	"strings"
@@ -9,7 +9,11 @@ import (
 )
 
 type WirelessDataSource interface {
-	GetInterfaceData(ifName string) (*dto.Iwconfig, error)
+	GetInterfaceData(ifName string) (*Iwconfig, error)
+}
+
+type ClassNetDataSource interface {
+	GetData() (map[string]dto.ClassNet, error)
 }
 
 type WirelessCollector struct {
@@ -101,7 +105,7 @@ func (c *WirelessCollector) filterWireless(m map[string]dto.ClassNet) map[string
 	return out
 }
 
-func genMetricsNetDevWireless(ifName string, iwconfig *dto.Iwconfig) []dto.Metric {
+func genMetricsNetDevWireless(ifName string, iwconfig *Iwconfig) []dto.Metric {
 	attrs := []dto.MetricAttribute{
 		{
 			Name:  dto.ResourceAttr,

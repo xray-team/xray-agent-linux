@@ -1,4 +1,4 @@
-package dto
+package netDevStatus
 
 type NetDevStatus struct {
 	// OperState

@@ -1,4 +1,4 @@
-package collectors
+package netDevStatus
 
 import (
 	"strings"
@@ -14,11 +14,11 @@ type ClassNetStatusDataSource interface {
 
 type NetDevStatusCollector struct {
 	Config             *conf.NetDevStatusConf
-	ClassNetDataSource ClassNetDataSource
+	ClassNetDataSource ClassNetStatusDataSource
 }
 
 // NewNetDevStatusCollector returns a new collector object.
-func NewNetDevStatusCollector(cfg *conf.CollectorsConf, classNetDataSource ClassNetDataSource) dto.Collector {
+func NewNetDevStatusCollector(cfg *conf.CollectorsConf, classNetDataSource ClassNetStatusDataSource) dto.Collector {
 	if cfg == nil || classNetDataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, dto.CollectorNameNetDevStatus)
 
@@ -58,7 +58,7 @@ func (c *NetDevStatusCollector) Collect() ([]dto.Metric, error) {
 	// fill out
 	for ifName, invItem := range inventory {
 		if invItem.IsDevice() {
-			status := &dto.NetDevStatus{
+			status := &NetDevStatus{
 				OperState:      invItem.OperState,
 				Duplex:         invItem.Duplex,
 				Speed:          invItem.Speed,
@@ -93,7 +93,7 @@ func (c *NetDevStatusCollector) filterNetDev(m map[string]dto.ClassNet) map[stri
 	return out
 }
 
-func genMetricsNetDevStatus(ifName string, status *dto.NetDevStatus) []dto.Metric {
+func genMetricsNetDevStatus(ifName string, status *NetDevStatus) []dto.Metric {
 	attrs := []dto.MetricAttribute{
 		{
 			Name:  dto.ResourceAttr,
@@ -132,4 +132,12 @@ func genMetricsNetDevStatus(ifName string, status *dto.NetDevStatus) []dto.Metri
 			Attributes: attrs,
 		},
 	}
+}
+
+func convertCarrierChangesToLinkFlaps(cc int64) int64 {
+	if cc <= 3 {
+		return 0
+	}
+
+	return cc/2 - 1
 }

@@ -1,4 +1,4 @@
-package collectors
+package diskStat
 
 import (
 	"github.com/xray-team/xray-agent-linux/conf"
@@ -7,7 +7,7 @@ import (
 )
 
 type DiskStatDataSource interface {
-	GetData() ([]dto.DiskStat, error)
+	GetData() ([]DiskStat, error)
 }
 
 type ClassBlockDataSource interface {
@@ -92,7 +92,7 @@ func (c *DiskStatCollector) Collect() ([]dto.Metric, error) {
 	return metrics, nil
 }
 
-func genMetricsDiskStat(attrs []dto.MetricAttribute, diskStat dto.DiskStat) []dto.Metric {
+func genMetricsDiskStat(attrs []dto.MetricAttribute, diskStat DiskStat) []dto.Metric {
 	return []dto.Metric{
 		{
 			Name:       dto.MetricDiskStatReadsCompletedSuccessfully,

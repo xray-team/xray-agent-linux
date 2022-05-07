@@ -1,4 +1,4 @@
-package run
+package wireless
 
 import (
 	"fmt"
@@ -7,14 +7,14 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/run"
 )
 
 type iwconfigDataSource struct {
-	cmdRunner *cmdRunner
+	cmdRunner *run.CmdRunner
 }
 
-func NewIwconfigDataSource(runner *cmdRunner) *iwconfigDataSource {
+func NewIwconfigDataSource(runner *run.CmdRunner) *iwconfigDataSource {
 	if runner == nil {
 		return nil
 	}
@@ -24,7 +24,7 @@ func NewIwconfigDataSource(runner *cmdRunner) *iwconfigDataSource {
 	}
 }
 
-func (ds *iwconfigDataSource) GetInterfaceData(ifName string) (*dto.Iwconfig, error) {
+func (ds *iwconfigDataSource) GetInterfaceData(ifName string) (*Iwconfig, error) {
 	if err := os.Setenv("PATH", "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"); err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (ds *iwconfigDataSource) GetInterfaceData(ifName string) (*dto.Iwconfig, er
 		return nil, fmt.Errorf("%s", stderr)
 	}
 
-	var out dto.Iwconfig
+	var out Iwconfig
 
 	// SSID
 	out.SSID, err = parseIwconfigSSID(stdout)

@@ -1,4 +1,4 @@
-package dto
+package wireless
 
 // refer to man iwconfig
 type Iwconfig struct {

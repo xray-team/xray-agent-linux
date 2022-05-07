@@ -1,12 +1,11 @@
-package proc_test
+package netDev_test
 
 import (
 	"reflect"
 	"testing"
 
-	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/collectors/netDev"
 	"github.com/xray-team/xray-agent-linux/logger"
-	"github.com/xray-team/xray-agent-linux/proc"
 )
 
 func Test_netDevDataSource_GetData(t *testing.T) {
@@ -15,19 +14,19 @@ func Test_netDevDataSource_GetData(t *testing.T) {
 	tests := []struct {
 		caseDescription string
 		filePath        string
-		want            map[string]dto.NetDevStatistics
+		want            map[string]netDev.NetDevStatistics
 		wantErr         bool
 	}{
 		{
 			caseDescription: "no file",
-			filePath:        "./testfiles/NetDev/nofile",
+			filePath:        "./testFiles/nofile",
 			want:            nil,
 			wantErr:         true,
 		},
 		{
 			caseDescription: "lo",
-			filePath:        "./testfiles/netDev/lo",
-			want: map[string]dto.NetDevStatistics{
+			filePath:        "./testFiles/lo",
+			want: map[string]netDev.NetDevStatistics{
 				"lo": {
 					RxBytes:       1,
 					RxPackets:     2,
@@ -51,8 +50,8 @@ func Test_netDevDataSource_GetData(t *testing.T) {
 		},
 		{
 			caseDescription: "lo",
-			filePath:        "./testfiles/netDev/lo-eth0",
-			want: map[string]dto.NetDevStatistics{
+			filePath:        "./testFiles/lo-eth0",
+			want: map[string]netDev.NetDevStatistics{
 				"lo": {
 					RxBytes:       13641,
 					RxPackets:     166,
@@ -98,7 +97,7 @@ func Test_netDevDataSource_GetData(t *testing.T) {
 		tt := testCase
 
 		t.Run(tt.caseDescription, func(t *testing.T) {
-			netDevDataSource := proc.NewNetDevDataSource(tt.filePath, "")
+			netDevDataSource := netDev.NewNetDevDataSource(tt.filePath, "")
 			got, err := netDevDataSource.GetData()
 
 			if (err != nil) != tt.wantErr {

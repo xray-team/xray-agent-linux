@@ -1,4 +1,4 @@
-package collectors
+package netDev
 
 import (
 	"strings"
@@ -9,7 +9,7 @@ import (
 )
 
 type NetDevDataSource interface {
-	GetData() (map[string]dto.NetDevStatistics, error)
+	GetData() (map[string]NetDevStatistics, error)
 }
 
 type ClassNetDataSource interface {
@@ -130,15 +130,7 @@ func (c *NetDevCollector) filterNetDev(m map[string]dto.ClassNet) map[string]dto
 	return out
 }
 
-func convertCarrierChangesToLinkFlaps(cc int64) int64 {
-	if cc <= 3 {
-		return 0
-	}
-
-	return cc/2 - 1
-}
-
-func genMetricsNetDevStatistics(ifName string, statistics dto.NetDevStatistics) []dto.Metric {
+func genMetricsNetDevStatistics(ifName string, statistics NetDevStatistics) []dto.Metric {
 	attrs := []dto.MetricAttribute{
 		{
 			Name:  dto.ResourceAttr,

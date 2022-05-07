@@ -1,4 +1,4 @@
-package dto
+package diskStat
 
 // DiskStat represents the content of the file /proc/diskstats
 // https://www.kernel.org/doc/Documentation/ABI/testing/procfs-diskstats

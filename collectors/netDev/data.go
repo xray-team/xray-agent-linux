@@ -1,6 +1,6 @@
-package dto
+package netDev
 
-// NetDevs describes the content of the file /proc/netdev
+// NetDevStatistics describes the content of the file /proc/netdev
 // https://github.com/torvalds/linux/blob/master/include/linux/netdevice.h
 // https://github.com/torvalds/linux/blob/master/net/core/net-procfs.c
 // Physical are all the network interfaces that are listed in /proc/net/dev, but do not exist in /sys/devices/virtual/net
