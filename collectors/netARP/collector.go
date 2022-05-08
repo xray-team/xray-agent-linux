@@ -8,17 +8,17 @@ import (
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
-type NetARPDataSource interface {
+type DataSource interface {
 	GetData() ([]ARPEntry, error)
 }
 
 type Collector struct {
 	Config     *conf.NetARPConf
-	DataSource NetARPDataSource
+	DataSource DataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, dataSource NetARPDataSource) dto.Collector {
+func NewCollector(cfg *conf.CollectorsConf, dataSource DataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 

@@ -45,7 +45,7 @@ func TestNetARPCollector_Collect(t *testing.T) {
 		tt := testCase
 
 		t.Run(tt.name, func(t *testing.T) {
-			c := netARP.Collector{DataSource: netARP.NewNetARPDataSource(tt.filePath, "")}
+			c := netARP.Collector{DataSource: netARP.NewDataSource(tt.filePath, "")}
 			got, err := c.GetNetArp()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetNetArp() error = %v, wantErr %v", err, tt.wantErr)

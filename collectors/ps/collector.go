@@ -6,13 +6,13 @@ import (
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
-type PSDataSource interface {
+type DataSource interface {
 	GetData() (*PS, error)
 }
 
 type Collector struct {
 	Config     *conf.PSConf
-	DataSource PSDataSource
+	DataSource DataSource
 }
 
 // GetName returns the collector's name.
@@ -21,7 +21,7 @@ func (c *Collector) GetName() string {
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, dataSource PSDataSource) dto.Collector {
+func NewCollector(cfg *conf.CollectorsConf, dataSource DataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 

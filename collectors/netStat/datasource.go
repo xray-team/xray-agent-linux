@@ -13,8 +13,8 @@ type netStatDataSource struct {
 	logPrefix string
 }
 
-// NewNetStatDataSource returns a new DataSource.
-func NewNetStatDataSource(filePath, logPrefix string) *netStatDataSource {
+// NewDataSource returns a new DataSource.
+func NewDataSource(filePath, logPrefix string) *netStatDataSource {
 	if filePath == "" {
 		return nil
 	}

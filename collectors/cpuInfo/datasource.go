@@ -13,8 +13,8 @@ type cpuInfoDataSource struct {
 	logPrefix string
 }
 
-// NewCPUInfoDataSource returns a new DataSource.
-func NewCPUInfoDataSource(filePath, logPrefix string) *cpuInfoDataSource {
+// NewDataSource returns a new DataSource.
+func NewDataSource(filePath, logPrefix string) *cpuInfoDataSource {
 	if filePath == "" {
 		return nil
 	}

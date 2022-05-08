@@ -14,7 +14,7 @@ type mdStatDataSource struct {
 	logPrefix string
 }
 
-func NewMDStatDataSource(path, logPrefix string) *mdStatDataSource {
+func NewDataSource(path, logPrefix string) *mdStatDataSource {
 	if path == "" {
 		return nil
 	}

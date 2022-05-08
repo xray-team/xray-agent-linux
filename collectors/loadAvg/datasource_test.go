@@ -62,7 +62,7 @@ func Test_loadAvgDataSource_GetData(t *testing.T) {
 		tt := testCase
 
 		t.Run(tt.caseDescription, func(t *testing.T) {
-			loadAvgDataSource := loadAvg.NewLoadAvgDataSource(tt.filePath, "")
+			loadAvgDataSource := loadAvg.NewDataSource(tt.filePath, "")
 			got, err := loadAvgDataSource.GetData()
 
 			if (err != nil) != tt.wantErr {

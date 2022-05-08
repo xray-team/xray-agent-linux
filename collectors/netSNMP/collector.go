@@ -9,11 +9,11 @@ import (
 
 type Collector struct {
 	Config     *conf.NetSNMPConf
-	DataSource netStat.NetStatDataSource
+	DataSource netStat.DataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, dataSource netStat.NetStatDataSource) dto.Collector {
+func NewCollector(cfg *conf.CollectorsConf, dataSource netStat.DataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 

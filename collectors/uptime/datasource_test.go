@@ -60,7 +60,7 @@ func Test_uptimeDataSource_GetData(t *testing.T) {
 		tt := testCase
 
 		t.Run(tt.name, func(t *testing.T) {
-			uptimeDataSource := uptime.NewUptimeDataSource(tt.args.filePath, "")
+			uptimeDataSource := uptime.NewDataSource(tt.args.filePath, "")
 			got, err := uptimeDataSource.GetData()
 			if fmt.Sprintf("%s", err) != fmt.Sprintf("%s", tt.err) {
 				t.Errorf("ParseUptime() error = %v, wantErr %v", err, tt.err)

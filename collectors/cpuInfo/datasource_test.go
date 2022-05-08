@@ -531,7 +531,7 @@ func Test_cpuInfoDataSource_GetData(t *testing.T) {
 		tt := testCase
 
 		t.Run(tt.caseDescription, func(t *testing.T) {
-			cpuInfoDataSource := cpuInfo.NewCPUInfoDataSource(tt.filePath, "")
+			cpuInfoDataSource := cpuInfo.NewDataSource(tt.filePath, "")
 			got, err := cpuInfoDataSource.GetData()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ParseCPUInfo() error = %v, wantErr %v", err, tt.wantErr)

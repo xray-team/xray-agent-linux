@@ -6,17 +6,17 @@ import (
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
-type UptimeDataSource interface {
+type DataSource interface {
 	GetData() (*Uptime, error)
 }
 
 type Collector struct {
 	Config     *conf.UptimeConf
-	DataSource UptimeDataSource
+	DataSource DataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, dataSource UptimeDataSource) dto.Collector {
+func NewCollector(cfg *conf.CollectorsConf, dataSource DataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 

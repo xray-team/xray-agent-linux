@@ -8,17 +8,17 @@ import (
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
-type CPUInfoDataSource interface {
+type DataSource interface {
 	GetData() (*CPUInfo, error)
 }
 
 type Collector struct {
 	Config     *conf.CPUInfoConf
-	DataSource CPUInfoDataSource
+	DataSource DataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, dataSource CPUInfoDataSource) dto.Collector {
+func NewCollector(cfg *conf.CollectorsConf, dataSource DataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 

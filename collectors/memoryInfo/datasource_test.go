@@ -57,7 +57,7 @@ func Test_memoryDataSource_GetData(t *testing.T) {
 		tt := testCase
 
 		t.Run(tt.caseDescription, func(t *testing.T) {
-			memInfoDataSource := memoryInfo.NewMemoryDataSource(tt.filePath, "")
+			memInfoDataSource := memoryInfo.NewDataSource(tt.filePath, "")
 			got, err := memInfoDataSource.GetData()
 
 			if (err != nil) != tt.wantErr {

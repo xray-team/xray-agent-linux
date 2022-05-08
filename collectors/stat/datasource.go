@@ -15,8 +15,8 @@ type statDataSource struct {
 	logPrefix string
 }
 
-// NewStatDataSource returns a new DataSource.
-func NewStatDataSource(filePath, logPrefix string) *statDataSource {
+// NewDataSource returns a new DataSource.
+func NewDataSource(filePath, logPrefix string) *statDataSource {
 	if filePath == "" {
 		return nil
 	}

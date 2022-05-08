@@ -13,8 +13,8 @@ type memoryDataSource struct {
 	logPrefix string
 }
 
-// NewMemoryDataSource returns a new DataSource.
-func NewMemoryDataSource(filePath, logPrefix string) *memoryDataSource {
+// NewDataSource returns a new DataSource.
+func NewDataSource(filePath, logPrefix string) *memoryDataSource {
 	if filePath == "" {
 		return nil
 	}

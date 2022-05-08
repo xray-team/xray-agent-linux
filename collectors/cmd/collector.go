@@ -12,17 +12,17 @@ import (
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
-type CmdDataSource interface {
+type DataSource interface {
 	RunPipeLine(pipeLine []*exec.Cmd) (string, string, error)
 }
 
 type Collector struct {
 	Config     *conf.CMDConf
-	DataSource CmdDataSource
+	DataSource DataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, dataSource CmdDataSource) dto.Collector {
+func NewCollector(cfg *conf.CollectorsConf, dataSource DataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 

@@ -6,17 +6,17 @@ import (
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
-type LoadAvgDataSource interface {
+type DataSource interface {
 	GetData() (*LoadAvg, error)
 }
 
 type Collector struct {
 	Config     *conf.LoadAvgConf
-	DataSource LoadAvgDataSource
+	DataSource DataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, dataSource LoadAvgDataSource) dto.Collector {
+func NewCollector(cfg *conf.CollectorsConf, dataSource DataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 

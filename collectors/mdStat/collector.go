@@ -9,17 +9,17 @@ import (
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
-type MDStatDataSource interface {
+type DataSource interface {
 	GetData() (*MDStats, error)
 }
 
 type Collector struct {
 	Config     *conf.MDStatConf
-	DataSource MDStatDataSource
+	DataSource DataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, dataSource MDStatDataSource) dto.Collector {
+func NewCollector(cfg *conf.CollectorsConf, dataSource DataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 		return nil

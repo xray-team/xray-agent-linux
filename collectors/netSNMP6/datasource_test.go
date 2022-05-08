@@ -124,7 +124,7 @@ func Test_netSNMP6DataSource_GetData(t *testing.T) {
 		tt := testCase
 
 		t.Run(tt.caseDescription, func(t *testing.T) {
-			netSNMP6DataSource := netSNMP6.NewNetSNMP6DataSource(tt.filePath, "")
+			netSNMP6DataSource := netSNMP6.NewDataSource(tt.filePath, "")
 			got, err := netSNMP6DataSource.GetData()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ParseNetSnmp6() error = %v, wantErr %v", err, tt.wantErr)

@@ -45,7 +45,7 @@ func Test_psDataSource_GetData(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.caseDescription, func(t *testing.T) {
-			psDataSource := ps.NewPSDataSource(tt.path, "")
+			psDataSource := ps.NewDataSource(tt.path, "")
 			got, err := psDataSource.GetData()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ParsePS() error = %v, wantErr %v", err, tt.wantErr)

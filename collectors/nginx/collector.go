@@ -7,11 +7,11 @@ import (
 
 type StubStatusCollector struct {
 	Config     *conf.NginxStubStatus
-	DataSource NginxStubStatusDataSource
+	DataSource StubStatusDataSource
 }
 
 // NewStubStatusCollector returns a new collector object.
-func NewStubStatusCollector(cfg *conf.CollectorsConf, dataSource NginxStubStatusDataSource) dto.Collector {
+func NewStubStatusCollector(cfg *conf.CollectorsConf, dataSource StubStatusDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		return nil
 	}
@@ -27,7 +27,7 @@ func NewStubStatusCollector(cfg *conf.CollectorsConf, dataSource NginxStubStatus
 	}
 }
 
-type NginxStubStatusDataSource interface {
+type StubStatusDataSource interface {
 	GetData() (*StubStatus, error)
 }
 

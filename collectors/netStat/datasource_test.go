@@ -275,7 +275,7 @@ func Test_netStatDataSource_GetData(t *testing.T) {
 	for _, testCase := range tests {
 		tt := testCase
 		t.Run(tt.caseDescription, func(t *testing.T) {
-			netStatDataSource := netStat.NewNetStatDataSource(tt.filePath, "")
+			netStatDataSource := netStat.NewDataSource(tt.filePath, "")
 			got, err := netStatDataSource.GetData()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ParseNetNetstat() error = %v, wantErr %v", err, tt.wantErr)

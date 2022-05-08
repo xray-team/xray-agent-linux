@@ -117,7 +117,7 @@ func Test_statDataSource_GetData(t *testing.T) {
 		tt := testCase
 
 		t.Run(tt.caseDescription, func(t *testing.T) {
-			statDataSource := stat.NewStatDataSource(tt.filePath, "")
+			statDataSource := stat.NewDataSource(tt.filePath, "")
 			got, err := statDataSource.GetData()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ParseStat() error = %v, wantErr %v", err, tt.wantErr)
