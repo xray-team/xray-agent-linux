@@ -14,14 +14,14 @@ type ClassBlockDataSource interface {
 	GetData() (map[string]dto.ClassBlock, error)
 }
 
-type DiskStatCollector struct {
+type Collector struct {
 	Config               *conf.DiskStatConf
 	DataSource           DiskStatDataSource
 	ClassBlockDataSource ClassBlockDataSource
 }
 
-// NewDiskStatCollector returns a new collector object.
-func NewDiskStatCollector(cfg *conf.CollectorsConf, diskStatDataSource DiskStatDataSource, classBlockDataSource ClassBlockDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, diskStatDataSource DiskStatDataSource, classBlockDataSource ClassBlockDataSource) dto.Collector {
 	if cfg == nil || diskStatDataSource == nil || classBlockDataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
@@ -33,7 +33,7 @@ func NewDiskStatCollector(cfg *conf.CollectorsConf, diskStatDataSource DiskStatD
 		return nil
 	}
 
-	return &DiskStatCollector{
+	return &Collector{
 		Config:               cfg.DiskStat,
 		DataSource:           diskStatDataSource,
 		ClassBlockDataSource: classBlockDataSource,
@@ -41,12 +41,12 @@ func NewDiskStatCollector(cfg *conf.CollectorsConf, diskStatDataSource DiskStatD
 }
 
 // GetName returns the collector's name.
-func (c *DiskStatCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *DiskStatCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	// Block Dev Inventory
 	inventory, err := c.ClassBlockDataSource.GetData()
 	if err != nil {
@@ -182,7 +182,7 @@ func genMetricsDiskStat(attrs []dto.MetricAttribute, diskStat DiskStat) []dto.Me
 	}
 }
 
-func (c *DiskStatCollector) filterBlockDevByMajor(m map[string]dto.ClassBlock) map[string]dto.ClassBlock {
+func (c *Collector) filterBlockDevByMajor(m map[string]dto.ClassBlock) map[string]dto.ClassBlock {
 	out := make(map[string]dto.ClassBlock)
 
 	for devName, dev := range m {
@@ -196,7 +196,7 @@ func (c *DiskStatCollector) filterBlockDevByMajor(m map[string]dto.ClassBlock) m
 	return out
 }
 
-func (c *DiskStatCollector) excludeBlockDevByName(m map[string]dto.ClassBlock) map[string]dto.ClassBlock {
+func (c *Collector) excludeBlockDevByName(m map[string]dto.ClassBlock) map[string]dto.ClassBlock {
 	for _, devName := range c.Config.ExcludeByName {
 		delete(m, devName)
 	}
@@ -204,7 +204,7 @@ func (c *DiskStatCollector) excludeBlockDevByName(m map[string]dto.ClassBlock) m
 	return m
 }
 
-func (c *DiskStatCollector) excludeBlockDevPartitions(m map[string]dto.ClassBlock) map[string]dto.ClassBlock {
+func (c *Collector) excludeBlockDevPartitions(m map[string]dto.ClassBlock) map[string]dto.ClassBlock {
 	if !c.Config.ExcludePartitions {
 		return m
 	}

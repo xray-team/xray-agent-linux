@@ -152,7 +152,7 @@ func TestDiskStatCollector_excludeBlockDevByName(t *testing.T) {
 		tt := testCase
 
 		t.Run(tt.name, func(t *testing.T) {
-			c := &DiskStatCollector{
+			c := &Collector{
 				Config:               tt.fields.Config,
 				DataSource:           tt.fields.DataSource,
 				ClassBlockDataSource: tt.fields.ClassBlockDataSource,
@@ -244,7 +244,7 @@ func TestDiskStatCollector_excludeBlockDevPartitions(t *testing.T) {
 		tt := testCase
 
 		t.Run(tt.name, func(t *testing.T) {
-			c := &DiskStatCollector{
+			c := &Collector{
 				Config:               tt.fields.Config,
 				DataSource:           tt.fields.DataSource,
 				ClassBlockDataSource: tt.fields.ClassBlockDataSource,

@@ -10,13 +10,13 @@ type EntropyDataSource interface {
 	GetData() (*Entropy, error)
 }
 
-type EntropyCollector struct {
+type Collector struct {
 	Config     *conf.EntropyConf
 	DataSource EntropyDataSource
 }
 
-// NewEntropyCollector returns a new collector object.
-func NewEntropyCollector(cfg *conf.CollectorsConf, dataSource EntropyDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, dataSource EntropyDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 		return nil
@@ -27,19 +27,19 @@ func NewEntropyCollector(cfg *conf.CollectorsConf, dataSource EntropyDataSource)
 		return nil
 	}
 
-	return &EntropyCollector{
+	return &Collector{
 		Config:     cfg.Entropy,
 		DataSource: dataSource,
 	}
 }
 
 // GetName returns the collector's name.
-func (c *EntropyCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *EntropyCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	data, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err

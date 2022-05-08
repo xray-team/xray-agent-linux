@@ -10,13 +10,13 @@ type StatDataSource interface {
 	GetData() (*Stat, error)
 }
 
-type StatCollector struct {
+type Collector struct {
 	Config     *conf.StatConf
 	DataSource StatDataSource
 }
 
-// NewStatCollector returns a new collector object.
-func NewStatCollector(cfg *conf.CollectorsConf, dataSource StatDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, dataSource StatDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
@@ -28,19 +28,19 @@ func NewStatCollector(cfg *conf.CollectorsConf, dataSource StatDataSource) dto.C
 		return nil
 	}
 
-	return &StatCollector{
+	return &Collector{
 		Config:     cfg.Stat,
 		DataSource: dataSource,
 	}
 }
 
 // GetName returns the collector's name.
-func (c *StatCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *StatCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	stat, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err

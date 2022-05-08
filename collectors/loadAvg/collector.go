@@ -10,13 +10,13 @@ type LoadAvgDataSource interface {
 	GetData() (*LoadAvg, error)
 }
 
-type LoadAvgCollector struct {
+type Collector struct {
 	Config     *conf.LoadAvgConf
 	DataSource LoadAvgDataSource
 }
 
-// NewLoadAvgCollector returns a new collector object.
-func NewLoadAvgCollector(cfg *conf.CollectorsConf, dataSource LoadAvgDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, dataSource LoadAvgDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
@@ -28,19 +28,19 @@ func NewLoadAvgCollector(cfg *conf.CollectorsConf, dataSource LoadAvgDataSource)
 		return nil
 	}
 
-	return &LoadAvgCollector{
+	return &Collector{
 		Config:     cfg.LoadAvg,
 		DataSource: dataSource,
 	}
 }
 
 // GetName returns the collector's name.
-func (c *LoadAvgCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *LoadAvgCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	loadAvg, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err

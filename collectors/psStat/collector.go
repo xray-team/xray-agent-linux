@@ -13,18 +13,18 @@ type PSStatDataSource interface {
 	GetData() (*PSStat, error)
 }
 
-type PSStatCollector struct {
+type Collector struct {
 	Config     *conf.PSStatConf
 	DataSource PSStatDataSource
 }
 
 // GetName returns the collector's name.
-func (c *PSStatCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
-// NewPSStatCollector returns a new collector object.
-func NewPSStatCollector(cfg *conf.CollectorsConf, dataSource PSStatDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, dataSource PSStatDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
@@ -36,14 +36,14 @@ func NewPSStatCollector(cfg *conf.CollectorsConf, dataSource PSStatDataSource) d
 		return nil
 	}
 
-	return &PSStatCollector{
+	return &Collector{
 		Config:     cfg.PSStat,
 		DataSource: dataSource,
 	}
 }
 
 // Collect collects and returns metrics.
-func (c *PSStatCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	psStats, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err

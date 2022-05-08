@@ -15,13 +15,13 @@ type MountsDataSource interface {
 	GetData() ([]Mounts, error)
 }
 
-type DiskSpaceCollector struct {
+type Collector struct {
 	Config           *conf.DiskSpaceConf
 	MountsDataSource MountsDataSource
 }
 
-// NewDiskSpaceCollector returns a new collector object.
-func NewDiskSpaceCollector(cfg *conf.CollectorsConf, mountsDataSource MountsDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, mountsDataSource MountsDataSource) dto.Collector {
 	if cfg == nil || mountsDataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
@@ -33,19 +33,19 @@ func NewDiskSpaceCollector(cfg *conf.CollectorsConf, mountsDataSource MountsData
 		return nil
 	}
 
-	return &DiskSpaceCollector{
+	return &Collector{
 		Config:           cfg.DiskSpace,
 		MountsDataSource: mountsDataSource,
 	}
 }
 
 // GetName returns the collector's name.
-func (c *DiskSpaceCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *DiskSpaceCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	mounts, err := c.MountsDataSource.GetData()
 	if err != nil {
 		return nil, fmt.Errorf("cannot parse mounts file: %s", err)
@@ -80,7 +80,7 @@ func (c *DiskSpaceCollector) Collect() ([]dto.Metric, error) {
 	return metrics, nil
 }
 
-func (c *DiskSpaceCollector) filterMounts(mounts []Mounts) []Mounts {
+func (c *Collector) filterMounts(mounts []Mounts) []Mounts {
 	out := make([]Mounts, 0)
 
 	// FS type
@@ -96,7 +96,7 @@ func (c *DiskSpaceCollector) filterMounts(mounts []Mounts) []Mounts {
 }
 
 // getDiskSpaceUsage returns disk usage info and error if any.
-func (c *DiskSpaceCollector) getDiskSpaceUsage(path string) (*DiskSpaceUsage, error) {
+func (c *Collector) getDiskSpaceUsage(path string) (*DiskSpaceUsage, error) {
 	var (
 		out  DiskSpaceUsage
 		stat unix.Statfs_t

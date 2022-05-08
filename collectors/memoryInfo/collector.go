@@ -10,13 +10,13 @@ type MemoryDataSource interface {
 	GetData() (*MemoryInfo, error)
 }
 
-type MemoryInfoCollector struct {
+type Collector struct {
 	Config     *conf.MemoryInfoConf
 	DataSource MemoryDataSource
 }
 
-// NewMemoryInfoCollector returns a new collector object.
-func NewMemoryInfoCollector(cfg *conf.CollectorsConf, dataSource MemoryDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, dataSource MemoryDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
@@ -28,19 +28,19 @@ func NewMemoryInfoCollector(cfg *conf.CollectorsConf, dataSource MemoryDataSourc
 		return nil
 	}
 
-	return &MemoryInfoCollector{
+	return &Collector{
 		Config:     cfg.MemoryInfo,
 		DataSource: dataSource,
 	}
 }
 
 // GetName returns the collector's name.
-func (c *MemoryInfoCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *MemoryInfoCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	data, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err

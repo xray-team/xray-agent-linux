@@ -5,13 +5,13 @@ import (
 	"github.com/xray-team/xray-agent-linux/dto"
 )
 
-type NginxStubStatusCollector struct {
+type StubStatusCollector struct {
 	Config     *conf.NginxStubStatus
 	DataSource NginxStubStatusDataSource
 }
 
-// NewNginxStubStatusCollector returns a new collector object.
-func NewNginxStubStatusCollector(cfg *conf.CollectorsConf, dataSource NginxStubStatusDataSource) dto.Collector {
+// NewStubStatusCollector returns a new collector object.
+func NewStubStatusCollector(cfg *conf.CollectorsConf, dataSource NginxStubStatusDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		return nil
 	}
@@ -21,7 +21,7 @@ func NewNginxStubStatusCollector(cfg *conf.CollectorsConf, dataSource NginxStubS
 		return nil
 	}
 
-	return &NginxStubStatusCollector{
+	return &StubStatusCollector{
 		Config:     cfg.NginxStubStatus,
 		DataSource: dataSource,
 	}
@@ -32,12 +32,12 @@ type NginxStubStatusDataSource interface {
 }
 
 // GetName returns the collector's name.
-func (c *NginxStubStatusCollector) GetName() string {
+func (c *StubStatusCollector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *NginxStubStatusCollector) Collect() ([]dto.Metric, error) {
+func (c *StubStatusCollector) Collect() ([]dto.Metric, error) {
 	data, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err

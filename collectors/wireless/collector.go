@@ -16,14 +16,14 @@ type ClassNetDataSource interface {
 	GetData() (map[string]dto.ClassNet, error)
 }
 
-type WirelessCollector struct {
+type Collector struct {
 	Config             *conf.WirelessConf
 	DataSource         WirelessDataSource
 	ClassNetDataSource ClassNetDataSource
 }
 
-// NewWirelessCollector returns a new collector object.
-func NewWirelessCollector(cfg *conf.CollectorsConf, wirelessDataSource WirelessDataSource, classNetDataSource ClassNetDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, wirelessDataSource WirelessDataSource, classNetDataSource ClassNetDataSource) dto.Collector {
 	if cfg == nil || wirelessDataSource == nil || classNetDataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
@@ -35,7 +35,7 @@ func NewWirelessCollector(cfg *conf.CollectorsConf, wirelessDataSource WirelessD
 		return nil
 	}
 
-	return &WirelessCollector{
+	return &Collector{
 		Config:             cfg.Wireless,
 		DataSource:         wirelessDataSource,
 		ClassNetDataSource: classNetDataSource,
@@ -43,12 +43,12 @@ func NewWirelessCollector(cfg *conf.CollectorsConf, wirelessDataSource WirelessD
 }
 
 // GetName returns the collector's name.
-func (c *WirelessCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *WirelessCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	// Inventory
 	inventory, err := c.ClassNetDataSource.GetData()
 	if err != nil {
@@ -73,7 +73,7 @@ func (c *WirelessCollector) Collect() ([]dto.Metric, error) {
 	return metrics, nil
 }
 
-func (c *WirelessCollector) filterWireless(m map[string]dto.ClassNet) map[string]dto.ClassNet {
+func (c *Collector) filterWireless(m map[string]dto.ClassNet) map[string]dto.ClassNet {
 	out := make(map[string]dto.ClassNet)
 
 	for devName, dev := range m {

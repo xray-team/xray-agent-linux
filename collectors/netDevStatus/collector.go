@@ -12,13 +12,13 @@ type ClassNetStatusDataSource interface {
 	GetData() (map[string]dto.ClassNet, error)
 }
 
-type NetDevStatusCollector struct {
+type Collector struct {
 	Config             *conf.NetDevStatusConf
 	ClassNetDataSource ClassNetStatusDataSource
 }
 
-// NewNetDevStatusCollector returns a new collector object.
-func NewNetDevStatusCollector(cfg *conf.CollectorsConf, classNetDataSource ClassNetStatusDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, classNetDataSource ClassNetStatusDataSource) dto.Collector {
 	if cfg == nil || classNetDataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
@@ -30,19 +30,19 @@ func NewNetDevStatusCollector(cfg *conf.CollectorsConf, classNetDataSource Class
 		return nil
 	}
 
-	return &NetDevStatusCollector{
+	return &Collector{
 		Config:             cfg.NetDevStatus,
 		ClassNetDataSource: classNetDataSource,
 	}
 }
 
 // GetName returns the collector's name.
-func (c *NetDevStatusCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *NetDevStatusCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	// Net Dev Inventory
 	inventory, err := c.ClassNetDataSource.GetData()
 	if err != nil {
@@ -73,7 +73,7 @@ func (c *NetDevStatusCollector) Collect() ([]dto.Metric, error) {
 	return metrics, nil
 }
 
-func (c *NetDevStatusCollector) filterNetDev(m map[string]dto.ClassNet) map[string]dto.ClassNet {
+func (c *Collector) filterNetDev(m map[string]dto.ClassNet) map[string]dto.ClassNet {
 	out := make(map[string]dto.ClassNet)
 
 	for devName, dev := range m {

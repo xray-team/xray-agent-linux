@@ -12,13 +12,13 @@ type NetARPDataSource interface {
 	GetData() ([]ARPEntry, error)
 }
 
-type NetARPCollector struct {
+type Collector struct {
 	Config     *conf.NetARPConf
 	DataSource NetARPDataSource
 }
 
-// NewNetARPCollector returns a new collector object.
-func NewNetARPCollector(cfg *conf.CollectorsConf, dataSource NetARPDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, dataSource NetARPDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
@@ -30,19 +30,19 @@ func NewNetARPCollector(cfg *conf.CollectorsConf, dataSource NetARPDataSource) d
 		return nil
 	}
 
-	return &NetARPCollector{
+	return &Collector{
 		Config:     cfg.NetARP,
 		DataSource: dataSource,
 	}
 }
 
 // GetName returns the collector's name.
-func (c *NetARPCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *NetARPCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	netArp, err := c.GetNetArp()
 	if err != nil {
 		return nil, err
@@ -95,7 +95,7 @@ func (c *NetARPCollector) Collect() ([]dto.Metric, error) {
 	return metrics, nil
 }
 
-func (c *NetARPCollector) GetNetArp() (*NetArp, error) {
+func (c *Collector) GetNetArp() (*NetArp, error) {
 	arpTable, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err

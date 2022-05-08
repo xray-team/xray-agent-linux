@@ -10,13 +10,13 @@ type NetStatDataSource interface {
 	GetData() (*Netstat, error)
 }
 
-type NetStatCollector struct {
+type Collector struct {
 	Config     *conf.NetStatConf
 	DataSource NetStatDataSource
 }
 
-// NewNetStatCollector returns a new collector object.
-func NewNetStatCollector(cfg *conf.CollectorsConf, dataSource NetStatDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, dataSource NetStatDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 		return nil
@@ -27,19 +27,19 @@ func NewNetStatCollector(cfg *conf.CollectorsConf, dataSource NetStatDataSource)
 		return nil
 	}
 
-	return &NetStatCollector{
+	return &Collector{
 		Config:     cfg.NetStat,
 		DataSource: dataSource,
 	}
 }
 
 // GetName returns the collector's name.
-func (c *NetStatCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *NetStatCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	netstat, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err

@@ -12,13 +12,13 @@ type CPUInfoDataSource interface {
 	GetData() (*CPUInfo, error)
 }
 
-type CPUInfoCollector struct {
+type Collector struct {
 	Config     *conf.CPUInfoConf
 	DataSource CPUInfoDataSource
 }
 
-// NewCpuInfoCollector returns a new collector object.
-func NewCpuInfoCollector(cfg *conf.CollectorsConf, dataSource CPUInfoDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, dataSource CPUInfoDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
@@ -30,19 +30,19 @@ func NewCpuInfoCollector(cfg *conf.CollectorsConf, dataSource CPUInfoDataSource)
 		return nil
 	}
 
-	return &CPUInfoCollector{
+	return &Collector{
 		Config:     cfg.CPUInfo,
 		DataSource: dataSource,
 	}
 }
 
 // GetName returns the collector's name.
-func (c *CPUInfoCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *CPUInfoCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	cpuInfo, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err

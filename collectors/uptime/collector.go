@@ -10,13 +10,13 @@ type UptimeDataSource interface {
 	GetData() (*Uptime, error)
 }
 
-type UptimeCollector struct {
+type Collector struct {
 	Config     *conf.UptimeConf
 	DataSource UptimeDataSource
 }
 
-// NewUptimeCollector returns a new collector object.
-func NewUptimeCollector(cfg *conf.CollectorsConf, dataSource UptimeDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, dataSource UptimeDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
@@ -28,19 +28,19 @@ func NewUptimeCollector(cfg *conf.CollectorsConf, dataSource UptimeDataSource) d
 		return nil
 	}
 
-	return &UptimeCollector{
+	return &Collector{
 		Config:     cfg.Uptime,
 		DataSource: dataSource,
 	}
 }
 
 // GetName returns the collector's name.
-func (c *UptimeCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *UptimeCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	data, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err

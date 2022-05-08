@@ -16,13 +16,13 @@ type CmdDataSource interface {
 	RunPipeLine(pipeLine []*exec.Cmd) (string, string, error)
 }
 
-type CmdCollector struct {
+type Collector struct {
 	Config     *conf.CMDConf
 	DataSource CmdDataSource
 }
 
-// NewCmdCollector returns a new collector object.
-func NewCmdCollector(cfg *conf.CollectorsConf, dataSource CmdDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, dataSource CmdDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
@@ -34,19 +34,19 @@ func NewCmdCollector(cfg *conf.CollectorsConf, dataSource CmdDataSource) dto.Col
 		return nil
 	}
 
-	return &CmdCollector{
+	return &Collector{
 		Config:     cfg.CMD,
 		DataSource: dataSource,
 	}
 }
 
 // GetName returns the collector's name.
-func (c *CmdCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *CmdCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	metrics := make([]dto.Metric, 0, len(c.Config.Metrics))
 
 	for i := range c.Config.Metrics {
@@ -59,7 +59,7 @@ func (c *CmdCollector) Collect() ([]dto.Metric, error) {
 	return metrics, nil
 }
 
-func (c *CmdCollector) processPipeLine(cfg *conf.CMDMetricConf, timeout int, out *[]dto.Metric) error {
+func (c *Collector) processPipeLine(cfg *conf.CMDMetricConf, timeout int, out *[]dto.Metric) error {
 	// Create a new context with timeout
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeout)*time.Second)
 	defer cancel()

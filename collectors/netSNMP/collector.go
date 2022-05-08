@@ -7,13 +7,13 @@ import (
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
-type netSNMPCollector struct {
+type Collector struct {
 	Config     *conf.NetSNMPConf
 	DataSource netStat.NetStatDataSource
 }
 
-// NewNetSNMPCollector returns a new collector object.
-func NewNetSNMPCollector(cfg *conf.CollectorsConf, dataSource netStat.NetStatDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, dataSource netStat.NetStatDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
@@ -25,19 +25,19 @@ func NewNetSNMPCollector(cfg *conf.CollectorsConf, dataSource netStat.NetStatDat
 		return nil
 	}
 
-	return &netSNMPCollector{
+	return &Collector{
 		Config:     cfg.NetSNMP,
 		DataSource: dataSource,
 	}
 }
 
 // GetName returns the collector's name.
-func (c *netSNMPCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *netSNMPCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	netstat, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err

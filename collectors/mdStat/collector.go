@@ -13,13 +13,13 @@ type MDStatDataSource interface {
 	GetData() (*MDStats, error)
 }
 
-type MDStatCollector struct {
+type Collector struct {
 	Config     *conf.MDStatConf
 	DataSource MDStatDataSource
 }
 
-// NewMDStatCollector returns a new collector object.
-func NewMDStatCollector(cfg *conf.CollectorsConf, dataSource MDStatDataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, dataSource MDStatDataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 		return nil
@@ -30,19 +30,19 @@ func NewMDStatCollector(cfg *conf.CollectorsConf, dataSource MDStatDataSource) d
 		return nil
 	}
 
-	return &MDStatCollector{
+	return &Collector{
 		Config:     cfg.MDStat,
 		DataSource: dataSource,
 	}
 }
 
 // GetName returns the collector's name.
-func (c *MDStatCollector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *MDStatCollector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	mdStat, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err

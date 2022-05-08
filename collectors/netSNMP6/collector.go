@@ -10,13 +10,13 @@ type SNMP6DataSource interface {
 	GetData() (*NetSNMP6, error)
 }
 
-type NetSNMP6Collector struct {
+type Collector struct {
 	Config     *conf.NetSNMP6Conf
 	DataSource SNMP6DataSource
 }
 
-// NewNetSNMP6Collector returns a new collector object.
-func NewNetSNMP6Collector(cfg *conf.CollectorsConf, dataSource SNMP6DataSource) dto.Collector {
+// NewCollector returns a new collector object.
+func NewCollector(cfg *conf.CollectorsConf, dataSource SNMP6DataSource) dto.Collector {
 	if cfg == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
@@ -28,19 +28,19 @@ func NewNetSNMP6Collector(cfg *conf.CollectorsConf, dataSource SNMP6DataSource) 
 		return nil
 	}
 
-	return &NetSNMP6Collector{
+	return &Collector{
 		Config:     cfg.NetSNMP6,
 		DataSource: dataSource,
 	}
 }
 
 // GetName returns the collector's name.
-func (c *NetSNMP6Collector) GetName() string {
+func (c *Collector) GetName() string {
 	return CollectorName
 }
 
 // Collect collects and returns metrics.
-func (c *NetSNMP6Collector) Collect() ([]dto.Metric, error) {
+func (c *Collector) Collect() ([]dto.Metric, error) {
 	snmp6, err := c.DataSource.GetData()
 	if err != nil {
 		return nil, err
