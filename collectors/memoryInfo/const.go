@@ -2,7 +2,7 @@ package memoryInfo
 
 const (
 	CollectorName = "MemoryInfo"
-	MemInfoPath   = "/meminfo"
+	MemInfoPath   = "/proc/meminfo"
 )
 
 // Metrics

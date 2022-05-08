@@ -2,7 +2,7 @@ package cpuInfo
 
 const (
 	CollectorName = "CPUInfo"
-	CPUInfoPath   = "/cpuinfo"
+	CPUInfoPath   = "/proc/cpuinfo"
 )
 
 // Metrics

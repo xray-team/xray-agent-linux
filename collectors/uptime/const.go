@@ -2,7 +2,7 @@ package uptime
 
 const (
 	CollectorName = "Uptime"
-	UptimePath    = "/uptime"
+	UptimePath    = "/proc/uptime"
 )
 
 // Metrics

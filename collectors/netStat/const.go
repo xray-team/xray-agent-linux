@@ -2,7 +2,7 @@ package netStat
 
 const (
 	CollectorName = "NetStat"
-	NetStatPath   = "/net/netstat"
+	NetStatPath   = "/proc/net/netstat"
 )
 
 // Metrics

@@ -2,7 +2,7 @@ package netSNMP
 
 const (
 	CollectorName = "NetSNMP"
-	NetSNMPPath   = "/net/snmp"
+	NetSNMPPath   = "/proc/net/snmp"
 )
 
 // Metrics

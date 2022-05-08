@@ -2,7 +2,7 @@ package loadAvg
 
 const (
 	CollectorName = "LoadAvg"
-	LoadAvgPath   = "/loadavg"
+	LoadAvgPath   = "/proc/loadavg"
 )
 
 // Metrics

@@ -2,7 +2,7 @@ package diskSpace
 
 const (
 	CollectorName = "DiskSpace"
-	MountsPath    = "/mounts"
+	MountsPath    = "/proc/mounts"
 )
 
 // Metrics

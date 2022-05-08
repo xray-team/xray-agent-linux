@@ -2,6 +2,7 @@ package psStat
 
 const (
 	CollectorName = "PSStat"
+	ProcPath      = "/proc"
 )
 
 // Metrics

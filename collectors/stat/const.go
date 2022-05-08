@@ -2,7 +2,7 @@ package stat
 
 const (
 	CollectorName = "Stat"
-	StatPath      = "/stat"
+	StatPath      = "/proc/stat"
 )
 
 // Metrics

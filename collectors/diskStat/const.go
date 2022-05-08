@@ -2,7 +2,7 @@ package diskStat
 
 const (
 	CollectorName = "DiskStat"
-	DiskStatsPath = "/diskstats"
+	DiskStatsPath = "/proc/diskstats"
 )
 
 // Metrics
