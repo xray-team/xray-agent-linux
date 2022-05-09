@@ -1,7 +1,6 @@
 package diskStat
 
 import (
-	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
@@ -15,26 +14,26 @@ type ClassBlockDataSource interface {
 }
 
 type Collector struct {
-	Config               *conf.DiskStatConf
+	Config               *Config
 	DataSource           DiskStatDataSource
 	ClassBlockDataSource ClassBlockDataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, diskStatDataSource DiskStatDataSource, classBlockDataSource ClassBlockDataSource) dto.Collector {
-	if cfg == nil || diskStatDataSource == nil || classBlockDataSource == nil {
+func NewCollector(config *Config, diskStatDataSource DiskStatDataSource, classBlockDataSource ClassBlockDataSource) dto.Collector {
+	if config == nil || diskStatDataSource == nil || classBlockDataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
 
 	// exit if collector disabled
-	if cfg.DiskStat == nil || !cfg.DiskStat.Enabled {
+	if !config.Enabled {
 		return nil
 	}
 
 	return &Collector{
-		Config:               cfg.DiskStat,
+		Config:               config,
 		DataSource:           diskStatDataSource,
 		ClassBlockDataSource: classBlockDataSource,
 	}

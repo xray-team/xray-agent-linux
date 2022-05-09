@@ -3,7 +3,6 @@ package cpuInfo
 import (
 	"strconv"
 
-	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
@@ -13,25 +12,25 @@ type DataSource interface {
 }
 
 type Collector struct {
-	Config     *conf.CPUInfoConf
+	Config     *Config
 	DataSource DataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, dataSource DataSource) dto.Collector {
-	if cfg == nil || dataSource == nil {
+func NewCollector(config *Config, dataSource DataSource) dto.Collector {
+	if config == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
 
 	// exit if collector disabled
-	if cfg.CPUInfo == nil || !cfg.CPUInfo.Enabled {
+	if !config.Enabled {
 		return nil
 	}
 
 	return &Collector{
-		Config:     cfg.CPUInfo,
+		Config:     config,
 		DataSource: dataSource,
 	}
 }

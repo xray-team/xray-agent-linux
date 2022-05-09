@@ -11,7 +11,6 @@
     "logOut": "syslog"
   },
   "collectors": {
-    "rootPath": "/",
     "enableSelfMetrics": true,
     "uptime": {
       "enabled": true

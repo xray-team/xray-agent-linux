@@ -1,28 +1,27 @@
 package nginx
 
 import (
-	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 )
 
 type StubStatusCollector struct {
-	Config     *conf.NginxStubStatus
+	Config     *Config
 	DataSource StubStatusDataSource
 }
 
 // NewStubStatusCollector returns a new collector object.
-func NewStubStatusCollector(cfg *conf.CollectorsConf, dataSource StubStatusDataSource) dto.Collector {
-	if cfg == nil || dataSource == nil {
+func NewStubStatusCollector(config *Config, dataSource StubStatusDataSource) dto.Collector {
+	if config == nil || dataSource == nil {
 		return nil
 	}
 
 	// exit if collector disabled
-	if cfg.NginxStubStatus == nil || !cfg.NginxStubStatus.Enabled {
+	if !config.Enabled {
 		return nil
 	}
 
 	return &StubStatusCollector{
-		Config:     cfg.NginxStubStatus,
+		Config:     config,
 		DataSource: dataSource,
 	}
 }

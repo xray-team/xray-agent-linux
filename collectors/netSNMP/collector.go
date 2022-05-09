@@ -2,31 +2,30 @@ package netSNMP
 
 import (
 	"github.com/xray-team/xray-agent-linux/collectors/netStat"
-	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
 type Collector struct {
-	Config     *conf.NetSNMPConf
+	Config     *Config
 	DataSource netStat.DataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, dataSource netStat.DataSource) dto.Collector {
-	if cfg == nil || dataSource == nil {
+func NewCollector(config *Config, dataSource netStat.DataSource) dto.Collector {
+	if config == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
 
 	// exit if collector disabled
-	if cfg.NetSNMP == nil || !cfg.NetSNMP.Enabled {
+	if !config.Enabled {
 		return nil
 	}
 
 	return &Collector{
-		Config:     cfg.NetSNMP,
+		Config:     config,
 		DataSource: dataSource,
 	}
 }

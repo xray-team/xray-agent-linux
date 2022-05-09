@@ -3,7 +3,6 @@ package netDevStatus
 import (
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
@@ -13,25 +12,25 @@ type ClassNetStatusDataSource interface {
 }
 
 type Collector struct {
-	Config             *conf.NetDevStatusConf
+	Config             *Config
 	ClassNetDataSource ClassNetStatusDataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, classNetDataSource ClassNetStatusDataSource) dto.Collector {
-	if cfg == nil || classNetDataSource == nil {
+func NewCollector(config *Config, classNetDataSource ClassNetStatusDataSource) dto.Collector {
+	if config == nil || classNetDataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
 
 	// exit if collector disabled
-	if cfg.NetDevStatus == nil || !cfg.NetDevStatus.Enabled {
+	if !config.Enabled {
 		return nil
 	}
 
 	return &Collector{
-		Config:             cfg.NetDevStatus,
+		Config:             config,
 		ClassNetDataSource: classNetDataSource,
 	}
 }

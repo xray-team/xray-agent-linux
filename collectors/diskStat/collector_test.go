@@ -4,13 +4,12 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 )
 
 func TestDiskStatCollector_excludeBlockDevByName(t *testing.T) {
 	type fields struct {
-		Config               *conf.DiskStatConf
+		Config               *Config
 		DataSource           DiskStatDataSource
 		ClassBlockDataSource ClassBlockDataSource
 	}
@@ -26,7 +25,7 @@ func TestDiskStatCollector_excludeBlockDevByName(t *testing.T) {
 		{
 			name: "first",
 			fields: fields{
-				Config: &conf.DiskStatConf{
+				Config: &Config{
 					ExcludeByName: []string{"sda1"},
 				},
 			},
@@ -45,7 +44,7 @@ func TestDiskStatCollector_excludeBlockDevByName(t *testing.T) {
 		{
 			name: "middle",
 			fields: fields{
-				Config: &conf.DiskStatConf{
+				Config: &Config{
 					ExcludeByName: []string{"sda2"},
 				},
 			},
@@ -64,7 +63,7 @@ func TestDiskStatCollector_excludeBlockDevByName(t *testing.T) {
 		{
 			name: "last",
 			fields: fields{
-				Config: &conf.DiskStatConf{
+				Config: &Config{
 					ExcludeByName: []string{"sda3"},
 				},
 			},
@@ -83,7 +82,7 @@ func TestDiskStatCollector_excludeBlockDevByName(t *testing.T) {
 		{
 			name: "nothing to exclude",
 			fields: fields{
-				Config: &conf.DiskStatConf{
+				Config: &Config{
 					ExcludeByName: []string{"sdb"},
 				},
 			},
@@ -103,7 +102,7 @@ func TestDiskStatCollector_excludeBlockDevByName(t *testing.T) {
 		{
 			name: "nothing to exclude - 2",
 			fields: fields{
-				Config: &conf.DiskStatConf{
+				Config: &Config{
 					ExcludeByName: []string{"sda1"},
 				},
 			},
@@ -115,7 +114,7 @@ func TestDiskStatCollector_excludeBlockDevByName(t *testing.T) {
 		{
 			name: "exclude all",
 			fields: fields{
-				Config: &conf.DiskStatConf{
+				Config: &Config{
 					ExcludeByName: []string{"sda1", "sda3", "sda2"},
 				},
 			},
@@ -131,7 +130,7 @@ func TestDiskStatCollector_excludeBlockDevByName(t *testing.T) {
 		{
 			name: "exclude 2",
 			fields: fields{
-				Config: &conf.DiskStatConf{
+				Config: &Config{
 					ExcludeByName: []string{"sda1", "sda3"},
 				},
 			},
@@ -166,7 +165,7 @@ func TestDiskStatCollector_excludeBlockDevByName(t *testing.T) {
 
 func TestDiskStatCollector_excludeBlockDevPartitions(t *testing.T) {
 	type fields struct {
-		Config               *conf.DiskStatConf
+		Config               *Config
 		DataSource           DiskStatDataSource
 		ClassBlockDataSource ClassBlockDataSource
 	}
@@ -182,7 +181,7 @@ func TestDiskStatCollector_excludeBlockDevPartitions(t *testing.T) {
 		{
 			name: "exclude partitions",
 			fields: fields{
-				Config: &conf.DiskStatConf{
+				Config: &Config{
 					ExcludePartitions: true,
 				},
 			},
@@ -201,7 +200,7 @@ func TestDiskStatCollector_excludeBlockDevPartitions(t *testing.T) {
 		{
 			name: "exclude partitions - 2",
 			fields: fields{
-				Config: &conf.DiskStatConf{
+				Config: &Config{
 					ExcludePartitions: true,
 				},
 			},
@@ -221,7 +220,7 @@ func TestDiskStatCollector_excludeBlockDevPartitions(t *testing.T) {
 		{
 			name: "not exclude partitions",
 			fields: fields{
-				Config: &conf.DiskStatConf{
+				Config: &Config{
 					ExcludePartitions: false,
 				},
 			},

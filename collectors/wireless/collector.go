@@ -3,7 +3,6 @@ package wireless
 import (
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
@@ -17,26 +16,26 @@ type ClassNetDataSource interface {
 }
 
 type Collector struct {
-	Config             *conf.WirelessConf
+	Config             *Config
 	DataSource         WirelessDataSource
 	ClassNetDataSource ClassNetDataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, wirelessDataSource WirelessDataSource, classNetDataSource ClassNetDataSource) dto.Collector {
-	if cfg == nil || wirelessDataSource == nil || classNetDataSource == nil {
+func NewCollector(config *Config, wirelessDataSource WirelessDataSource, classNetDataSource ClassNetDataSource) dto.Collector {
+	if config == nil || wirelessDataSource == nil || classNetDataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
 
 	// exit if collector disabled
-	if cfg.Wireless == nil || !cfg.Wireless.Enabled {
+	if !config.Enabled {
 		return nil
 	}
 
 	return &Collector{
-		Config:             cfg.Wireless,
+		Config:             config,
 		DataSource:         wirelessDataSource,
 		ClassNetDataSource: classNetDataSource,
 	}

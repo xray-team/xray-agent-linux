@@ -3,7 +3,6 @@ package netDev
 import (
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
@@ -17,26 +16,26 @@ type ClassNetDataSource interface {
 }
 
 type Collector struct {
-	Config             *conf.NetDevConf
+	Config             *Config
 	DataSource         NetDevDataSource
 	ClassNetDataSource ClassNetDataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, netDevDataSource NetDevDataSource, classNetDataSource ClassNetDataSource) dto.Collector {
-	if cfg == nil || netDevDataSource == nil || classNetDataSource == nil {
+func NewCollector(config *Config, netDevDataSource NetDevDataSource, classNetDataSource ClassNetDataSource) dto.Collector {
+	if config == nil || netDevDataSource == nil || classNetDataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
 
 	// exit if collector disabled
-	if cfg.NetDev == nil || !cfg.NetDev.Enabled {
+	if !config.Enabled {
 		return nil
 	}
 
 	return &Collector{
-		Config:             cfg.NetDev,
+		Config:             config,
 		DataSource:         netDevDataSource,
 		ClassNetDataSource: classNetDataSource,
 	}

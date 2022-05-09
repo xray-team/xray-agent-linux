@@ -7,17 +7,16 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
 type StubStatusClient struct {
-	config    conf.NginxStubStatus
+	config    Config
 	client    *http.Client
 	logPrefix string
 }
 
-func NewStubStatusClient(config *conf.NginxStubStatus, client *http.Client, logPrefix string) *StubStatusClient {
+func NewStubStatusClient(config *Config, client *http.Client, logPrefix string) *StubStatusClient {
 	if config == nil || client == nil {
 		return nil
 	}

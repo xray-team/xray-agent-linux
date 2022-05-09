@@ -7,7 +7,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
@@ -17,25 +16,25 @@ type DataSource interface {
 }
 
 type Collector struct {
-	Config     *conf.CMDConf
+	Config     *Config
 	DataSource DataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, dataSource DataSource) dto.Collector {
-	if cfg == nil || dataSource == nil {
+func NewCollector(config *Config, dataSource DataSource) dto.Collector {
+	if config == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
 
 	// exit if collector disabled
-	if cfg.CMD == nil || !cfg.CMD.Enabled {
+	if !config.Enabled {
 		return nil
 	}
 
 	return &Collector{
-		Config:     cfg.CMD,
+		Config:     config,
 		DataSource: dataSource,
 	}
 }
@@ -59,7 +58,7 @@ func (c *Collector) Collect() ([]dto.Metric, error) {
 	return metrics, nil
 }
 
-func (c *Collector) processPipeLine(cfg *conf.CMDMetricConf, timeout int, out *[]dto.Metric) error {
+func (c *Collector) processPipeLine(cfg *MetricConfig, timeout int, out *[]dto.Metric) error {
 	// Create a new context with timeout
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeout)*time.Second)
 	defer cancel()

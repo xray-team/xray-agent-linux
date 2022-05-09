@@ -4,7 +4,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
@@ -14,7 +13,7 @@ type DataSource interface {
 }
 
 type Collector struct {
-	Config     *conf.PSStatConf
+	Config     *Config
 	DataSource DataSource
 }
 
@@ -24,20 +23,20 @@ func (c *Collector) GetName() string {
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, dataSource DataSource) dto.Collector {
-	if cfg == nil || dataSource == nil {
+func NewCollector(config *Config, dataSource DataSource) dto.Collector {
+	if config == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
 
 	// exit if collector disabled
-	if cfg.PSStat == nil || !cfg.PS.Enabled || len(cfg.PSStat.ProcessList) == 0 {
+	if !config.Enabled || len(config.ProcessList) == 0 {
 		return nil
 	}
 
 	return &Collector{
-		Config:     cfg.PSStat,
+		Config:     config,
 		DataSource: dataSource,
 	}
 }

@@ -3,7 +3,6 @@ package netARP
 import (
 	"strings"
 
-	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
@@ -13,25 +12,25 @@ type DataSource interface {
 }
 
 type Collector struct {
-	Config     *conf.NetARPConf
+	Config     *Config
 	DataSource DataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, dataSource DataSource) dto.Collector {
-	if cfg == nil || dataSource == nil {
+func NewCollector(config *Config, dataSource DataSource) dto.Collector {
+	if config == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
 
 	// exit if collector disabled
-	if cfg.NetARP == nil || !cfg.NetARP.Enabled {
+	if !config.Enabled {
 		return nil
 	}
 
 	return &Collector{
-		Config:     cfg.NetARP,
+		Config:     config,
 		DataSource: dataSource,
 	}
 }

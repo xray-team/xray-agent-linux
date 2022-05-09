@@ -6,7 +6,6 @@ import (
 
 	"golang.org/x/sys/unix"
 
-	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
 )
@@ -16,25 +15,25 @@ type MountsDataSource interface {
 }
 
 type Collector struct {
-	Config           *conf.DiskSpaceConf
+	Config           *Config
 	MountsDataSource MountsDataSource
 }
 
 // NewCollector returns a new collector object.
-func NewCollector(cfg *conf.CollectorsConf, mountsDataSource MountsDataSource) dto.Collector {
-	if cfg == nil || mountsDataSource == nil {
+func NewCollector(config *Config, mountsDataSource MountsDataSource) dto.Collector {
+	if config == nil || mountsDataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
 
 		return nil
 	}
 
 	// exit if collector disabled
-	if cfg.DiskSpace == nil || !cfg.DiskSpace.Enabled {
+	if !config.Enabled {
 		return nil
 	}
 
 	return &Collector{
-		Config:           cfg.DiskSpace,
+		Config:           config,
 		MountsDataSource: mountsDataSource,
 	}
 }

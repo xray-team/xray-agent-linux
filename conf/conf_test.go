@@ -4,6 +4,24 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/xray-team/xray-agent-linux/collectors/cpuInfo"
+	"github.com/xray-team/xray-agent-linux/collectors/diskSpace"
+	"github.com/xray-team/xray-agent-linux/collectors/diskStat"
+	"github.com/xray-team/xray-agent-linux/collectors/entropy"
+	"github.com/xray-team/xray-agent-linux/collectors/loadAvg"
+	"github.com/xray-team/xray-agent-linux/collectors/mdStat"
+	"github.com/xray-team/xray-agent-linux/collectors/memoryInfo"
+	"github.com/xray-team/xray-agent-linux/collectors/netARP"
+	"github.com/xray-team/xray-agent-linux/collectors/netDev"
+	"github.com/xray-team/xray-agent-linux/collectors/netDevStatus"
+	"github.com/xray-team/xray-agent-linux/collectors/netSNMP"
+	"github.com/xray-team/xray-agent-linux/collectors/netSNMP6"
+	"github.com/xray-team/xray-agent-linux/collectors/netStat"
+	"github.com/xray-team/xray-agent-linux/collectors/ps"
+	"github.com/xray-team/xray-agent-linux/collectors/psStat"
+	"github.com/xray-team/xray-agent-linux/collectors/stat"
+	"github.com/xray-team/xray-agent-linux/collectors/uptime"
+	"github.com/xray-team/xray-agent-linux/collectors/wireless"
 	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
@@ -40,21 +58,20 @@ func TestReadConfigFile(t *testing.T) {
 					LogOut:   "syslog",
 				},
 				Collectors: &conf.CollectorsConf{
-					RootPath:          "/",
 					EnableSelfMetrics: true,
-					Uptime:            &conf.UptimeConf{Enabled: true},
-					LoadAvg:           &conf.LoadAvgConf{Enabled: true},
-					PS:                &conf.PSConf{Enabled: true},
-					PSStat:            &conf.PSStatConf{Enabled: true, ProcessList: []string{"xray-agent"}},
-					Stat:              &conf.StatConf{Enabled: true},
-					CPUInfo:           &conf.CPUInfoConf{Enabled: true},
-					MemoryInfo:        &conf.MemoryInfoConf{Enabled: true},
-					NetARP:            &conf.NetARPConf{Enabled: true},
-					NetStat:           &conf.NetStatConf{Enabled: true},
-					NetSNMP:           &conf.NetSNMPConf{Enabled: true},
-					NetSNMP6:          &conf.NetSNMP6Conf{Enabled: true},
-					Entropy:           &conf.EntropyConf{Enabled: true},
-					NetDev: &conf.NetDevConf{
+					Uptime:            &uptime.Config{Enabled: true},
+					LoadAvg:           &loadAvg.Config{Enabled: true},
+					PS:                &ps.Config{Enabled: true},
+					PSStat:            &psStat.Config{Enabled: true, ProcessList: []string{"xray-agent"}},
+					Stat:              &stat.Config{Enabled: true},
+					CPUInfo:           &cpuInfo.Config{Enabled: true},
+					MemoryInfo:        &memoryInfo.Config{Enabled: true},
+					NetARP:            &netARP.Config{Enabled: true},
+					NetStat:           &netStat.Config{Enabled: true},
+					NetSNMP:           &netSNMP.Config{Enabled: true},
+					NetSNMP6:          &netSNMP6.Config{Enabled: true},
+					Entropy:           &entropy.Config{Enabled: true},
+					NetDev: &netDev.Config{
 						Enabled:          true,
 						ExcludeLoopbacks: true,
 						ExcludeWireless:  false,
@@ -65,17 +82,17 @@ func TestReadConfigFile(t *testing.T) {
 							"tun1",
 						},
 					},
-					NetDevStatus: &conf.NetDevStatusConf{
+					NetDevStatus: &netDevStatus.Config{
 						Enabled:         true,
 						ExcludeWireless: true,
 						ExcludeByName:   nil,
 					},
-					Wireless: &conf.WirelessConf{
+					Wireless: &wireless.Config{
 						Enabled:            true,
 						ExcludeByName:      nil,
 						ExcludeByOperState: nil,
 					},
-					DiskStat: &conf.DiskStatConf{
+					DiskStat: &diskStat.Config{
 						Enabled: true,
 						MonitoredDiskTypes: []int64{
 							dto.BlockDevMajorTypeSCSI, // SCSI disk devices  (sda*, sdb*, sdc*, ...,)
@@ -86,7 +103,7 @@ func TestReadConfigFile(t *testing.T) {
 							"sde1",
 						},
 					},
-					DiskSpace: &conf.DiskSpaceConf{
+					DiskSpace: &diskSpace.Config{
 						Enabled: true,
 						MonitoredFileSystemTypes: []string{
 							"ext4",
@@ -97,7 +114,7 @@ func TestReadConfigFile(t *testing.T) {
 							"btrfs",
 						},
 					},
-					MDStat: &conf.MDStatConf{Enabled: true},
+					MDStat: &mdStat.Config{Enabled: true},
 				},
 				TSDB: &conf.TSDBConf{
 					Graphite: &conf.GraphiteConf{
