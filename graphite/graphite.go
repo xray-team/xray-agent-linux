@@ -18,8 +18,12 @@ type Graphite struct {
 	stopChan      chan bool
 }
 
-func New(cfg *conf.GraphiteConf, telemetryChan <-chan *dto.Telemetry) (*Graphite, error) {
-	return &Graphite{cfg: cfg, telemetryChan: telemetryChan, stopChan: make(chan bool)}, nil
+func New(cfg *conf.GraphiteConf, telemetryChan <-chan *dto.Telemetry) *Graphite {
+	return &Graphite{
+		cfg:           cfg,
+		telemetryChan: telemetryChan,
+		stopChan:      make(chan bool),
+	}
 }
 
 func (g *Graphite) Start() {

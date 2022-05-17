@@ -4,8 +4,11 @@ import (
 	"flag"
 
 	"github.com/xray-team/xray-agent-linux/conf"
+	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/graphite"
 	"github.com/xray-team/xray-agent-linux/logger"
 	"github.com/xray-team/xray-agent-linux/service"
+	"github.com/xray-team/xray-agent-linux/stats"
 )
 
 func main() {
@@ -39,12 +42,10 @@ func main() {
 		return
 	}
 
-	agent, err := service.NewAgent(*cfg)
-	if err != nil {
-		logger.Log.Error.Printf(logger.MessageError, logger.TagAgent, err.Error())
+	// Start service
+	telemetryChan := make(chan *dto.Telemetry)
+	cfg.TSDB.Graphite.DryRun = *cfg.Agent.Flags.DryRun
 
-		return
-	}
-
+	agent := service.New(stats.New(cfg, telemetryChan), graphite.New(cfg.TSDB.Graphite, telemetryChan))
 	agent.Start()
 }
