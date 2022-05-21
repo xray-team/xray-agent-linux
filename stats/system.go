@@ -125,6 +125,23 @@ func (s *Stat) Stop() {
 	s.stopChan <- true
 }
 
+func (s *Stat) DryRun() {
+	s.RegisterCollectors()
+	s.initCollectors()
+
+	defer func() {
+		close(s.telemetryChan)
+		close(s.stopChan)
+	}()
+
+	stats, err := s.getStat()
+	if err != nil {
+		logger.Log.Error.Printf(logger.MessageCollectError, logger.TagAgent, err.Error())
+	}
+
+	s.telemetryChan <- stats
+}
+
 func (s *Stat) getStat() (*dto.Telemetry, error) {
 	var (
 		metrics    []dto.Metric

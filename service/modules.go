@@ -12,6 +12,7 @@ import (
 type Module interface {
 	Start()
 	Stop()
+	DryRun()
 	Title() string
 }
 
@@ -44,5 +45,12 @@ func RunModules(modules ...Module) {
 				return
 			}
 		}
+	}
+}
+
+func DryRunModules(modules ...Module) {
+	for _, m := range modules {
+		logger.Log.Info.Printf(logger.Message, logger.TagAgent, fmt.Sprintf("Starting module %s (DryRun mode)", m.Title()))
+		m.DryRun()
 	}
 }

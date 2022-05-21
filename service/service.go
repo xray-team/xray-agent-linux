@@ -15,3 +15,7 @@ func New(getter, sender Module) *Service {
 func (s *Service) Start() {
 	RunModules(s.statGetter, s.statSender)
 }
+
+func (s *Service) DryRun() {
+	DryRunModules(s.statGetter, s.statSender)
+}

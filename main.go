@@ -38,8 +38,13 @@ func main() {
 	}
 
 	// Start service
-	telemetryChan := make(chan *dto.Telemetry)
-
-	agent := service.New(stats.New(config, telemetryChan), graphite.New(config.TSDB.Graphite, telemetryChan))
-	agent.Start()
+	if *flags.DryRun {
+		telemetryChan := make(chan *dto.Telemetry, 1)
+		agent := service.New(stats.New(config, telemetryChan), graphite.New(config.TSDB.Graphite, telemetryChan))
+		agent.DryRun()
+	} else {
+		telemetryChan := make(chan *dto.Telemetry)
+		agent := service.New(stats.New(config, telemetryChan), graphite.New(config.TSDB.Graphite, telemetryChan))
+		agent.Start()
+	}
 }

@@ -28,7 +28,7 @@ func New(cfg *conf.GraphiteConf, telemetryChan <-chan *dto.Telemetry) *Graphite 
 
 func (g *Graphite) Start() {
 	for t := range g.telemetryChan {
-		err := g.sendMetrics(t, g.cfg.DryRun)
+		err := g.sendMetrics(t)
 		if err != nil {
 			logger.Log.Error.Printf(logger.Message, logger.TagAgent, fmt.Sprintf("send metrics error: %s", err.Error()))
 		}
@@ -42,11 +42,17 @@ func (g *Graphite) Stop() {
 	close(g.stopChan)
 }
 
+func (g *Graphite) DryRun() {
+	for t := range g.telemetryChan {
+		g.printMetrics(t)
+	}
+}
+
 func (g *Graphite) Title() string {
 	return "graphite"
 }
 
-func (g *Graphite) sendMetrics(telemetry *dto.Telemetry, dryRun bool) error {
+func (g *Graphite) sendMetrics(telemetry *dto.Telemetry) error {
 	var (
 		gm     []graphite.Metric
 		errors = make([]string, 0)
@@ -60,13 +66,6 @@ func (g *Graphite) sendMetrics(telemetry *dto.Telemetry, dryRun bool) error {
 			gm = genGraphiteTagsMetrics(*telemetry)
 		default:
 			return fmt.Errorf("bad graphite mode")
-		}
-
-		// debug
-		if dryRun {
-			logger.Log.Info.Printf("metrics %+v", gm)
-
-			continue
 		}
 
 		// Initializing graphite client
@@ -89,6 +88,21 @@ func (g *Graphite) sendMetrics(telemetry *dto.Telemetry, dryRun bool) error {
 	}
 
 	return nil
+}
+
+func (g *Graphite) printMetrics(telemetry *dto.Telemetry) {
+	var gm []graphite.Metric
+
+	for _, serverConf := range g.cfg.Servers {
+		switch serverConf.Mode {
+		case dto.GraphiteModeTree:
+			gm = genGraphiteTreeMetrics(*telemetry)
+		case dto.GraphiteModeTags:
+			gm = genGraphiteTagsMetrics(*telemetry)
+		}
+
+		logger.Log.Info.Printf("metrics for server:%s %+v", serverConf.Address, gm)
+	}
 }
 
 func convertGraphiteConf(hostInfo *dto.HostInfo, cfg *conf.GraphiteServerConf) *graphite.Config {
