@@ -42,10 +42,10 @@ func TestReadConfigFile(t *testing.T) {
 					LogOut:   "syslog",
 				},
 				Collectors: map[string]json.RawMessage{
-					"uptime":  []byte(`{"enabled": true}`),
-					"loadAvg": []byte("{\n      \"enabled\": true\n    }"),
-					"psStat":  []byte(`{"enabled": true, "collectPerPidStat": false, "processList": ["xray-agent"]}`),
-					"netDev":  []byte("{\n      \"enabled\": true,\n      \"excludeLoopbacks\": true,\n      \"excludeWireless\": false,\n      \"excludeBridges\": false,\n      \"excludeVirtual\": false,\n      \"excludeByName\": [\n        \"tun0\",\n        \"tun1\"\n      ]\n    }"),
+					"Uptime":  []byte(`{"enabled": true}`),
+					"LoadAvg": []byte("{\n      \"enabled\": true\n    }"),
+					"PSStat":  []byte(`{"enabled": true, "collectPerPidStat": false, "processList": ["xray-agent"]}`),
+					"NetDev":  []byte("{\n      \"enabled\": true,\n      \"excludeLoopbacks\": true,\n      \"excludeWireless\": false,\n      \"excludeBridges\": false,\n      \"excludeVirtual\": false,\n      \"excludeByName\": [\n        \"tun0\",\n        \"tun1\"\n      ]\n    }"),
 				},
 				TSDB: &conf.TSDBConf{
 					Graphite: &conf.GraphiteConf{

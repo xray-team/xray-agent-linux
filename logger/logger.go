@@ -1,14 +1,11 @@
 package logger
 
 import (
-	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
 	"log/syslog"
 	"os"
-
-	"github.com/go-playground/validator"
 )
 
 // Log are global logger variable.
@@ -82,16 +79,4 @@ func setSyslogLogger(level string) error {
 	}
 
 	return nil
-}
-
-func LogValidationError(err error) {
-	switch err.(type) {
-	case validator.ValidationErrors:
-		errs := err.(validator.ValidationErrors)
-		for _, e := range errs {
-			Log.Error.Printf(Message, TagConfig, fmt.Sprintf("invalid field: '%s', invalid value: '%v', tag: '%s', param: '%s'", e.Namespace(), e.Value(), e.Tag(), e.Param()))
-		}
-	default:
-		Log.Error.Printf(Message, TagConfig, err.Error())
-	}
 }

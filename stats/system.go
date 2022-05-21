@@ -55,26 +55,26 @@ func (s *Stat) RegisterCollector(name string, createFunc func([]byte) dto.Collec
 }
 
 func (s *Stat) RegisterCollectors() {
-	s.RegisterCollector("cmd", cmd.CreateCollector)
-	s.RegisterCollector("cpuInfo", cpuInfo.CreateCollector)
-	s.RegisterCollector("diskSpace", diskSpace.CreateCollector)
-	s.RegisterCollector("diskStat", diskStat.CreateCollector)
-	s.RegisterCollector("entropy", entropy.CreateCollector)
-	s.RegisterCollector("loadAvg", loadAvg.CreateCollector)
-	s.RegisterCollector("mdStat", mdStat.CreateCollector)
-	s.RegisterCollector("memoryInfo", memoryInfo.CreateCollector)
-	s.RegisterCollector("netARP", netARP.CreateCollector)
-	s.RegisterCollector("netDev", netDev.CreateCollector)
-	s.RegisterCollector("netDevStatus", netDevStatus.CreateCollector)
-	s.RegisterCollector("netSNMP", netSNMP.CreateCollector)
-	s.RegisterCollector("netSNMP6", netSNMP6.CreateCollector)
-	s.RegisterCollector("netStat", netStat.CreateCollector)
-	s.RegisterCollector("nginxStubStatus", nginx.CreateCollector)
-	s.RegisterCollector("ps", ps.CreateCollector)
-	s.RegisterCollector("psStat", psStat.CreateCollector)
-	s.RegisterCollector("stat", stat.CreateCollector)
-	s.RegisterCollector("uptime", uptime.CreateCollector)
-	s.RegisterCollector("wireless", wireless.CreateCollector)
+	s.RegisterCollector(cmd.CollectorName, cmd.CreateCollector)
+	s.RegisterCollector(cpuInfo.CollectorName, cpuInfo.CreateCollector)
+	s.RegisterCollector(diskSpace.CollectorName, diskSpace.CreateCollector)
+	s.RegisterCollector(diskStat.CollectorName, diskStat.CreateCollector)
+	s.RegisterCollector(entropy.CollectorName, entropy.CreateCollector)
+	s.RegisterCollector(loadAvg.CollectorName, loadAvg.CreateCollector)
+	s.RegisterCollector(mdStat.CollectorName, mdStat.CreateCollector)
+	s.RegisterCollector(memoryInfo.CollectorName, memoryInfo.CreateCollector)
+	s.RegisterCollector(netARP.CollectorName, netARP.CreateCollector)
+	s.RegisterCollector(netDev.CollectorName, netDev.CreateCollector)
+	s.RegisterCollector(netDevStatus.CollectorName, netDevStatus.CreateCollector)
+	s.RegisterCollector(netSNMP.CollectorName, netSNMP.CreateCollector)
+	s.RegisterCollector(netSNMP6.CollectorName, netSNMP6.CreateCollector)
+	s.RegisterCollector(netStat.CollectorName, netStat.CreateCollector)
+	s.RegisterCollector(nginx.CollectorName, nginx.CreateCollector)
+	s.RegisterCollector(ps.CollectorName, ps.CreateCollector)
+	s.RegisterCollector(psStat.CollectorName, psStat.CreateCollector)
+	s.RegisterCollector(stat.CollectorName, stat.CreateCollector)
+	s.RegisterCollector(uptime.CollectorName, uptime.CreateCollector)
+	s.RegisterCollector(wireless.CollectorName, wireless.CreateCollector)
 }
 
 func (s *Stat) initCollectors() {
@@ -83,6 +83,9 @@ func (s *Stat) initCollectors() {
 
 		if ok {
 			s.collectors = append(s.collectors, createFunc(collectorConfig))
+			logger.Log.Info.Printf(logger.MessageInitCollector, name)
+		} else {
+			logger.Log.Info.Printf(logger.MessageUnknownCollector, logger.TagAgent, name)
 		}
 	}
 }
