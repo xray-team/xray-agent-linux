@@ -1,5 +1,9 @@
 package conf
 
+type TSDBConf struct {
+	Graphite *GraphiteConf `json:"graphite" validate:"required"`
+}
+
 type GraphiteConf struct {
 	Servers []GraphiteServerConf `json:"servers" validate:"required,dive"`
 	DryRun  bool                 `json:"-"`

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/graphite"
@@ -15,13 +14,10 @@ func main() {
 	logger.Init()
 
 	// Parse flags
-	var f conf.Flags
-	f.ConfigFilePath = flag.String("config", "./config.json", "path to config file")
-	f.DryRun = flag.Bool("dryrun", false, "test run")
-	flag.Parse()
+	flags := conf.ParseFlags()
 
 	// Read and parse config
-	cfg, err := conf.GetConfiguration(&f)
+	config, err := conf.GetConfiguration(flags)
 	if err != nil {
 		logger.LogValidationError(err)
 
@@ -29,10 +25,10 @@ func main() {
 	}
 
 	// update logger params
-	if *f.DryRun {
+	if *flags.DryRun {
 		err = logger.SetLogger("stdout", "debug")
 	} else {
-		err = logger.SetLogger(cfg.Agent.LogOut, cfg.Agent.LogLevel)
+		err = logger.SetLogger(config.Agent.LogOut, config.Agent.LogLevel)
 	}
 
 	if err != nil {
@@ -43,8 +39,7 @@ func main() {
 
 	// Start service
 	telemetryChan := make(chan *dto.Telemetry)
-	cfg.TSDB.Graphite.DryRun = *cfg.Agent.Flags.DryRun
 
-	agent := service.New(stats.New(cfg, telemetryChan), graphite.New(cfg.TSDB.Graphite, telemetryChan))
+	agent := service.New(stats.New(config, telemetryChan), graphite.New(config.TSDB.Graphite, telemetryChan))
 	agent.Start()
 }
