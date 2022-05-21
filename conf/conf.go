@@ -9,16 +9,11 @@ import (
 	"github.com/go-playground/validator"
 )
 
-// BaseConfig is interface for all validatable structures.
-type BaseConfig interface {
-	Validate() error
-}
-
 // Config defines configuration object.
 type Config struct {
-	Agent      *AgentConf      `json:"agent" validate:"required"`
-	TSDB       *TSDBConf       `json:"tsDB" validate:"required"`
-	Collectors *CollectorsConf `json:"collectors" validate:"required"`
+	Agent      *AgentConf                 `json:"agent" validate:"required"`
+	TSDB       *TSDBConf                  `json:"tsDB" validate:"required"`
+	Collectors map[string]json.RawMessage `json:"collectors" validate:"required"`
 }
 
 type TSDBConf struct {

@@ -1,6 +1,12 @@
 package cmd
 
-import "github.com/xray-team/xray-agent-linux/dto"
+import (
+	"encoding/json"
+
+	"github.com/go-playground/validator"
+
+	"github.com/xray-team/xray-agent-linux/dto"
+)
 
 type Config struct {
 	Enabled bool           `json:"enabled"`
@@ -13,4 +19,25 @@ type MetricConfig struct {
 	Delimiter  string                `json:"delimiter" validate:"required"`
 	Attributes []dto.MetricAttribute `json:"attributes" validate:"dive"`
 	PipeLine   [][]string            `json:"pipeline" validate:"required,min=1,dive,required,min=1"`
+}
+
+// NewConfig returns Config with default values.
+func NewConfig() *Config {
+	return &Config{
+		Enabled: false,
+		Timeout: 10,
+		Metrics: nil,
+	}
+}
+
+// Validate validates all Config fields.
+func (config *Config) Validate() error {
+	validate := validator.New()
+
+	return validate.Struct(config)
+}
+
+// Parse Config from raw json.
+func (config *Config) Parse(data []byte) error {
+	return json.Unmarshal(data, &config)
 }

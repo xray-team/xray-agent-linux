@@ -14,6 +14,23 @@ type Collector struct {
 	DataSource DataSource
 }
 
+// CreateCollector returns a new collector object.
+func CreateCollector(rawConfig []byte) dto.Collector {
+	config := NewConfig()
+
+	err := config.Parse(rawConfig)
+	if err != nil {
+		logger.Log.Error.Printf(logger.MessageError, CollectorName, err.Error())
+
+		return nil
+	}
+
+	return NewCollector(
+		config,
+		NewDataSource(NetSNMP6Path, CollectorName),
+	)
+}
+
 // NewCollector returns a new collector object.
 func NewCollector(config *Config, dataSource DataSource) dto.Collector {
 	if config == nil || dataSource == nil {

@@ -1,27 +1,10 @@
 package conf_test
 
 import (
+	"encoding/json"
 	"reflect"
 	"testing"
 
-	"github.com/xray-team/xray-agent-linux/collectors/cpuInfo"
-	"github.com/xray-team/xray-agent-linux/collectors/diskSpace"
-	"github.com/xray-team/xray-agent-linux/collectors/diskStat"
-	"github.com/xray-team/xray-agent-linux/collectors/entropy"
-	"github.com/xray-team/xray-agent-linux/collectors/loadAvg"
-	"github.com/xray-team/xray-agent-linux/collectors/mdStat"
-	"github.com/xray-team/xray-agent-linux/collectors/memoryInfo"
-	"github.com/xray-team/xray-agent-linux/collectors/netARP"
-	"github.com/xray-team/xray-agent-linux/collectors/netDev"
-	"github.com/xray-team/xray-agent-linux/collectors/netDevStatus"
-	"github.com/xray-team/xray-agent-linux/collectors/netSNMP"
-	"github.com/xray-team/xray-agent-linux/collectors/netSNMP6"
-	"github.com/xray-team/xray-agent-linux/collectors/netStat"
-	"github.com/xray-team/xray-agent-linux/collectors/ps"
-	"github.com/xray-team/xray-agent-linux/collectors/psStat"
-	"github.com/xray-team/xray-agent-linux/collectors/stat"
-	"github.com/xray-team/xray-agent-linux/collectors/uptime"
-	"github.com/xray-team/xray-agent-linux/collectors/wireless"
 	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
@@ -48,6 +31,7 @@ func TestReadConfigFile(t *testing.T) {
 			want: &conf.Config{
 				Agent: &conf.AgentConf{
 					GetStatIntervalSec: 60,
+					EnableSelfMetrics:  true,
 					HostAttributes: []dto.MetricAttribute{
 						{
 							Name:  "Source",
@@ -57,64 +41,11 @@ func TestReadConfigFile(t *testing.T) {
 					LogLevel: "default",
 					LogOut:   "syslog",
 				},
-				Collectors: &conf.CollectorsConf{
-					EnableSelfMetrics: true,
-					Uptime:            &uptime.Config{Enabled: true},
-					LoadAvg:           &loadAvg.Config{Enabled: true},
-					PS:                &ps.Config{Enabled: true},
-					PSStat:            &psStat.Config{Enabled: true, ProcessList: []string{"xray-agent"}},
-					Stat:              &stat.Config{Enabled: true},
-					CPUInfo:           &cpuInfo.Config{Enabled: true},
-					MemoryInfo:        &memoryInfo.Config{Enabled: true},
-					NetARP:            &netARP.Config{Enabled: true},
-					NetStat:           &netStat.Config{Enabled: true},
-					NetSNMP:           &netSNMP.Config{Enabled: true},
-					NetSNMP6:          &netSNMP6.Config{Enabled: true},
-					Entropy:           &entropy.Config{Enabled: true},
-					NetDev: &netDev.Config{
-						Enabled:          true,
-						ExcludeLoopbacks: true,
-						ExcludeWireless:  false,
-						ExcludeBridges:   false,
-						ExcludeVirtual:   false,
-						ExcludeByName: []string{
-							"tun0",
-							"tun1",
-						},
-					},
-					NetDevStatus: &netDevStatus.Config{
-						Enabled:         true,
-						ExcludeWireless: true,
-						ExcludeByName:   nil,
-					},
-					Wireless: &wireless.Config{
-						Enabled:            true,
-						ExcludeByName:      nil,
-						ExcludeByOperState: nil,
-					},
-					DiskStat: &diskStat.Config{
-						Enabled: true,
-						MonitoredDiskTypes: []int64{
-							dto.BlockDevMajorTypeSCSI, // SCSI disk devices  (sda*, sdb*, sdc*, ...,)
-							dto.BlockDevMajorTypeMD,   // Metadisk (RAID) devices (md0, md1, ...)
-						},
-						ExcludeByName: []string{
-							"sde",
-							"sde1",
-						},
-					},
-					DiskSpace: &diskSpace.Config{
-						Enabled: true,
-						MonitoredFileSystemTypes: []string{
-							"ext4",
-							"ext3",
-							"ext2",
-							"xfs",
-							"jfs",
-							"btrfs",
-						},
-					},
-					MDStat: &mdStat.Config{Enabled: true},
+				Collectors: map[string]json.RawMessage{
+					"uptime":  []byte(`{"enabled": true}`),
+					"loadAvg": []byte("{\n      \"enabled\": true\n    }"),
+					"psStat":  []byte(`{"enabled": true, "collectPerPidStat": false, "processList": ["xray-agent"]}`),
+					"netDev":  []byte("{\n      \"enabled\": true,\n      \"excludeLoopbacks\": true,\n      \"excludeWireless\": false,\n      \"excludeBridges\": false,\n      \"excludeVirtual\": false,\n      \"excludeByName\": [\n        \"tun0\",\n        \"tun1\"\n      ]\n    }"),
 				},
 				TSDB: &conf.TSDBConf{
 					Graphite: &conf.GraphiteConf{

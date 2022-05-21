@@ -1,7 +1,6 @@
 package stats
 
 import (
-	"net/http"
 	"time"
 
 	"github.com/xray-team/xray-agent-linux/collectors/cmd"
@@ -28,21 +27,70 @@ import (
 	"github.com/xray-team/xray-agent-linux/conf"
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
-	"github.com/xray-team/xray-agent-linux/run"
-	"github.com/xray-team/xray-agent-linux/sys"
 )
 
 type Stat struct {
 	cfg           *conf.Config
 	telemetryChan chan<- *dto.Telemetry
 	stopChan      chan bool
+	reg           map[string]func([]byte) dto.Collector
+	collectors    []dto.Collector
 }
 
 func New(cfg *conf.Config, telemetryChan chan<- *dto.Telemetry) *Stat {
-	return &Stat{cfg: cfg, telemetryChan: telemetryChan, stopChan: make(chan bool)}
+	return &Stat{
+		cfg:           cfg,
+		telemetryChan: telemetryChan,
+		stopChan:      make(chan bool),
+		reg:           make(map[string]func([]byte) dto.Collector),
+	}
+}
+
+func (s *Stat) Title() string {
+	return "stat"
+}
+
+func (s *Stat) RegisterCollector(name string, createFunc func([]byte) dto.Collector) {
+	s.reg[name] = createFunc
+}
+
+func (s *Stat) RegisterCollectors() {
+	s.RegisterCollector("cmd", cmd.CreateCollector)
+	s.RegisterCollector("cpuInfo", cpuInfo.CreateCollector)
+	s.RegisterCollector("diskSpace", diskSpace.CreateCollector)
+	s.RegisterCollector("diskStat", diskStat.CreateCollector)
+	s.RegisterCollector("entropy", entropy.CreateCollector)
+	s.RegisterCollector("loadAvg", loadAvg.CreateCollector)
+	s.RegisterCollector("mdStat", mdStat.CreateCollector)
+	s.RegisterCollector("memoryInfo", memoryInfo.CreateCollector)
+	s.RegisterCollector("netARP", netARP.CreateCollector)
+	s.RegisterCollector("netDev", netDev.CreateCollector)
+	s.RegisterCollector("netDevStatus", netDevStatus.CreateCollector)
+	s.RegisterCollector("netSNMP", netSNMP.CreateCollector)
+	s.RegisterCollector("netSNMP6", netSNMP6.CreateCollector)
+	s.RegisterCollector("netStat", netStat.CreateCollector)
+	s.RegisterCollector("nginxStubStatus", nginx.CreateCollector)
+	s.RegisterCollector("ps", ps.CreateCollector)
+	s.RegisterCollector("psStat", psStat.CreateCollector)
+	s.RegisterCollector("stat", stat.CreateCollector)
+	s.RegisterCollector("uptime", uptime.CreateCollector)
+	s.RegisterCollector("wireless", wireless.CreateCollector)
+}
+
+func (s *Stat) initCollectors() {
+	for name, collectorConfig := range s.cfg.Collectors {
+		createFunc, ok := s.reg[name]
+
+		if ok {
+			s.collectors = append(s.collectors, createFunc(collectorConfig))
+		}
+	}
 }
 
 func (s *Stat) Start() {
+	s.RegisterCollectors()
+	s.initCollectors()
+
 	ticker := time.NewTicker(time.Duration(s.cfg.Agent.GetStatIntervalSec) * time.Second)
 	defer func() {
 		ticker.Stop()
@@ -77,16 +125,11 @@ func (s *Stat) Stop() {
 	s.stopChan <- true
 }
 
-func (s *Stat) Title() string {
-	return "stat getter"
-}
-
 func (s *Stat) getStat() (*dto.Telemetry, error) {
 	var (
 		metrics    []dto.Metric
 		numMetrics int
 		startTime  = time.Now()
-		cols       = s.initCollectors()
 	)
 
 	hostInfo, err := getHostInfo(s.cfg.Agent)
@@ -94,7 +137,7 @@ func (s *Stat) getStat() (*dto.Telemetry, error) {
 		return nil, err
 	}
 
-	for _, collector := range cols {
+	for _, collector := range s.collectors {
 		// if collector is not enable
 		if collector == nil {
 			continue
@@ -111,7 +154,7 @@ func (s *Stat) getStat() (*dto.Telemetry, error) {
 	}
 
 	// append self metrics (agent scope)
-	if s.cfg.Collectors.EnableSelfMetrics {
+	if s.cfg.Agent.EnableSelfMetrics {
 		agentSummaryMetrics := s.agentSummaryToMetrics(dto.AgentSummary{
 			Duration:      time.Since(startTime),
 			MetricsNumber: len(metrics),
@@ -136,7 +179,7 @@ func (s *Stat) Collect(collector dto.Collector) ([]dto.Metric, error) {
 
 	func() {
 		defer func() {
-			if s.cfg.Collectors.EnableSelfMetrics {
+			if s.cfg.Agent.EnableSelfMetrics {
 				summary.Duration = time.Since(collectorStartTime)
 				summary.MetricsNumber = len(m)
 				// append self metrics (collector scope)
@@ -203,86 +246,5 @@ func (s *Stat) collectorSummaryToMetrics(cs dto.CollectorSummary) []dto.Metric {
 			Attributes: attrs,
 			Value:      cs.Duration.Nanoseconds(),
 		},
-	}
-}
-
-func (s *Stat) initCollectors() []dto.Collector {
-	return []dto.Collector{
-		// /proc/uptime
-		uptime.NewCollector(s.cfg.Collectors.Uptime,
-			uptime.NewDataSource(uptime.UptimePath, uptime.CollectorName)),
-		// /proc/loadavg
-		loadAvg.NewCollector(s.cfg.Collectors.LoadAvg,
-			loadAvg.NewDataSource(loadAvg.LoadAvgPath, loadAvg.CollectorName)),
-		// PS
-		ps.NewCollector(s.cfg.Collectors.PS,
-			ps.NewDataSource(ps.ProcPath, ps.CollectorName)),
-		// PS stat
-		psStat.NewCollector(s.cfg.Collectors.PSStat,
-			psStat.NewDataSource(psStat.ProcPath, psStat.CollectorName)),
-		// /proc/stat
-		stat.NewCollector(s.cfg.Collectors.Stat,
-			stat.NewDataSource(stat.StatPath, stat.CollectorName)),
-		// /proc/cpuinfo
-		cpuInfo.NewCollector(s.cfg.Collectors.CPUInfo,
-			cpuInfo.NewDataSource(cpuInfo.CPUInfoPath, cpuInfo.CollectorName)),
-		// /proc/meminfo
-		memoryInfo.NewCollector(s.cfg.Collectors.MemoryInfo,
-			memoryInfo.NewDataSource(memoryInfo.MemInfoPath, memoryInfo.CollectorName)),
-		// /proc/diskstat
-		diskStat.NewCollector(
-			s.cfg.Collectors.DiskStat,
-			diskStat.NewBlockDevDataSource(diskStat.DiskStatsPath, diskStat.CollectorName),
-			sys.NewClassBlockDataSource(sys.ClassBlockDir, diskStat.CollectorName),
-		),
-		// disk space
-		diskSpace.NewCollector(s.cfg.Collectors.DiskSpace, diskSpace.NewMountsDataSource(diskSpace.MountsPath, diskSpace.CollectorName)),
-		// /proc/net/dev
-		netDev.NewCollector(
-			s.cfg.Collectors.NetDev,
-			netDev.NewNetDevDataSource(netDev.NetDevPath, netDev.CollectorName),
-			sys.NewClassNetDataSource(sys.ClassNetDir, netDev.CollectorName),
-		),
-		// /sys/class/net
-		netDevStatus.NewCollector(s.cfg.Collectors.NetDevStatus,
-			sys.NewClassNetDataSource(sys.ClassNetDir, netDevStatus.CollectorName)),
-		// iwconfig
-		wireless.NewCollector(
-			s.cfg.Collectors.Wireless,
-			wireless.NewIwconfigDataSource(run.NewCmdRunner(wireless.CollectorName)),
-			sys.NewClassNetDataSource(sys.ClassNetDir, wireless.CollectorName),
-		),
-		// /proc/net/arp
-		netARP.NewCollector(s.cfg.Collectors.NetARP,
-			netARP.NewDataSource(netARP.NetArpPath, netARP.CollectorName)),
-		// /proc/net/netstat
-		netStat.NewCollector(s.cfg.Collectors.NetStat,
-			netStat.NewDataSource(netStat.NetStatPath, netStat.CollectorName)),
-		// /proc/net/snmp
-		netSNMP.NewCollector(s.cfg.Collectors.NetSNMP,
-			netStat.NewDataSource(netSNMP.NetSNMPPath, netSNMP.CollectorName)),
-		// /proc/net/snmp6
-		netSNMP6.NewCollector(s.cfg.Collectors.NetSNMP6,
-			netSNMP6.NewDataSource(netSNMP6.NetSNMP6Path, netSNMP6.CollectorName)),
-		// mdStat
-		mdStat.NewCollector(s.cfg.Collectors.MDStat,
-			mdStat.NewDataSource(mdStat.MDStatPath, mdStat.CollectorName)),
-		// CMD collector
-		cmd.NewCollector(s.cfg.Collectors.CMD,
-			run.NewCmdRunner(cmd.CollectorName)),
-		// nginx
-		nginx.NewStubStatusCollector(s.cfg.Collectors.NginxStubStatus,
-			nginx.NewStubStatusClient(
-				s.cfg.Collectors.NginxStubStatus,
-				&http.Client{
-					Timeout: time.Second * time.Duration(s.cfg.Collectors.NginxStubStatus.Timeout),
-				},
-				nginx.CollectorName,
-			),
-		),
-		// entropy
-		entropy.NewCollector(s.cfg.Collectors.Entropy,
-			entropy.NewDataSource(entropy.EntropyPath, entropy.CollectorName),
-		),
 	}
 }

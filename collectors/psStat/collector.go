@@ -17,9 +17,21 @@ type Collector struct {
 	DataSource DataSource
 }
 
-// GetName returns the collector's name.
-func (c *Collector) GetName() string {
-	return CollectorName
+// CreateCollector returns a new collector object.
+func CreateCollector(rawConfig []byte) dto.Collector {
+	config := NewConfig()
+
+	err := config.Parse(rawConfig)
+	if err != nil {
+		logger.Log.Error.Printf(logger.MessageError, CollectorName, err.Error())
+
+		return nil
+	}
+
+	return NewCollector(
+		config,
+		NewDataSource(ProcPath, CollectorName),
+	)
 }
 
 // NewCollector returns a new collector object.
@@ -39,6 +51,11 @@ func NewCollector(config *Config, dataSource DataSource) dto.Collector {
 		Config:     config,
 		DataSource: dataSource,
 	}
+}
+
+// GetName returns the collector's name.
+func (c *Collector) GetName() string {
+	return CollectorName
 }
 
 // Collect collects and returns metrics.

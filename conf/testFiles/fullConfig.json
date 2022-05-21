@@ -1,6 +1,7 @@
 {
   "agent": {
     "getStatIntervalSec": 60,
+    "enableSelfMetrics": true,
     "hostAttributes": [
       {
         "name": "Source",
@@ -11,42 +12,11 @@
     "logOut": "syslog"
   },
   "collectors": {
-    "enableSelfMetrics": true,
-    "uptime": {
-      "enabled": true
-    },
+    "uptime": {"enabled": true},
     "loadAvg": {
       "enabled": true
     },
-    "ps": {
-      "enabled": true
-    },
-    "psStat": {
-      "enabled": true,
-      "collectPerPidStat": false,
-      "processList": ["xray-agent"]
-    },
-    "stat": {
-      "enabled": true
-    },
-    "cpuInfo": {
-      "enabled": true
-    },
-    "memoryInfo": {
-      "enabled": true
-    },
-    "netARP": {
-      "enabled": true
-    },
-    "netStat": {
-      "enabled": true
-    },
-    "netSNMP": {
-      "enabled": true
-    },
-    "netSNMP6": {
-      "enabled": true
-    },
+    "psStat": {"enabled": true, "collectPerPidStat": false, "processList": ["xray-agent"]},
     "netDev": {
       "enabled": true,
       "excludeLoopbacks": true,
@@ -57,41 +27,6 @@
         "tun0",
         "tun1"
       ]
-    },
-    "netDevStatus": {
-      "enabled": true,
-      "excludeWireless": true
-    },
-    "wireless": {
-      "enabled": true
-    },
-    "diskStat": {
-      "enabled": true,
-      "diskTypes": [
-        8,
-        9
-      ],
-      "excludeByName": [
-        "sde",
-        "sde1"
-      ]
-    },
-    "diskSpace": {
-      "enabled": true,
-      "fsTypes": [
-        "ext4",
-        "ext3",
-        "ext2",
-        "xfs",
-        "jfs",
-        "btrfs"
-      ]
-    },
-    "mdStat": {
-      "enabled": true
-    },
-    "entropy": {
-      "enabled": true
     }
   },
   "tsDB": {

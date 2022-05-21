@@ -19,6 +19,30 @@ type Collector struct {
 	MountsDataSource MountsDataSource
 }
 
+// CreateCollector returns a new collector object.
+func CreateCollector(rawConfig []byte) dto.Collector {
+	config := NewConfig()
+
+	err := config.Parse(rawConfig)
+	if err != nil {
+		logger.Log.Error.Printf(logger.MessageError, CollectorName, err.Error())
+
+		return nil
+	}
+
+	err = config.Validate()
+	if err != nil {
+		logger.Log.Error.Printf(logger.MessageError, CollectorName, err.Error())
+
+		return nil
+	}
+
+	return NewCollector(
+		config,
+		NewMountsDataSource(MountsPath, CollectorName),
+	)
+}
+
 // NewCollector returns a new collector object.
 func NewCollector(config *Config, mountsDataSource MountsDataSource) dto.Collector {
 	if config == nil || mountsDataSource == nil {

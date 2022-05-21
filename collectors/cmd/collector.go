@@ -9,6 +9,7 @@ import (
 
 	"github.com/xray-team/xray-agent-linux/dto"
 	"github.com/xray-team/xray-agent-linux/logger"
+	"github.com/xray-team/xray-agent-linux/run"
 )
 
 type DataSource interface {
@@ -18,6 +19,30 @@ type DataSource interface {
 type Collector struct {
 	Config     *Config
 	DataSource DataSource
+}
+
+// CreateCollector returns a new collector object.
+func CreateCollector(rawConfig []byte) dto.Collector {
+	config := NewConfig()
+
+	err := config.Parse(rawConfig)
+	if err != nil {
+		logger.Log.Error.Printf(logger.MessageError, CollectorName, err.Error())
+
+		return nil
+	}
+
+	err = config.Validate()
+	if err != nil {
+		logger.Log.Error.Printf(logger.MessageError, CollectorName, err.Error())
+
+		return nil
+	}
+
+	return NewCollector(
+		config,
+		run.NewCmdRunner(CollectorName),
+	)
 }
 
 // NewCollector returns a new collector object.

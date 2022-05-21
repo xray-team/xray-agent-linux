@@ -1,6 +1,8 @@
 package wireless
 
 import (
+	"github.com/xray-team/xray-agent-linux/run"
+	"github.com/xray-team/xray-agent-linux/sys"
 	"strings"
 
 	"github.com/xray-team/xray-agent-linux/dto"
@@ -19,6 +21,31 @@ type Collector struct {
 	Config             *Config
 	DataSource         WirelessDataSource
 	ClassNetDataSource ClassNetDataSource
+}
+
+// CreateCollector returns a new collector object.
+func CreateCollector(rawConfig []byte) dto.Collector {
+	config := NewConfig()
+
+	err := config.Parse(rawConfig)
+	if err != nil {
+		logger.Log.Error.Printf(logger.MessageError, CollectorName, err.Error())
+
+		return nil
+	}
+
+	err = config.Validate()
+	if err != nil {
+		logger.Log.Error.Printf(logger.MessageError, CollectorName, err.Error())
+
+		return nil
+	}
+
+	return NewCollector(
+		config,
+		NewIwconfigDataSource(run.NewCmdRunner(CollectorName)),
+		sys.NewClassNetDataSource(sys.ClassNetDir, CollectorName),
+	)
 }
 
 // NewCollector returns a new collector object.

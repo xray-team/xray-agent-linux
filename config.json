@@ -1,6 +1,7 @@
 {
   "agent": {
     "getStatIntervalSec": 60,
+    "enableSelfMetrics": true,
     "hostAttributes": [
       {
         "name": "Source",
@@ -8,10 +9,9 @@
       }
     ],
     "logLevel": "default",
-    "logOut": "syslog"
+    "logOut": "stdout"
   },
   "collectors": {
-    "enableSelfMetrics": true,
     "uptime": {
       "enabled": true
     },

@@ -11,6 +11,23 @@ type Collector struct {
 	DataSource netStat.DataSource
 }
 
+// CreateCollector returns a new collector object.
+func CreateCollector(rawConfig []byte) dto.Collector {
+	config := NewConfig()
+
+	err := config.Parse(rawConfig)
+	if err != nil {
+		logger.Log.Error.Printf(logger.MessageError, CollectorName, err.Error())
+
+		return nil
+	}
+
+	return NewCollector(
+		config,
+		netStat.NewDataSource(NetSNMPPath, CollectorName),
+	)
+}
+
 // NewCollector returns a new collector object.
 func NewCollector(config *Config, dataSource netStat.DataSource) dto.Collector {
 	if config == nil || dataSource == nil {

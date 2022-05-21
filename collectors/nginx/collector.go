@@ -1,12 +1,46 @@
 package nginx
 
 import (
+	"net/http"
+	"time"
+
 	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/logger"
 )
 
 type StubStatusCollector struct {
 	Config     *Config
 	DataSource StubStatusDataSource
+}
+
+// CreateCollector returns a new collector object.
+func CreateCollector(rawConfig []byte) dto.Collector {
+	config := NewConfig()
+
+	err := config.Parse(rawConfig)
+	if err != nil {
+		logger.Log.Error.Printf(logger.MessageError, CollectorName, err.Error())
+
+		return nil
+	}
+
+	err = config.Validate()
+	if err != nil {
+		logger.Log.Error.Printf(logger.MessageError, CollectorName, err.Error())
+
+		return nil
+	}
+
+	return NewStubStatusCollector(
+		config,
+		NewStubStatusClient(
+			config,
+			&http.Client{
+				Timeout: time.Second * time.Duration(config.Timeout),
+			},
+			CollectorName,
+		),
+	)
 }
 
 // NewStubStatusCollector returns a new collector object.
