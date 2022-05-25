@@ -82,8 +82,8 @@ func (s *Stat) initCollectors() {
 		createFunc, ok := s.reg[name]
 
 		if ok {
-			s.collectors = append(s.collectors, createFunc(collectorConfig))
 			logger.Log.Info.Printf(logger.MessageInitCollector, name)
+			s.collectors = append(s.collectors, createFunc(collectorConfig))
 		} else {
 			logger.Log.Info.Printf(logger.MessageUnknownCollector, logger.TagAgent, name)
 		}
