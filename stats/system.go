@@ -102,22 +102,12 @@ func (s *Stat) Start() {
 	}()
 
 	// start first time before ticker
-	stats, err := s.getStat()
-	if err != nil {
-		logger.Log.Error.Printf(logger.MessageCollectError, logger.TagAgent, err.Error())
-	}
-	s.telemetryChan <- stats
+	s.getStat()
 
 	for {
 		select {
 		case <-ticker.C:
-			stats, err := s.getStat()
-			if err != nil {
-				logger.Log.Error.Printf(logger.MessageCollectError, logger.TagAgent, err.Error())
-
-				continue
-			}
-			s.telemetryChan <- stats
+			s.getStat()
 		case <-s.stopChan:
 			return
 		}
@@ -137,15 +127,12 @@ func (s *Stat) DryRun() {
 		close(s.stopChan)
 	}()
 
-	stats, err := s.getStat()
-	if err != nil {
-		logger.Log.Error.Printf(logger.MessageCollectError, logger.TagAgent, err.Error())
-	}
-
-	s.telemetryChan <- stats
+	s.getStat()
 }
 
-func (s *Stat) getStat() (*dto.Telemetry, error) {
+func (s *Stat) getStat() {
+	logger.Log.Info.Printf(logger.Message, logger.TagAgent, "Collect")
+
 	var (
 		metrics    []dto.Metric
 		numMetrics int
@@ -154,7 +141,9 @@ func (s *Stat) getStat() (*dto.Telemetry, error) {
 
 	hostInfo, err := getHostInfo(s.cfg.Agent)
 	if err != nil {
-		return nil, err
+		logger.Log.Error.Printf(logger.MessageCollectError, logger.TagAgent, err.Error())
+
+		return
 	}
 
 	for _, collector := range s.collectors {
@@ -183,37 +172,40 @@ func (s *Stat) getStat() (*dto.Telemetry, error) {
 		metrics = append(metrics, agentSummaryMetrics...)
 	}
 
-	return &dto.Telemetry{
+	s.telemetryChan <- &dto.Telemetry{
 		HostInfo: hostInfo,
 		Metrics:  metrics,
-	}, nil
+	}
 }
 
 func (s *Stat) Collect(collector dto.Collector) ([]dto.Metric, error) {
 	var (
-		m                  []dto.Metric
+		metrics            []dto.Metric
 		err                error
 		collectorStartTime = time.Now()
-		summary            = dto.CollectorSummary{CollectorName: collector.GetName(), Status: 1}
+		summary            = dto.CollectorSummary{
+			CollectorName: collector.GetName(),
+			Status:        1, // 1 - success
+		}
 	)
 
 	func() {
 		defer func() {
 			if s.cfg.Agent.EnableSelfMetrics {
 				summary.Duration = time.Since(collectorStartTime)
-				summary.MetricsNumber = len(m)
+				summary.MetricsNumber = len(metrics)
 				// append self metrics (collector scope)
-				m = append(m, s.collectorSummaryToMetrics(summary)...)
+				metrics = append(metrics, s.collectorSummaryToMetrics(summary)...)
 			}
 		}()
 
-		m, err = collector.Collect()
+		metrics, err = collector.Collect()
 		if err != nil {
-			summary.Status = 2
+			summary.Status = 2 // 2 - error
 		}
 	}()
 
-	return m, err
+	return metrics, err
 }
 
 func (s *Stat) agentSummaryToMetrics(as dto.AgentSummary) []dto.Metric {
