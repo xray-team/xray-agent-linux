@@ -184,6 +184,11 @@ func genMetricsDiskSpace(attrs []dto.MetricAttribute, diskSpace *DiskSpaceUsage)
 			Attributes: attrs,
 		},
 		{
+			Name:       MetricInodesFreePercent,
+			Value:      calculateDiskFreeInodesPercentage(diskSpace.Inodes),
+			Attributes: attrs,
+		},
+		{
 			Name:       MetricInodesUsed,
 			Value:      diskSpace.Inodes.Used,
 			Attributes: attrs,
@@ -203,4 +208,13 @@ func calculateDiskFreePercentage(info DiskSpaceBlockInfo) float64 {
 	}
 
 	return float64(info.Available*100) / float64(info.Used+info.Available)
+}
+
+func calculateDiskFreeInodesPercentage(info DiskSpaceInodeInfo) float64 {
+	// prevent division by zero
+	if float64(info.Total) == 0 {
+		return 0
+	}
+
+	return float64(info.Free*100) / float64(info.Total)
 }
