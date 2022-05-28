@@ -35,6 +35,9 @@
     "MemoryInfo": {
       "enabled": true
     },
+    "VMstat": {
+      "enabled": true
+    },
     "NetARP": {
       "enabled": true
     },

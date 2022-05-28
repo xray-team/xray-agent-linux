@@ -22,6 +22,7 @@ import (
 	"github.com/xray-team/xray-agent-linux/collectors/psStat"
 	"github.com/xray-team/xray-agent-linux/collectors/stat"
 	"github.com/xray-team/xray-agent-linux/collectors/uptime"
+	"github.com/xray-team/xray-agent-linux/collectors/vmStat"
 	"github.com/xray-team/xray-agent-linux/collectors/wireless"
 
 	"github.com/xray-team/xray-agent-linux/conf"
@@ -74,6 +75,7 @@ func (s *Stat) RegisterCollectors() {
 	s.RegisterCollector(psStat.CollectorName, psStat.CreateCollector)
 	s.RegisterCollector(stat.CollectorName, stat.CreateCollector)
 	s.RegisterCollector(uptime.CollectorName, uptime.CreateCollector)
+	s.RegisterCollector(vmStat.CollectorName, vmStat.CreateCollector)
 	s.RegisterCollector(wireless.CollectorName, wireless.CreateCollector)
 }
 
