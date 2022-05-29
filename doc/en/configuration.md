@@ -1,12 +1,10 @@
-[Russian version](../ru/configuration.md)
-
----
 # Configuration
 ## Configuration file example
 ```json
 {
   "agent": {
     "getStatIntervalSec": 60,
+    "enableSelfMetrics": true,
     "hostAttributes": [
       {
         "name": "Source",
@@ -17,44 +15,42 @@
     "logOut": "syslog"
   },
   "collectors": {
-    "rootPath": "/",
-    "enableSelfMetrics": true,
-    "uptime": {
+    "Uptime": {
       "enabled": true
     },
-    "loadAvg": {
+    "LoadAvg": {
       "enabled": true
     },
-    "ps": {
+    "PS": {
       "enabled": true
     },
-    "psStat": {
+    "PSStat": {
       "enabled": true,
       "collectPerPidStat": false,
       "processList": ["xray-agent"]
     },
-    "stat": {
+    "Stat": {
       "enabled": true
     },
-    "cpuInfo": {
+    "CPUInfo": {
       "enabled": true
     },
-    "memoryInfo": {
+    "MemoryInfo": {
       "enabled": true
     },
-    "netARP": {
+    "NetARP": {
       "enabled": true
     },
-    "netStat": {
+    "NetStat": {
       "enabled": true
     },
-    "netSNMP": {
+    "NetSNMP": {
       "enabled": true
     },
-    "netSNMP6": {
+    "NetSNMP6": {
       "enabled": true
     },
-    "netDev": {
+    "NetDev": {
       "enabled": true,
       "excludeLoopbacks": true,
       "excludeWireless": false,
@@ -63,17 +59,17 @@
       "excludeByName": [],
       "excludeByOperState": []
     },
-    "netDevStatus": {
+    "NetDevStatus": {
       "enabled": true,
       "excludeWireless": true,
       "excludeByName": []
     },
-    "wireless": {
+    "Wireless": {
       "enabled": true,
       "excludeByName": [],
       "excludeByOperState": ["down"]
     },
-    "diskStat": {
+    "DiskStat": {
       "enabled": true,
       "diskTypes": [
         8,
@@ -82,7 +78,7 @@
       "excludePartitions": false,
       "excludeByName": []
     },
-    "diskSpace": {
+    "DiskSpace": {
       "enabled": true,
       "fsTypes": [
         "ext4",
@@ -93,20 +89,20 @@
         "btrfs"
       ]
     },
-    "mdStat": {
+    "MDStat": {
       "enabled": true
     },
-    "cmd": {
+    "CMD": {
       "enabled": false,
       "timeout": 10,
       "metrics": []
     },
-    "nginxStubStatus": {
+    "Nginx": {
       "enabled": true,
       "endpoint": "http://127.0.0.1/basic_status",
       "timeout": 5
     },
-    "entropy": {
+    "Entropy": {
       "enabled": true
     }
   },

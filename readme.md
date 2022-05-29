@@ -15,8 +15,7 @@ Tested with:
 The deb and rpm packages are available at the [Releases page](https://github.com/xray-team/xray-agent-linux/releases/latest).
 
 ### Documentation
-* [English](doc/en/index.md)
-* [Russian](doc/ru/index.md)
+* [doc/en/index.md](doc/en/index.md)
 
 ### Contribute
 Welcomes any kind of contribution, please follow the next steps:
