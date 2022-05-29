@@ -17,7 +17,9 @@ const (
 const (
 	Message                   = "[%s] %s"
 	MessageError              = "[%s] Error: %s"
+	MessageInitCollector      = "[%s] Init collector"
 	MessageInitCollectorError = "[%s] Collector init params error"
+	MessageUnknownCollector   = "[%s] Unknown collector '%s'"
 	MessageCollectError       = "[%s] Collect error: %s"
 	MessageSetLogParamsError  = "[%s] Can't set logger params: %s"
 

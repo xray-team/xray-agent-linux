@@ -17,13 +17,13 @@ func TestReadStringFile(t *testing.T) {
 	}{
 		{
 			caseDescription: "no file",
-			filePath:        "../proc/testfiles/nofile",
+			filePath:        "./testFiles/nofile",
 			want:            "",
 			wantErr:         true,
 		},
 		{
 			caseDescription: "version",
-			filePath:        "../proc/testfiles/version/version_signature-Mint19.2",
+			filePath:        "./testFiles/version_signature-Mint19.2",
 			want:            "Ubuntu 5.0.0-32.34~18.04.2-generic 5.0.21",
 			wantErr:         false,
 		},

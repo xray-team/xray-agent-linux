@@ -1,6 +1,7 @@
 package conf_test
 
 import (
+	"encoding/json"
 	"reflect"
 	"testing"
 
@@ -30,6 +31,7 @@ func TestReadConfigFile(t *testing.T) {
 			want: &conf.Config{
 				Agent: &conf.AgentConf{
 					GetStatIntervalSec: 60,
+					EnableSelfMetrics:  true,
 					HostAttributes: []dto.MetricAttribute{
 						{
 							Name:  "Source",
@@ -39,65 +41,11 @@ func TestReadConfigFile(t *testing.T) {
 					LogLevel: "default",
 					LogOut:   "syslog",
 				},
-				Collectors: &conf.CollectorsConf{
-					RootPath:          "/",
-					EnableSelfMetrics: true,
-					Uptime:            &conf.UptimeConf{Enabled: true},
-					LoadAvg:           &conf.LoadAvgConf{Enabled: true},
-					PS:                &conf.PSConf{Enabled: true},
-					PSStat:            &conf.PSStatConf{Enabled: true, ProcessList: []string{"xray-agent"}},
-					Stat:              &conf.StatConf{Enabled: true},
-					CPUInfo:           &conf.CPUInfoConf{Enabled: true},
-					MemoryInfo:        &conf.MemoryInfoConf{Enabled: true},
-					NetARP:            &conf.NetARPConf{Enabled: true},
-					NetStat:           &conf.NetStatConf{Enabled: true},
-					NetSNMP:           &conf.NetSNMPConf{Enabled: true},
-					NetSNMP6:          &conf.NetSNMP6Conf{Enabled: true},
-					Entropy:           &conf.EntropyConf{Enabled: true},
-					NetDev: &conf.NetDevConf{
-						Enabled:          true,
-						ExcludeLoopbacks: true,
-						ExcludeWireless:  false,
-						ExcludeBridges:   false,
-						ExcludeVirtual:   false,
-						ExcludeByName: []string{
-							"tun0",
-							"tun1",
-						},
-					},
-					NetDevStatus: &conf.NetDevStatusConf{
-						Enabled:         true,
-						ExcludeWireless: true,
-						ExcludeByName:   nil,
-					},
-					Wireless: &conf.WirelessConf{
-						Enabled:            true,
-						ExcludeByName:      nil,
-						ExcludeByOperState: nil,
-					},
-					DiskStat: &conf.DiskStatConf{
-						Enabled: true,
-						MonitoredDiskTypes: []int64{
-							dto.BlockDevMajorTypeSCSI, // SCSI disk devices  (sda*, sdb*, sdc*, ...,)
-							dto.BlockDevMajorTypeMD,   // Metadisk (RAID) devices (md0, md1, ...)
-						},
-						ExcludeByName: []string{
-							"sde",
-							"sde1",
-						},
-					},
-					DiskSpace: &conf.DiskSpaceConf{
-						Enabled: true,
-						MonitoredFileSystemTypes: []string{
-							"ext4",
-							"ext3",
-							"ext2",
-							"xfs",
-							"jfs",
-							"btrfs",
-						},
-					},
-					MDStat: &conf.MDStatConf{Enabled: true},
+				Collectors: map[string]json.RawMessage{
+					"Uptime":  []byte(`{"enabled": true}`),
+					"LoadAvg": []byte("{\n      \"enabled\": true\n    }"),
+					"PSStat":  []byte(`{"enabled": true, "collectPerPidStat": false, "processList": ["xray-agent"]}`),
+					"NetDev":  []byte("{\n      \"enabled\": true,\n      \"excludeLoopbacks\": true,\n      \"excludeWireless\": false,\n      \"excludeBridges\": false,\n      \"excludeVirtual\": false,\n      \"excludeByName\": [\n        \"tun0\",\n        \"tun1\"\n      ]\n    }"),
 				},
 				TSDB: &conf.TSDBConf{
 					Graphite: &conf.GraphiteConf{

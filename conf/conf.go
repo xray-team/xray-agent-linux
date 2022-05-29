@@ -9,33 +9,26 @@ import (
 	"github.com/go-playground/validator"
 )
 
-// BaseConfig is interface for all validatable structures.
-type BaseConfig interface {
-	Validate() error
-}
-
 // Config defines configuration object.
 type Config struct {
-	Agent      *AgentConf      `json:"agent" validate:"required"`
-	TSDB       *TSDBConf       `json:"tsDB" validate:"required"`
-	Collectors *CollectorsConf `json:"collectors" validate:"required"`
-}
-
-type TSDBConf struct {
-	Graphite *GraphiteConf `json:"graphite" validate:"required"`
+	Flags      *Flags
+	Agent      *AgentConf                 `json:"agent" validate:"required"`
+	TSDB       *TSDBConf                  `json:"tsDB" validate:"required"`
+	Collectors map[string]json.RawMessage `json:"collectors" validate:"required"`
 }
 
 func GetConfiguration(flags *Flags) (*Config, error) {
-	cfg, err := ReadConfigFile(*flags.ConfigFilePath)
+	config, err := ReadConfigFile(*flags.ConfigFilePath)
 	if err != nil {
 		return nil, err
 	}
 
-	cfg.Agent.Flags = flags
+	config.Flags = flags
+	config.TSDB.Graphite.DryRun = *flags.DryRun
 
-	err = cfg.Validate()
+	err = config.Validate()
 
-	return cfg, err
+	return config, err
 }
 
 func ReadConfigFile(filePath string) (*Config, error) {
@@ -55,8 +48,8 @@ func ReadConfigFile(filePath string) (*Config, error) {
 }
 
 // Validate validates all Config fields.
-func (cfg *Config) Validate() (err error) {
+func (c *Config) Validate() (err error) {
 	validate := validator.New()
 
-	return validate.Struct(cfg)
+	return validate.Struct(c)
 }

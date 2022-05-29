@@ -1,11 +1,12 @@
 package main
 
 import (
-	"flag"
-
 	"github.com/xray-team/xray-agent-linux/conf"
+	"github.com/xray-team/xray-agent-linux/dto"
+	"github.com/xray-team/xray-agent-linux/graphite"
 	"github.com/xray-team/xray-agent-linux/logger"
 	"github.com/xray-team/xray-agent-linux/service"
+	"github.com/xray-team/xray-agent-linux/stats"
 )
 
 func main() {
@@ -13,13 +14,10 @@ func main() {
 	logger.Init()
 
 	// Parse flags
-	var f conf.Flags
-	f.ConfigFilePath = flag.String("config", "./config.json", "path to config file")
-	f.DryRun = flag.Bool("dryrun", false, "test run")
-	flag.Parse()
+	flags := conf.ParseFlags()
 
 	// Read and parse config
-	cfg, err := conf.GetConfiguration(&f)
+	config, err := conf.GetConfiguration(flags)
 	if err != nil {
 		logger.LogValidationError(err)
 
@@ -27,10 +25,10 @@ func main() {
 	}
 
 	// update logger params
-	if *f.DryRun {
+	if *flags.DryRun {
 		err = logger.SetLogger("stdout", "debug")
 	} else {
-		err = logger.SetLogger(cfg.Agent.LogOut, cfg.Agent.LogLevel)
+		err = logger.SetLogger(config.Agent.LogOut, config.Agent.LogLevel)
 	}
 
 	if err != nil {
@@ -39,12 +37,14 @@ func main() {
 		return
 	}
 
-	agent, err := service.NewAgent(*cfg)
-	if err != nil {
-		logger.Log.Error.Printf(logger.MessageError, logger.TagAgent, err.Error())
-
-		return
+	// Start service
+	if *flags.DryRun {
+		telemetryChan := make(chan *dto.Telemetry, 1)
+		agent := service.New(stats.New(config, telemetryChan), graphite.New(config.TSDB.Graphite, telemetryChan))
+		agent.DryRun()
+	} else {
+		telemetryChan := make(chan *dto.Telemetry)
+		agent := service.New(stats.New(config, telemetryChan), graphite.New(config.TSDB.Graphite, telemetryChan))
+		agent.Start()
 	}
-
-	agent.Start()
 }

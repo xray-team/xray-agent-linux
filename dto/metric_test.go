@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/xray-team/xray-agent-linux/collectors/loadAvg"
+	"github.com/xray-team/xray-agent-linux/collectors/netDev"
+	"github.com/xray-team/xray-agent-linux/collectors/stat"
 	"github.com/xray-team/xray-agent-linux/dto"
 )
 
@@ -22,56 +25,56 @@ func TestMetric_GenGraphiteTreeName(t *testing.T) {
 		{
 			name: "loadAvg",
 			fields: fields{
-				Name: dto.MetricLoadAvgLast,
+				Name: loadAvg.MetricLast,
 				Attributes: []dto.MetricAttribute{
 					{
 						Name:  dto.ResourceAttr,
-						Value: dto.ResourceLoadAvg,
+						Value: loadAvg.ResourceName,
 					},
 				},
 				Value: 1,
 			},
-			want: fmt.Sprintf("%s.%s", dto.ResourceLoadAvg, dto.MetricLoadAvgLast),
+			want: fmt.Sprintf("%s.%s", loadAvg.ResourceName, loadAvg.MetricLast),
 		},
 		{
 			name: "cpu",
 			fields: fields{
-				Name: dto.MetricCPUSoftIRQTimer,
+				Name: stat.MetricCPUSoftIRQTimer,
 				Attributes: []dto.MetricAttribute{
 					{
 						Name:  dto.ResourceAttr,
-						Value: dto.ResourceStat,
+						Value: stat.ResourceName,
 					},
 					{
-						Name:  dto.SetNameCPUProcessor,
-						Value: dto.SetValueCPUProcessorTotal,
+						Name:  stat.SetNameCPUProcessor,
+						Value: stat.SetValueCPUProcessorTotal,
 					},
 					{
-						Name:  dto.SetNameCPUSet,
-						Value: dto.SetValueCPUSetSoftIRQ,
+						Name:  stat.SetNameCPUSet,
+						Value: stat.SetValueCPUSetSoftIRQ,
 					},
 				},
 				Value: 1,
 			},
-			want: fmt.Sprintf("%s.%s.%s.%s", dto.ResourceStat, dto.SetValueCPUProcessorTotal, dto.SetValueCPUSetSoftIRQ, dto.MetricCPUSoftIRQTimer),
+			want: fmt.Sprintf("%s.%s.%s.%s", stat.ResourceName, stat.SetValueCPUProcessorTotal, stat.SetValueCPUSetSoftIRQ, stat.MetricCPUSoftIRQTimer),
 		},
 		{
 			name: "netDev",
 			fields: fields{
-				Name: dto.MetricNetDevStatisticsRxBytes,
+				Name: netDev.MetricStatisticsRxBytes,
 				Attributes: []dto.MetricAttribute{
 					{
 						Name:  dto.ResourceAttr,
-						Value: dto.ResourceNetDev,
+						Value: netDev.ResourceName,
 					},
 					{
-						Name:  dto.SetNameNetDevInterface,
+						Name:  netDev.SetNameInterface,
 						Value: "eth0",
 					},
 				},
 				Value: 1,
 			},
-			want: fmt.Sprintf("%s.eth0.%s", dto.ResourceNetDev, dto.MetricNetDevStatisticsRxBytes),
+			want: fmt.Sprintf("%s.eth0.%s", netDev.ResourceName, netDev.MetricStatisticsRxBytes),
 		},
 	}
 

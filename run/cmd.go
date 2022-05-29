@@ -8,17 +8,17 @@ import (
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
-type cmdRunner struct {
+type CmdRunner struct {
 	logPrefix string
 }
 
-func NewCmdRunner(logPrefix string) *cmdRunner {
-	return &cmdRunner{
+func NewCmdRunner(logPrefix string) *CmdRunner {
+	return &CmdRunner{
 		logPrefix: logPrefix,
 	}
 }
 
-func (r *cmdRunner) Run(cmd *exec.Cmd) (string, string, error) {
+func (r *CmdRunner) Run(cmd *exec.Cmd) (string, string, error) {
 	var (
 		stdout bytes.Buffer
 		stderr bytes.Buffer
@@ -38,7 +38,7 @@ func (r *cmdRunner) Run(cmd *exec.Cmd) (string, string, error) {
 	return stdout.String(), stderr.String(), nil
 }
 
-func (r *cmdRunner) RunPipeLine(pipeLine []*exec.Cmd) (string, string, error) {
+func (r *CmdRunner) RunPipeLine(pipeLine []*exec.Cmd) (string, string, error) {
 	var (
 		stdout bytes.Buffer
 		stderr bytes.Buffer
