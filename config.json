@@ -9,7 +9,7 @@
       }
     ],
     "logLevel": "default",
-    "logOut": "stdout"
+    "logOut": "syslog"
   },
   "collectors": {
     "Uptime": {
@@ -35,7 +35,7 @@
     "MemoryInfo": {
       "enabled": true
     },
-    "VMstat": {
+    "VMStat": {
       "enabled": true
     },
     "NetARP": {
