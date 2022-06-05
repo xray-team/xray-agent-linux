@@ -7,7 +7,7 @@ System metrics:
 |------------------|---------|----------------|-----------------------------------------------------------------------|
 | Intr             | counter | /proc/stat     | The total number of all interrupts serviced.                          |
 | Ctxt             | counter | /proc/stat     | The total number of context switches across all CPUs.                 |
-| Btime            | counter | /proc/stat     | The time at which the system booted, in seconds since the Unix epoch. |
+| BootTime         | counter | /proc/stat     | The time at which the system booted, in seconds since the Unix epoch. |
 | Processes        | counter | /proc/stat     | The number of processes and threads created.                          |
 | ProcessesRunning | gauge   | /proc/stat     | The number of processes currently running on CPUs.                    |
 | ProcessesBlocked | gauge   | /proc/stat     | The number of processes currently blocked.                            |
