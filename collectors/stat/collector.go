@@ -71,8 +71,8 @@ func (c *Collector) Collect() ([]dto.Metric, error) {
 	}
 
 	totalAttr := dto.MetricAttribute{
-		Name:  SetNameCPUProcessor,
-		Value: SetValueCPUProcessorTotal,
+		Name:  SetNameProcessor,
+		Value: SetValueProcessorTotal,
 	}
 
 	usageAttr := dto.MetricAttribute{
@@ -93,14 +93,38 @@ func (c *Collector) Collect() ([]dto.Metric, error) {
 	metrics = append(metrics,
 		// Ctxt
 		dto.Metric{
-			Name:       MetricCPUCtxt,
+			Name:       MetricCtxt,
 			Value:      stat.Ctxt,
 			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr},
 		},
 		// Intr
 		dto.Metric{
-			Name:       MetricCPUIntr,
+			Name:       MetricIntr,
 			Value:      stat.Intr,
+			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr},
+		},
+		// Processes
+		dto.Metric{
+			Name:       MetricProcesses,
+			Value:      stat.Processes,
+			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr},
+		},
+		// ProcessesRunning (procs_running)
+		dto.Metric{
+			Name:       MetricProcessesRunning,
+			Value:      stat.ProcessesRunning,
+			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr},
+		},
+		// ProcessesBlocked (procs_blocked)
+		dto.Metric{
+			Name:       MetricProcessesBlocked,
+			Value:      stat.ProcessesBlocked,
+			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr},
+		},
+		// BootTime (btime)
+		dto.Metric{
+			Name:       MetricBootTime,
+			Value:      stat.Btime,
 			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr},
 		},
 		// CPU Usage
@@ -161,57 +185,57 @@ func (c *Collector) Collect() ([]dto.Metric, error) {
 		},
 		// SoftIRQ
 		dto.Metric{
-			Name:       MetricCPUSoftIRQTotal,
+			Name:       MetricSoftIRQTotal,
 			Value:      stat.SoftIRQ.Total,
 			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr, softIRQAttr},
 		},
 		dto.Metric{
-			Name:       MetricCPUSoftIRQHi,
+			Name:       MetricSoftIRQHi,
 			Value:      stat.SoftIRQ.Hi,
 			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr, softIRQAttr},
 		},
 		dto.Metric{
-			Name:       MetricCPUSoftIRQTimer,
+			Name:       MetricSoftIRQTimer,
 			Value:      stat.SoftIRQ.Timer,
 			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr, softIRQAttr},
 		},
 		dto.Metric{
-			Name:       MetricCPUSoftIRQNetRx,
+			Name:       MetricSoftIRQNetRx,
 			Value:      stat.SoftIRQ.NetRx,
 			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr, softIRQAttr},
 		},
 		dto.Metric{
-			Name:       MetricCPUSoftIRQNetTx,
+			Name:       MetricSoftIRQNetTx,
 			Value:      stat.SoftIRQ.NetTx,
 			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr, softIRQAttr},
 		},
 		dto.Metric{
-			Name:       MetricCPUSoftIRQBlock,
+			Name:       MetricSoftIRQBlock,
 			Value:      stat.SoftIRQ.Block,
 			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr, softIRQAttr},
 		},
 		dto.Metric{
-			Name:       MetricCPUSoftIRQIRQPoll,
+			Name:       MetricSoftIRQIRQPoll,
 			Value:      stat.SoftIRQ.IRQPoll,
 			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr, softIRQAttr},
 		},
 		dto.Metric{
-			Name:       MetricCPUSoftIRQTasklet,
+			Name:       MetricSoftIRQTasklet,
 			Value:      stat.SoftIRQ.Tasklet,
 			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr, softIRQAttr},
 		},
 		dto.Metric{
-			Name:       MetricCPUSoftIRQSched,
+			Name:       MetricSoftIRQSched,
 			Value:      stat.SoftIRQ.Sched,
 			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr, softIRQAttr},
 		},
 		dto.Metric{
-			Name:       MetricCPUSoftIRQHRTimer,
+			Name:       MetricSoftIRQHRTimer,
 			Value:      stat.SoftIRQ.HRTimer,
 			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr, softIRQAttr},
 		},
 		dto.Metric{
-			Name:       MetricCPUSoftIRQRCU,
+			Name:       MetricSoftIRQRCU,
 			Value:      stat.SoftIRQ.RCU,
 			Attributes: []dto.MetricAttribute{resourceAttr, totalAttr, softIRQAttr},
 		})
@@ -221,7 +245,7 @@ func (c *Collector) Collect() ([]dto.Metric, error) {
 		attrs := []dto.MetricAttribute{
 			resourceAttr,
 			{
-				Name:  SetNameCPUProcessor,
+				Name:  SetNameProcessor,
 				Value: cpuNumber,
 			},
 			usageAttr,
@@ -290,7 +314,7 @@ func (c *Collector) Collect() ([]dto.Metric, error) {
 	metrics = append(metrics,
 		// Ctxt
 		dto.Metric{
-			Name:       MetricCPUCountCPUs,
+			Name:       MetricCountCPUs,
 			Value:      len(stat.PerCPU),
 			Attributes: []dto.MetricAttribute{resourceAttr, countAttr},
 		},

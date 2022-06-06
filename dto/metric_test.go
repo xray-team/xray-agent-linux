@@ -39,15 +39,15 @@ func TestMetric_GenGraphiteTreeName(t *testing.T) {
 		{
 			name: "cpu",
 			fields: fields{
-				Name: stat.MetricCPUSoftIRQTimer,
+				Name: stat.MetricSoftIRQTimer,
 				Attributes: []dto.MetricAttribute{
 					{
 						Name:  dto.ResourceAttr,
 						Value: stat.ResourceName,
 					},
 					{
-						Name:  stat.SetNameCPUProcessor,
-						Value: stat.SetValueCPUProcessorTotal,
+						Name:  stat.SetNameProcessor,
+						Value: stat.SetValueProcessorTotal,
 					},
 					{
 						Name:  stat.SetNameCPUSet,
@@ -56,7 +56,7 @@ func TestMetric_GenGraphiteTreeName(t *testing.T) {
 				},
 				Value: 1,
 			},
-			want: fmt.Sprintf("%s.%s.%s.%s", stat.ResourceName, stat.SetValueCPUProcessorTotal, stat.SetValueCPUSetSoftIRQ, stat.MetricCPUSoftIRQTimer),
+			want: fmt.Sprintf("%s.%s.%s.%s", stat.ResourceName, stat.SetValueProcessorTotal, stat.SetValueCPUSetSoftIRQ, stat.MetricSoftIRQTimer),
 		},
 		{
 			name: "netDev",
