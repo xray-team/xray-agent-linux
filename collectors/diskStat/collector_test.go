@@ -171,9 +171,11 @@ func TestDiskStatCollector_excludeBlockDevPartitions(t *testing.T) {
 		DataSource           DiskStatDataSource
 		ClassBlockDataSource ClassBlockDataSource
 	}
+
 	type args struct {
 		m map[string]dto.ClassBlock
 	}
+
 	tests := []struct {
 		name   string
 		fields fields

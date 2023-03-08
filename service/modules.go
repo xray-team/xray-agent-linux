@@ -24,11 +24,13 @@ func RunModules(modules ...Module) {
 
 			m.Stop()
 		}
+
 		logger.Log.Info.Printf(logger.Message, logger.TagAgent, "Stopped all modules")
 	}()
 
 	for _, m := range modules {
 		logger.Log.Info.Printf(logger.Message, logger.TagAgent, fmt.Sprintf("Starting module %s", m.Title()))
+
 		go m.Start()
 	}
 
