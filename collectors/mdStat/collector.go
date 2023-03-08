@@ -38,6 +38,7 @@ func CreateCollector(rawConfig []byte) dto.Collector {
 func NewCollector(config *Config, dataSource DataSource) dto.Collector {
 	if config == nil || dataSource == nil {
 		logger.Log.Error.Printf(logger.MessageInitCollectorError, CollectorName)
+
 		return nil
 	}
 

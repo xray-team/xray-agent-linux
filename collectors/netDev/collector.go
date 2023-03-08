@@ -139,6 +139,7 @@ func (c *Collector) filterNetDev(m map[string]dto.ClassNet) map[string]dto.Class
 					return true
 				}
 			}
+
 			return false
 		}() {
 			continue
