@@ -8,18 +8,20 @@ all: clean build
 
 download:
 	$(ENV_BIN) GOPROXY=direct $(GO_BIN) get
-	$(GO_BIN) get github.com/golangci/golangci-lint/cmd/golangci-lint
 	$(GO_BIN) mod tidy
 
 update:
 	$(ENV_BIN) GOPROXY=direct $(GO_BIN) get -u
-	$(GO_BIN) get -u github.com/golangci/golangci-lint/cmd/golangci-lint
 	$(GO_BIN) mod tidy
 
 test:
 	$(GO_BIN) test -failfast ./...
 
 lint:
+    # Install:
+    # https://golangci-lint.run/usage/install/#local-installation
+    # binary will be $(go env GOPATH)/bin/golangci-lint
+    # curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.50.1
 	golangci-lint run ./...
 
 clean:
