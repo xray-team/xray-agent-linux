@@ -38,6 +38,9 @@
     "VMStat": {
       "enabled": true
     },
+    "Entropy": {
+      "enabled": true
+    },
     "NetARP": {
       "enabled": true
     },
@@ -101,19 +104,16 @@
       "metrics": []
     },
     "Nginx": {
-      "enabled": true,
+      "enabled": false,
       "endpoint": "http://127.0.0.1/basic_status",
       "timeout": 5
-    },
-    "Entropy": {
-      "enabled": true
     }
   },
   "tsDB": {
     "graphite": {
       "servers": [
         {
-          "mode": "tree",
+          "mode": "tags",
           "address": "127.0.0.1:2003",
           "protocol": "tcp",
           "timeout": 10
