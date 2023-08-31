@@ -54,11 +54,11 @@ func (ds *interruptsDataSource) GetData() (*Interrupts, error) {
 
 		// Not all lines in /proc/interrupts have the same number of fields
 		// This condition makes parsing correct.
-		if len(fields) <= 1+coresCount {
-			irqTotalsPerCPU = fields[1:]
-		} else {
-			irqTotalsPerCPU = fields[1 : 1+coresCount]
+		if len(fields) < coresCount+1 {
+			continue
 		}
+
+		irqTotalsPerCPU = fields[1 : coresCount+1]
 
 		// Summation of interrupts for each cpu core
 		for i, v := range irqTotalsPerCPU {
