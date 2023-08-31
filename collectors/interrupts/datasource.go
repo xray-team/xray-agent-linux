@@ -45,7 +45,8 @@ func (ds *interruptsDataSource) GetData() (*Interrupts, error) {
 		return nil, errors.New("cant calculate cores total number")
 	}
 
-	data.PerCPU = make(map[int]int64)
+	data.PerCPU = make(map[int]InterruptsStat)
+
 	for _, line := range lines[1:] {
 		fields := strings.Fields(line)
 
@@ -66,13 +67,13 @@ func (ds *interruptsDataSource) GetData() (*Interrupts, error) {
 				return nil, err
 			}
 
-			data.PerCPU[i] += irqPerCoreTotal
+			data.PerCPU[i] = InterruptsStat{data.PerCPU[i].Total + irqPerCoreTotal}
 		}
 	}
 
 	// Total interrupts calculation
 	for _, v := range data.PerCPU {
-		data.Total += v
+		data.Total.Total += v.Total
 	}
 
 	return &data, nil
