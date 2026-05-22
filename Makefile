@@ -19,9 +19,10 @@ test:
 
 lint:
     # Install:
-    # https://golangci-lint.run/usage/install/#local-installation
+    # https://golangci-lint.run/docs/welcome/install/local/
     # binary will be $(go env GOPATH)/bin/golangci-lint
-    # curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.50.1
+    # curl -sSfL https://golangci-lint.run/install.sh | sh -s -- -b $(go env GOPATH)/bin latest
+    # golangci-lint --version
 	golangci-lint run ./...
 
 clean:

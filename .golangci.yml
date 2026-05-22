@@ -1,47 +1,48 @@
+version: "2"
+
 run:
-  deadline: 5m
-  skip-dirs:
-    - vendor/.*
-linters-settings:
-  errcheck:
-    check-type-assertions: true
-  govet:
-    check-shadowing: true
-  gocyclo:
-    min-complexity: 30
-  cyclop:
-    max-complexity: 30
-  maligned:
-    suggest-new: true
-  depguard:
-    list-type: blacklist
-    include-go-root: true
-    packages:
-      - github.com/davecgh/go-spew/spew
-  misspell:
-    locale: US
-  lll:
-    line-length: 200
-  funlen:
-    lines: 500
-    statements: 500
-  gocognit:
-    min-complexity: 80
-  unparam:
-    # call graph construction algorithm (cha, rta). In general, use cha for libraries,
-    # and rta for programs with main packages. Default is cha.
-    algo: cha
-  prealloc:
-    for-loops: true
+  timeout: 5m
+
 linters:
-  enable-all: true
+  default: all
   disable:
     - dupl
-    - gomnd
+    - mnd
     - gochecknoinits
     - gochecknoglobals
-    - goerr113
+    - err113
     - wrapcheck
     - paralleltest
-    - exhaustivestruct
     - exhaustruct
+    - wsl
+    - gomodguard
+  settings:
+    errcheck:
+      check-type-assertions: true
+    govet:
+      enable:
+        - shadow
+    gocyclo:
+      min-complexity: 30
+    cyclop:
+      max-complexity: 30
+    depguard:
+      rules:
+        main:
+          deny:
+            - pkg: github.com/davecgh/go-spew/spew
+              desc: spew is not allowed
+    misspell:
+      locale: US
+    lll:
+      line-length: 200
+    funlen:
+      lines: 500
+      statements: 500
+    gocognit:
+      min-complexity: 80
+    prealloc:
+      for-loops: true
+  exclusions:
+    paths:
+      - vendor
