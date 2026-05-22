@@ -1,6 +1,7 @@
 package graphite
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -54,8 +55,8 @@ func (g *Graphite) Title() string {
 
 func (g *Graphite) sendMetrics(telemetry *dto.Telemetry) error {
 	var (
-		gm     []graphite.Metric
-		errors = make([]string, 0)
+		gm   []graphite.Metric
+		errs = make([]string, 0)
 	)
 
 	for _, serverConf := range g.cfg.Servers {
@@ -71,7 +72,7 @@ func (g *Graphite) sendMetrics(telemetry *dto.Telemetry) error {
 		// Initializing graphite client
 		graphiteClient, err := graphite.NewGraphiteTCP(convertGraphiteConf(telemetry.HostInfo, &serverConf))
 		if err != nil {
-			errors = append(errors, fmt.Sprintf("error while sending metric to server %s: %s", serverConf.Address, err.Error()))
+			errs = append(errs, fmt.Sprintf("error while sending metric to server %s: %s", serverConf.Address, err.Error()))
 
 			continue
 		}
@@ -79,12 +80,12 @@ func (g *Graphite) sendMetrics(telemetry *dto.Telemetry) error {
 		// Sending metrics to server
 		err = graphiteClient.SendMetrics(&gm)
 		if err != nil {
-			errors = append(errors, fmt.Sprintf("error while sending metric to server %s: %s", serverConf.Address, err.Error()))
+			errs = append(errs, fmt.Sprintf("error while sending metric to server %s: %s", serverConf.Address, err.Error()))
 		}
 	}
 
-	if len(errors) != 0 {
-		return fmt.Errorf(strings.Join(errors, "; "))
+	if len(errs) != 0 {
+		return errors.New(strings.Join(errs, "; "))
 	}
 
 	return nil
