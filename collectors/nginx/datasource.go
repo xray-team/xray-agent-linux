@@ -2,7 +2,7 @@ package nginx
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -48,7 +48,7 @@ func (ds *StubStatusClient) GetData() (*StubStatus, error) {
 		return nil, fmt.Errorf("status code: %v", resp.StatusCode)
 	}
 
-	respBody, err := ioutil.ReadAll(resp.Body)
+	respBody, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}

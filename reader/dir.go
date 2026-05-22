@@ -1,17 +1,16 @@
 package reader
 
 import (
-	"io/ioutil"
 	"os"
 
 	"github.com/xray-team/xray-agent-linux/logger"
 )
 
-func ReadDir(path, logPrefix string) ([]os.FileInfo, error) {
+func ReadDir(path, logPrefix string) ([]os.DirEntry, error) {
 	// logger
 	logger.Log.Debug.Printf(logger.MessageReadDir, logPrefix, path)
 
-	f, err := ioutil.ReadDir(path)
+	f, err := os.ReadDir(path)
 	if err != nil {
 		// logger
 		logger.Log.Debug.Printf(logger.MessageReadDirError, logPrefix, path)
