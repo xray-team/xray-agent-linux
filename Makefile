@@ -31,4 +31,7 @@ clean:
 
 build:
 	$(GO_BIN) mod tidy
-	$(GO_BIN) build -o $(OUT_BIN) -v
+    # Build a dynamic binary (with libc6/glibc dependency)
+    # $(GO_BIN) build -o $(OUT_BIN) -v
+    # Build a fully static binary (no libc6/glibc dependency)
+	$(ENV_BIN) CGO_ENABLED=0 GOOS=linux $(GO_BIN) build -trimpath -ldflags=' -s -w -extldflags "-static"' -o $(OUT_BIN) -v

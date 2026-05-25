@@ -20,12 +20,15 @@ jobs:
       run: echo ${{steps.tag.outputs.tag}}
 
     - name: Set up Go
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v5
       with:
-        go-version: 1.16
+        go-version: '1.25'
 
-    - name: Build
-      run: go build -o xray-agent -v
+    - name: Build (static, no libc dependency)
+      env:
+        CGO_ENABLED: 0
+        GOOS: linux
+      run: go build -trimpath -ldflags='-s -w -extldflags "-static"' -o xray-agent -v
       
     - uses: kentik/pkg@v1.0.0-rc7
       with:
