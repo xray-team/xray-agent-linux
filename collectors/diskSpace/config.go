@@ -3,7 +3,7 @@ package diskSpace
 import (
 	"encoding/json"
 
-	"github.com/go-playground/validator"
+	"github.com/go-playground/validator/v10"
 )
 
 type Config struct {

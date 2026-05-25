@@ -3,7 +3,7 @@ package reader
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -17,7 +17,7 @@ func ReadFile(filePath, logPrefix string) ([]byte, error) {
 	logger.Log.Debug.Printf(logger.MessageReadFile, logPrefix, filePath)
 
 	// read file to memory
-	data, err := ioutil.ReadFile(filePath)
+	data, err := os.ReadFile(filePath)
 	if err != nil {
 		// logger
 		logger.Log.Debug.Printf(logger.MessageReadFileError, logPrefix, filePath, err)
@@ -75,7 +75,7 @@ func ReadInt64File(filePath, logPrefix string) (int64, error) {
 		return 0, err
 	}
 
-	// convert ot int64
+	// convert to int64
 	i, err := strconv.ParseInt(string(bytes.TrimSpace(data)), 10, 64)
 	if err != nil {
 		return 0, fmt.Errorf("'%s': %w", filePath, err)

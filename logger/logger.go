@@ -2,7 +2,6 @@ package logger
 
 import (
 	"io"
-	"io/ioutil"
 	"log"
 	"log/syslog"
 	"os"
@@ -29,7 +28,7 @@ func (logSeverity *LogSeverity) SetDefault(out io.Writer, flags int) {
 	Log = &LogSeverity{
 		Info:  log.New(out, "", flags),
 		Error: log.New(out, "", flags),
-		Debug: log.New(ioutil.Discard, "", flags),
+		Debug: log.New(io.Discard, "", flags),
 	}
 }
 
