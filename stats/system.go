@@ -8,6 +8,7 @@ import (
 	"github.com/xray-team/xray-agent-linux/collectors/diskSpace"
 	"github.com/xray-team/xray-agent-linux/collectors/diskStat"
 	"github.com/xray-team/xray-agent-linux/collectors/entropy"
+	"github.com/xray-team/xray-agent-linux/collectors/interrupts"
 	"github.com/xray-team/xray-agent-linux/collectors/loadAvg"
 	"github.com/xray-team/xray-agent-linux/collectors/mdStat"
 	"github.com/xray-team/xray-agent-linux/collectors/memoryInfo"
@@ -77,6 +78,7 @@ func (s *Stat) RegisterCollectors() {
 	s.RegisterCollector(uptime.CollectorName, uptime.CreateCollector)
 	s.RegisterCollector(vmStat.CollectorName, vmStat.CreateCollector)
 	s.RegisterCollector(wireless.CollectorName, wireless.CreateCollector)
+	s.RegisterCollector(interrupts.CollectorName, interrupts.CreateCollector)
 }
 
 func (s *Stat) initCollectors() {

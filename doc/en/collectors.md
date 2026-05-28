@@ -3,6 +3,7 @@
 List of collectors:
 - [CMD](../../collectors/cmd/readme.md)
 - [CPUInfo](../../collectors/cpuInfo/readme.md)
+- [Interrupts](../../collectors/interrupts/readme.md)
 - [DiskSpace](../../collectors/diskSpace/readme.md)
 - [DiskStat](../../collectors/diskStat/readme.md)
 - [Entropy](../../collectors/entropy/readme.md)
